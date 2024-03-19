@@ -2,5 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFF</color>
-    <color name="primary_green">#0AF3D6</color>
+    <color name="primary_green">#00FB97</color>
+    <color name="primary_soft">#cbc8c9</color>
+    <color name="bottom_nav_background">#302D2D</color>
 </resources>

@@ -6,4 +6,14 @@
         android:icon="@drawable/home_selector"
         android:title="Home" />
 
+    <item
+        android:id="@+id/matchesFragment"
+        android:icon="@drawable/matches_selector"
+        android:title="Matches" />
+
+    <item
+        android:id="@+id/newsFragment"
+        android:icon="@drawable/news_selector"
+        android:title="News" />
+
 </menu>
