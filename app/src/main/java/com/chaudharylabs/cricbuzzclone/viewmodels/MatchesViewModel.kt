@@ -11,9 +11,7 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
     private var matchesRepository: MatchesRepository = MatchesRepository(application)
 
     suspend fun getMatches(
-        apiKey: String,
-        apiHost: String
     ): Flow<NetworkResult<MatchesResponse>> {
-        return matchesRepository.getMatches(apiKey, apiHost)
+        return matchesRepository.getMatches()
     }
 }

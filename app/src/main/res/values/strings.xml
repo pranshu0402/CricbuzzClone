@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">CricbuzzClone</string>
     <string name="cricbuzz_clone">Cricbuzz Clone</string>
+    <string name="matches">MATCHES</string>
 </resources>

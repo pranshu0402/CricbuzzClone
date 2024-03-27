@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -15,6 +17,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        dataBinding = true
     }
 
     buildTypes {
@@ -50,5 +56,8 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.10.0")
     implementation("com.squareup.retrofit2:converter-gson:2.10.0")
     implementation("com.google.code.gson:gson:2.10.1")
-    implementation("androidx.lifecycle:lifecycle-extensions:2.7.0")
+//    implementation("androidx.lifecycle:lifecycle-extensions:2.7.0")
+//    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+//    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+//    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
 }

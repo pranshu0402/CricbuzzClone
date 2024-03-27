@@ -9,9 +9,11 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
 class MatchesRepository(application: Application) : BaseRepository(application) {
+
+    private val apiKey = "f80e239580msh700af856dd70624p1ba082jsn44ef85800156"
+    private val apiHost = "cricbuzz-cricket.p.rapidapi.com"
+
     suspend fun getMatches(
-        apiKey: String,
-        apiHost: String
     ): Flow<NetworkResult<MatchesResponse>> {
         return flow {
             try {

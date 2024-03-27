@@ -19,4 +19,11 @@
         <item name="android:letterSpacing">0.02</item>
     </style>
 
+    <style name="ShapeAppearanceOverlay.App.CornerSize15Percent" parent="">
+        <item name="cornerSizeTopLeft">15%</item>
+        <item name="cornerSizeTopRight">15%</item>
+        <item name="cornerSizeBottomLeft">15%</item>
+        <item name="cornerSizeBottomRight">15%</item>
+    </style>
+
 </resources>
