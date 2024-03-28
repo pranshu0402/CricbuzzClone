@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.chaudharylabs.cricbuzzclone.R
 import com.chaudharylabs.cricbuzzclone.data.api.NetworkResult
+import com.chaudharylabs.cricbuzzclone.data.model.Matche
 import com.chaudharylabs.cricbuzzclone.data.model.MatchesResponse
 import com.chaudharylabs.cricbuzzclone.databinding.FragmentHomeBinding
 import com.chaudharylabs.cricbuzzclone.ui.adapters.HomeBannerAdapter
@@ -25,6 +26,7 @@ class HomeFragment : Fragment() {
 
     private var currentItemIndex = 0
     private var autoScrollHandler: Handler? = null
+    private var list: ArrayList<Matche> = ArrayList()
     private lateinit var binding: FragmentHomeBinding
     private val matchesViewModel: MatchesViewModel by activityViewModels()
 
@@ -45,16 +47,24 @@ class HomeFragment : Fragment() {
             executePendingBindings()
         }
 
-        //  getMatches()
+        getMatches()
+
+        matchesViewModel.list.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                loadBanners(it)
+            }
+        }
     }
 
     private fun getMatches() {
         lifecycleScope.launch {
-            matchesViewModel.getMatches().collect(matchesCallback)
+            matchesViewModel.getLiveMatches().collect(liveMatchesCallback)
+            matchesViewModel.getRecentMatches().collect(recentMatchesCallback)
+            // matchesViewModel.getUpcomingMatches().collect(upcomingMatchesCallback)
         }
     }
 
-    private val matchesCallback: FlowCollector<NetworkResult<MatchesResponse>> =
+    private val liveMatchesCallback: FlowCollector<NetworkResult<MatchesResponse>> =
         FlowCollector { response ->
             when (response) {
                 is NetworkResult.Loading -> {
@@ -63,8 +73,7 @@ class HomeFragment : Fragment() {
                 is NetworkResult.Success -> {
                     response.data?.let {
                         Log.d(TAG, "response Success :: $it")
-
-                        loadBanners(it)
+                        getList(it)
                     }
                 }
 
@@ -75,20 +84,79 @@ class HomeFragment : Fragment() {
             }
         }
 
-    private fun loadBanners(matchesResponse: MatchesResponse?) {
+    private val recentMatchesCallback: FlowCollector<NetworkResult<MatchesResponse>> =
+        FlowCollector { response ->
+            when (response) {
+                is NetworkResult.Loading -> {
+                }
+
+                is NetworkResult.Success -> {
+                    response.data?.let {
+                        Log.d(TAG, "response Success :: $it")
+                        getList(it)
+                    }
+                }
+
+                is NetworkResult.Error -> {
+                    Log.e(TAG, "response Error :: ${response.message}")
+                }
+
+            }
+        }
+
+    private val upcomingMatchesCallback: FlowCollector<NetworkResult<MatchesResponse>> =
+        FlowCollector { response ->
+            when (response) {
+                is NetworkResult.Loading -> {
+                }
+
+                is NetworkResult.Success -> {
+                    response.data?.let {
+                        Log.d(TAG, "response Success :: $it")
+                        getList(it)
+                    }
+                }
+
+                is NetworkResult.Error -> {
+                    Log.e(TAG, "response Error :: ${response.message}")
+                }
+
+            }
+        }
+
+    private fun getList(matchesResponse: MatchesResponse?) {
+        matchesResponse?.let { matches ->
+            val league = matches.filters?.matchType?.find { a -> a == "League" }
+
+            matches.typeMatches?.forEach { a ->
+                if (a.matchType == league) {
+                    a.seriesMatches?.forEach { b ->
+                        if (b.seriesAdWrapper?.seriesName == "Indian Premier League 2024") {
+                            b.seriesAdWrapper.matches?.forEach {
+                                list.add(it)
+                            }
+
+                            matchesViewModel.list.value = list
+
+                            Log.d(TAG, "list :: ${matchesViewModel.list.value?.size}")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun loadBanners(matchesResponse: ArrayList<Matche>) {
         binding.apply {
 
-            matchesResponse?.let {matches->
+            matchesResponse.let { matches ->
                 bannerAdapter =
                     activity?.let {
-                        matches.typeMatches?.let { it1 ->
-                            HomeBannerAdapter(
-                                this@HomeFragment,
-                                it1,
-                                matchesResponse.filters?.matchType as List<String>,
-                                it
-                            )
-                        }
+                        HomeBannerAdapter(
+                            this@HomeFragment,
+                            matches,
+                            it
+                        )
                     }
             }
 

@@ -8,8 +8,22 @@ import retrofit2.http.Headers
 
 interface APIInterface {
     @Headers("Content-Type: application/json")
+    @GET("live")
+    suspend fun getLiveMatches(
+        @Header("X-RapidAPI-Key") apiKey: String?,
+        @Header("X-RapidAPI-Host") apiHost: String?
+    ): Response<MatchesResponse?>
+
+    @Headers("Content-Type: application/json")
     @GET("recent")
-    suspend fun getMatches(
+    suspend fun getRecentMatches(
+        @Header("X-RapidAPI-Key") apiKey: String?,
+        @Header("X-RapidAPI-Host") apiHost: String?
+    ): Response<MatchesResponse?>
+
+    @Headers("Content-Type: application/json")
+    @GET("upcoming")
+    suspend fun getUpcomingMatches(
         @Header("X-RapidAPI-Key") apiKey: String?,
         @Header("X-RapidAPI-Host") apiHost: String?
     ): Response<MatchesResponse?>

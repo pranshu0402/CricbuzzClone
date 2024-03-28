@@ -5,4 +5,6 @@
     <color name="primary_green">#00FB97</color>
     <color name="primary_soft">#cbc8c9</color>
     <color name="bottom_nav_background">#302D2D</color>
+    <color name="primary_brown">#D84315</color>
+    <color name="primary_light_blue">#039AA8</color>
 </resources>
