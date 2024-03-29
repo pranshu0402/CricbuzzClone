@@ -8,6 +8,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.chaudharylabs.cricbuzzclone.R
 import com.chaudharylabs.cricbuzzclone.data.model.Matche
 import com.chaudharylabs.cricbuzzclone.databinding.LytHomeBannerListBinding
@@ -20,6 +21,7 @@ import java.util.Locale
 class HomeBannerAdapter(
     private var present: HomeFragment,
     private var list: List<Matche>,
+    private var teamImageUrlList: ArrayList<String>,
     private val activity: FragmentActivity
 ) :
     RecyclerView.Adapter<HomeBannerAdapter.ViewHolder>() {
@@ -57,12 +59,43 @@ class HomeBannerAdapter(
                 this.presenter = present
                 tvMatchNo.text = matche.matchInfo?.matchDesc
                 tvSeriesName.text = " - ${matche.matchInfo?.seriesName}"
-                tvTeam1Name.text = matche.matchInfo?.team1?.teamName
-                tvTeam2Name.text = matche.matchInfo?.team2?.teamName
+
+                teamImageUrlList.forEach {
+                    if (it.contains(matche.matchInfo?.team1?.imageId.toString())) {
+                        Glide.with(ivTeam1Pic.context)
+                            .load(it)
+                            .into(ivTeam1Pic)
+                    }
+
+                    if (it.contains(matche.matchInfo?.team2?.imageId.toString())) {
+                        Glide.with(ivTeam2Pic.context)
+                            .load(it)
+                            .into(ivTeam2Pic)
+                    }
+                }
 
                 if (matche.matchInfo?.state == "Preview") {
                     tvStartDate.visibility = View.VISIBLE
                     tvStatus.visibility = View.GONE
+                    lytTeamScore.visibility = View.GONE
+
+                    tvTeam1Name.text = matche.matchInfo.team1?.teamName
+                    tvTeam2Name.text = matche.matchInfo.team2?.teamName
+
+                    tvTeam1Name.setTextColor(
+                        AppCompatResources.getColorStateList(
+                            tvStartDate.context,
+                            R.color.white
+                        )
+                    )
+
+                    tvTeam2Name.setTextColor(
+                        AppCompatResources.getColorStateList(
+                            tvStartDate.context,
+                            R.color.white
+                        )
+                    )
+
                     val l = matche.matchInfo.startDate?.toLongOrNull()
                     if (l != null) {
                         tvStartDate.text = getDateFromMilliseconds(l)
@@ -78,6 +111,7 @@ class HomeBannerAdapter(
                 } else {
                     tvStartDate.visibility = View.GONE
                     tvStatus.visibility = View.VISIBLE
+                    lytTeamScore.visibility = View.VISIBLE
                     tvStatus.text = matche.matchInfo?.status
 
                     if (matche.matchInfo?.state == "Toss") {
@@ -94,6 +128,87 @@ class HomeBannerAdapter(
                                 R.color.primary_light_blue
                             )
                         )
+                    }
+
+                    if (matche.matchInfo?.state == "Complete") {
+
+                        tvTeam1Name.text = matche.matchInfo.team1?.teamSName
+                        tvTeam2Name.text = matche.matchInfo.team2?.teamSName
+
+                        val team1 = matche.matchInfo.team1?.teamSName.toString()
+                        val team2 = matche.matchInfo.team2?.teamSName.toString()
+
+                        val team1Overs = matche.matchScore?.team1Score?.inngs1?.overs.toString()
+                            .replace("19.6", "20")
+                        val team2Overs = matche.matchScore?.team2Score?.inngs1?.overs.toString()
+                            .replace("19.6", "20")
+
+                        tvTeam1Score.text =
+                            "${matche.matchScore?.team1Score?.inngs1?.runs}-${matche.matchScore?.team1Score?.inngs1?.wickets} ($team1Overs)"
+
+                        tvTeam2Score.text =
+                            "${matche.matchScore?.team2Score?.inngs1?.runs}-${matche.matchScore?.team2Score?.inngs1?.wickets} ($team2Overs)"
+
+
+                        if (matche.matchInfo.stateTitle?.contains(team1) == true) {
+                            tvTeam1Score.setTextColor(
+                                AppCompatResources.getColorStateList(
+                                    tvStartDate.context,
+                                    R.color.white
+                                )
+                            )
+                            tvTeam1Name.setTextColor(
+                                AppCompatResources.getColorStateList(
+                                    tvStartDate.context,
+                                    R.color.white
+                                )
+                            )
+                        } else {
+                            tvTeam1Score.setTextColor(
+                                AppCompatResources.getColorStateList(
+                                    tvStartDate.context,
+                                    R.color.primary_soft
+                                )
+                            )
+                            tvTeam1Name.setTextColor(
+                                AppCompatResources.getColorStateList(
+                                    tvStartDate.context,
+                                    R.color.primary_soft
+                                )
+                            )
+                        }
+
+                        if (matche.matchInfo.stateTitle?.contains(team2) == true) {
+                            tvTeam2Score.setTextColor(
+                                AppCompatResources.getColorStateList(
+                                    tvStartDate.context,
+                                    R.color.white
+                                )
+                            )
+                            tvTeam2Name.setTextColor(
+                                AppCompatResources.getColorStateList(
+                                    tvStartDate.context,
+                                    R.color.white
+                                )
+                            )
+                        } else {
+                            tvTeam2Score.setTextColor(
+                                AppCompatResources.getColorStateList(
+                                    tvStartDate.context,
+                                    R.color.primary_soft
+                                )
+                            )
+                            tvTeam2Name.setTextColor(
+                                AppCompatResources.getColorStateList(
+                                    tvStartDate.context,
+                                    R.color.primary_soft
+                                )
+                            )
+                        }
+
+                    } else {
+                        tvTeam1Name.text = matche.matchInfo?.team1?.teamName
+                        tvTeam2Name.text = matche.matchInfo?.team2?.teamName
                     }
                 }
             }

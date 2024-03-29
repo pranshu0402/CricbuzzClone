@@ -21,14 +21,18 @@ import com.chaudharylabs.cricbuzzclone.ui.utils.DotsIndicatorDecoration
 import com.chaudharylabs.cricbuzzclone.viewmodels.MatchesViewModel
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class HomeFragment : Fragment() {
 
     private var currentItemIndex = 0
     private var autoScrollHandler: Handler? = null
     private var list: ArrayList<Matche> = ArrayList()
+    private var teamImageUrlList: ArrayList<String> = ArrayList()
     private lateinit var binding: FragmentHomeBinding
     private val matchesViewModel: MatchesViewModel by activityViewModels()
+    private val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,20 +51,36 @@ class HomeFragment : Fragment() {
             executePendingBindings()
         }
 
+        getTeamImageUrlList()
+
         getMatches()
 
         matchesViewModel.list.observe(viewLifecycleOwner) {
-            if (it.isNotEmpty()) {
+            if (!it.isNullOrEmpty()) {
                 loadBanners(it)
             }
         }
     }
 
+    private fun getTeamImageUrlList() {
+        teamImageUrlList.clear()
+        teamImageUrlList.add("https://static.cricbuzz.com/a/img/v1/24x18/i1/c225641/chennai-super-kings.jpg")
+        teamImageUrlList.add("https://static.cricbuzz.com/a/img/v1/24x18/i1/c225647/rajasthan-royals.jpg")
+        teamImageUrlList.add("https://static.cricbuzz.com/a/img/v1/24x18/i1/c225646/kolkata-knight-riders.jpg")
+        teamImageUrlList.add("https://static.cricbuzz.com/a/img/v1/24x18/i1/c225648/punjab-kings.jpg")
+        teamImageUrlList.add("https://static.cricbuzz.com/a/img/v1/24x18/i1/c225643/royal-challengers-bengaluru.jpg")
+        teamImageUrlList.add("https://static.cricbuzz.com/a/img/v1/24x18/i1/c235085/gujarat-titans.jpg")
+        teamImageUrlList.add("https://static.cricbuzz.com/a/img/v1/24x18/i1/c225644/delhi-capitals.jpg")
+        teamImageUrlList.add("https://static.cricbuzz.com/a/img/v1/24x18/i1/c389444/lucknow-super-giants.jpg")
+        teamImageUrlList.add("https://static.cricbuzz.com/a/img/v1/24x18/i1/c225645/mumbai-indians.jpg")
+        teamImageUrlList.add("https://static.cricbuzz.com/a/img/v1/24x18/i1/c225649/sunrisers-hyderabad.jpg")
+    }
+
     private fun getMatches() {
         lifecycleScope.launch {
             matchesViewModel.getLiveMatches().collect(liveMatchesCallback)
+            matchesViewModel.getUpcomingMatches().collect(upcomingMatchesCallback)
             matchesViewModel.getRecentMatches().collect(recentMatchesCallback)
-            // matchesViewModel.getUpcomingMatches().collect(upcomingMatchesCallback)
         }
     }
 
@@ -113,7 +133,36 @@ class HomeFragment : Fragment() {
                 is NetworkResult.Success -> {
                     response.data?.let {
                         Log.d(TAG, "response Success :: $it")
-                        getList(it)
+                        it.let { matches ->
+                            val league = matches.filters?.matchType?.find { a -> a == "League" }
+
+                            matches.typeMatches?.forEach { a ->
+                                if (a.matchType == league) {
+                                    a.seriesMatches?.forEach { b ->
+                                        if (b.seriesAdWrapper?.seriesName == "Indian Premier League 2024") {
+                                            b.seriesAdWrapper.matches?.forEach { matche ->
+                                                val l = matche.matchInfo?.startDate?.toLongOrNull()
+                                                if (l != null) {
+                                                    if (sdf.format(l) == sdf.format(
+                                                            System.currentTimeMillis()
+                                                        )
+                                                    ) {
+                                                        list.add(matche)
+
+                                                        matchesViewModel.list.value = list
+
+                                                        Log.d(
+                                                            TAG,
+                                                            "list :: ${matchesViewModel.list.value?.size}, $list"
+                                                        )
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -155,6 +204,7 @@ class HomeFragment : Fragment() {
                         HomeBannerAdapter(
                             this@HomeFragment,
                             matches,
+                            teamImageUrlList,
                             it
                         )
                     }
