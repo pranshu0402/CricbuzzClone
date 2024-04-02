@@ -2,7 +2,7 @@ package com.chaudharylabs.cricbuzzclone.data.api.repositories
 
 import android.app.Application
 import com.chaudharylabs.cricbuzzclone.data.api.NetworkResult
-import com.chaudharylabs.cricbuzzclone.data.model.MatchesResponse
+import com.chaudharylabs.cricbuzzclone.data.model.matches.MatchesResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

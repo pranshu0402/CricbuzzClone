@@ -1,7 +1,6 @@
 package com.chaudharylabs.cricbuzzclone.ui
 
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,25 +12,26 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.chaudharylabs.cricbuzzclone.R
 import com.chaudharylabs.cricbuzzclone.data.api.NetworkResult
-import com.chaudharylabs.cricbuzzclone.data.model.Matche
-import com.chaudharylabs.cricbuzzclone.data.model.MatchesResponse
+import com.chaudharylabs.cricbuzzclone.data.model.matches.Matche
+import com.chaudharylabs.cricbuzzclone.data.model.matches.MatchesResponse
+import com.chaudharylabs.cricbuzzclone.data.model.top_stoires.TopStoriesResponse
 import com.chaudharylabs.cricbuzzclone.databinding.FragmentHomeBinding
 import com.chaudharylabs.cricbuzzclone.ui.adapters.HomeBannerAdapter
+import com.chaudharylabs.cricbuzzclone.ui.adapters.TopStoriesAdapter
 import com.chaudharylabs.cricbuzzclone.ui.utils.DotsIndicatorDecoration
 import com.chaudharylabs.cricbuzzclone.viewmodels.MatchesViewModel
+import com.chaudharylabs.cricbuzzclone.viewmodels.TopStoriesViewModel
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class HomeFragment : Fragment() {
-
-    private var currentItemIndex = 0
-    private var autoScrollHandler: Handler? = null
     private var list: ArrayList<Matche> = ArrayList()
     private var teamImageUrlList: ArrayList<String> = ArrayList()
     private lateinit var binding: FragmentHomeBinding
     private val matchesViewModel: MatchesViewModel by activityViewModels()
+    private val topStoriesViewModel: TopStoriesViewModel by activityViewModels()
     private val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
     override fun onCreateView(
@@ -55,12 +55,46 @@ class HomeFragment : Fragment() {
 
         getMatches()
 
+        getTopStories()
+
         matchesViewModel.list.observe(viewLifecycleOwner) {
             if (!it.isNullOrEmpty()) {
                 loadBanners(it)
             }
         }
     }
+
+    private fun getTopStories() {
+        lifecycleScope.launch {
+            topStoriesViewModel.getTopStories().collect(topStoriesCallback)
+        }
+    }
+
+    private val topStoriesCallback: FlowCollector<NetworkResult<TopStoriesResponse>> =
+        FlowCollector { response ->
+            when (response) {
+                is NetworkResult.Loading -> {
+                }
+
+                is NetworkResult.Success -> {
+                    response.data?.let {
+                        Log.d(TAG, "response Success :: $it")
+
+                        if (!it.storyList.isNullOrEmpty()) {
+                            binding.topStoriesAdapter =
+                                TopStoriesAdapter(
+                                    this@HomeFragment,
+                                    it.storyList.filter { it.story != null })
+                        }
+                    }
+                }
+
+                is NetworkResult.Error -> {
+                    Log.e(TAG, "response Error :: ${response.message}")
+                }
+
+            }
+        }
 
     private fun getTeamImageUrlList() {
         teamImageUrlList.clear()
@@ -227,33 +261,6 @@ class HomeFragment : Fragment() {
             }
             rvBannerList.visibility = View.VISIBLE
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        autoScrollHandler?.post(autoScrollRunnable)
-    }
-
-    private var autoScrollRunnable: Runnable = object : Runnable {
-        override fun run() {
-            val maxCount = binding.rvBannerList.adapter?.itemCount
-            if (maxCount != null && currentItemIndex < maxCount) {
-                binding.rvBannerList.smoothScrollToPosition(currentItemIndex++)
-                autoScrollHandler?.postDelayed(this, 4000)
-            } else {
-                currentItemIndex = 0
-                autoScrollHandler?.post(this)
-            }
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        if (autoScrollHandler != null) {
-            autoScrollHandler?.removeCallbacks(autoScrollRunnable)
-        }
-
-        binding.unbind()
     }
 
     companion object {

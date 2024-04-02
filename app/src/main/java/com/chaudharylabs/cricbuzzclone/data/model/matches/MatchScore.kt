@@ -1,4 +1,4 @@
-package com.chaudharylabs.cricbuzzclone.data.model
+package com.chaudharylabs.cricbuzzclone.data.model.matches
 
 data class MatchScore(
     val team1Score: Team1Score?,

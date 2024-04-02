@@ -5,8 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.chaudharylabs.cricbuzzclone.data.api.NetworkResult
 import com.chaudharylabs.cricbuzzclone.data.api.repositories.MatchesRepository
-import com.chaudharylabs.cricbuzzclone.data.model.Matche
-import com.chaudharylabs.cricbuzzclone.data.model.MatchesResponse
+import com.chaudharylabs.cricbuzzclone.data.model.matches.Matche
+import com.chaudharylabs.cricbuzzclone.data.model.matches.MatchesResponse
 import kotlinx.coroutines.flow.Flow
 
 class MatchesViewModel(application: Application) : AndroidViewModel(application) {

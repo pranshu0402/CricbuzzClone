@@ -1,6 +1,6 @@
-package com.chaudharylabs.cricbuzzclone.data.model
+package com.chaudharylabs.cricbuzzclone.data.model.matches
 
-data class Team2(
+data class Team1(
     val imageId: Int?,
     val teamId: Int?,
     val teamName: String?,

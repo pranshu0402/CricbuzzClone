@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
     private var retrofit: Retrofit? = null
-    private var BASE_URL: String = "https://cricbuzz-cricket.p.rapidapi.com/matches/v1/"
+    private var BASE_URL: String = "https://cricbuzz-cricket.p.rapidapi.com/"
 
     val retrofitInstance: APIInterface
         get() {

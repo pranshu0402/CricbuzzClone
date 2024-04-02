@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.chaudharylabs.cricbuzzclone.R
-import com.chaudharylabs.cricbuzzclone.data.model.Matche
+import com.chaudharylabs.cricbuzzclone.data.model.matches.Matche
 import com.chaudharylabs.cricbuzzclone.databinding.LytHomeBannerListBinding
 import com.chaudharylabs.cricbuzzclone.ui.HomeFragment
 import java.text.DateFormat

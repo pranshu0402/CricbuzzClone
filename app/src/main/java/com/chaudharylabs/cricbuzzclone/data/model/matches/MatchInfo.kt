@@ -1,4 +1,4 @@
-package com.chaudharylabs.cricbuzzclone.data.model
+package com.chaudharylabs.cricbuzzclone.data.model.matches
 
 data class MatchInfo(
     val currBatTeamId: Int?,

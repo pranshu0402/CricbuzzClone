@@ -19,11 +19,16 @@
         <item name="android:letterSpacing">0.02</item>
     </style>
 
-    <style name="ShapeAppearanceOverlay.App.CornerSize15Percent" parent="">
-        <item name="cornerSizeTopLeft">15%</item>
-        <item name="cornerSizeTopRight">15%</item>
-        <item name="cornerSizeBottomLeft">15%</item>
-        <item name="cornerSizeBottomRight">15%</item>
+    <style name="ShapeAppearanceOverlay.App.CornerSize10Percent" parent="">
+        <item name="cornerSizeTopLeft">10%</item>
+        <item name="cornerSizeTopRight">10%</item>
+        <item name="cornerSizeBottomLeft">10%</item>
+        <item name="cornerSizeBottomRight">10%</item>
     </style>
+
+    <declare-styleable name="CricConstraintLayout">
+        <attr name="customBackgroundColor" format="color" />
+        <attr name="customBackgroundRadius" format="dimension" />
+    </declare-styleable>
 
 </resources>
