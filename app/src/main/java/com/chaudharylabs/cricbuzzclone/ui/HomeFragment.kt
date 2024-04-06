@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.chaudharylabs.cricbuzzclone.R
@@ -24,14 +24,17 @@ import com.chaudharylabs.cricbuzzclone.viewmodels.TopStoriesViewModel
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 class HomeFragment : Fragment() {
     private var list: ArrayList<Matche> = ArrayList()
+    private var newList: ArrayList<Matche> = ArrayList()
+    private var date: ArrayList<String> = ArrayList()
     private var teamImageUrlList: ArrayList<String> = ArrayList()
     private lateinit var binding: FragmentHomeBinding
-    private val matchesViewModel: MatchesViewModel by activityViewModels()
-    private val topStoriesViewModel: TopStoriesViewModel by activityViewModels()
+    private lateinit var matchesViewModel: MatchesViewModel
+    private lateinit var topStoriesViewModel: TopStoriesViewModel
     private val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
     override fun onCreateView(
@@ -50,6 +53,9 @@ class HomeFragment : Fragment() {
             lifecycleOwner = this@HomeFragment
             executePendingBindings()
         }
+
+        matchesViewModel = ViewModelProvider(this)[MatchesViewModel::class.java]
+        topStoriesViewModel = ViewModelProvider(this)[TopStoriesViewModel::class.java]
 
         getTeamImageUrlList()
 
@@ -126,13 +132,13 @@ class HomeFragment : Fragment() {
 
                 is NetworkResult.Success -> {
                     response.data?.let {
-                        Log.d(TAG, "response Success :: $it")
+                        Log.d(TAG, "liveMatches response Success :: $it")
                         getList(it)
                     }
                 }
 
                 is NetworkResult.Error -> {
-                    Log.e(TAG, "response Error :: ${response.message}")
+                    Log.e(TAG, "liveMatches response Error :: ${response.message}")
                 }
 
             }
@@ -146,13 +152,13 @@ class HomeFragment : Fragment() {
 
                 is NetworkResult.Success -> {
                     response.data?.let {
-                        Log.d(TAG, "response Success :: $it")
+                        Log.d(TAG, "recentMatches response Success :: $it")
                         getList(it)
                     }
                 }
 
                 is NetworkResult.Error -> {
-                    Log.e(TAG, "response Error :: ${response.message}")
+                    Log.e(TAG, "recentMatches response Error :: ${response.message}")
                 }
 
             }
@@ -166,42 +172,13 @@ class HomeFragment : Fragment() {
 
                 is NetworkResult.Success -> {
                     response.data?.let {
-                        Log.d(TAG, "response Success :: $it")
-                        it.let { matches ->
-                            val league = matches.filters?.matchType?.find { a -> a == "League" }
-
-                            matches.typeMatches?.forEach { a ->
-                                if (a.matchType == league) {
-                                    a.seriesMatches?.forEach { b ->
-                                        if (b.seriesAdWrapper?.seriesName == "Indian Premier League 2024") {
-                                            b.seriesAdWrapper.matches?.forEach { matche ->
-                                                val l = matche.matchInfo?.startDate?.toLongOrNull()
-                                                if (l != null) {
-                                                    if (sdf.format(l) == sdf.format(
-                                                            System.currentTimeMillis()
-                                                        )
-                                                    ) {
-                                                        list.add(matche)
-
-                                                        matchesViewModel.list.value = list
-
-                                                        Log.d(
-                                                            TAG,
-                                                            "list :: ${matchesViewModel.list.value?.size}, $list"
-                                                        )
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        Log.d(TAG, "upcomingMatches response Success :: $it")
+                        getList(it)
                     }
                 }
 
                 is NetworkResult.Error -> {
-                    Log.e(TAG, "response Error :: ${response.message}")
+                    Log.e(TAG, "upcomingMatches response Error :: ${response.message}")
                 }
 
             }
@@ -209,24 +186,58 @@ class HomeFragment : Fragment() {
 
     private fun getList(matchesResponse: MatchesResponse?) {
         matchesResponse?.let { matches ->
-            val league = matches.filters?.matchType?.find { a -> a == "League" }
 
             matches.typeMatches?.forEach { a ->
-                if (a.matchType == league) {
-                    a.seriesMatches?.forEach { b ->
-                        if (b.seriesAdWrapper?.seriesName == "Indian Premier League 2024") {
-                            b.seriesAdWrapper.matches?.forEach {
-                                list.add(it)
-                            }
-
-                            matchesViewModel.list.value = list
-
-                            Log.d(TAG, "list :: ${matchesViewModel.list.value?.size}")
-                        }
+                a.seriesMatches?.forEach { b ->
+                    b.seriesAdWrapper?.matches?.forEach {
+                        list.add(it)
                     }
                 }
             }
+
+            getFormattedList(list)
         }
+    }
+
+    private fun getFormattedList(list: java.util.ArrayList<Matche>?) {
+        println(list)
+
+        val currentDate = sdf.format(System.currentTimeMillis())
+        val firstDate: Date? = sdf.parse(currentDate)
+
+        list?.forEach {
+
+            val secondDate: Date? = sdf.parse(sdf.format(it.matchInfo?.startDate?.toLong()))
+
+            val cmp = firstDate?.compareTo(secondDate)
+            if (cmp != null) {
+                when {
+                    cmp > 0 -> {
+                        newList.add(it)
+                        date.add(sdf.format(it.matchInfo?.startDate?.toLong()))
+                        println("sitaramhanuman $date")
+                        println("sitaramhanuman $newList")
+                    }
+
+                    cmp < 0 -> {
+                        println("sitaramhanuman $newList")
+                    }
+
+                    else -> {
+                        newList.add(it)
+                        date.add(sdf.format(it.matchInfo?.startDate?.toLong()))
+                        println("sitaramhanuman $date")
+                        println("sitaramhanuman $newList")
+                    }
+                }
+            }
+
+        }
+
+        matchesViewModel.list.value = newList.distinct() as ArrayList<Matche>
+
+        Log.d(TAG, "sitaramhanuman :: ${matchesViewModel.list.value?.size}")
+
     }
 
     private fun loadBanners(matchesResponse: ArrayList<Matche>) {

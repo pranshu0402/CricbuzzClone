@@ -26,6 +26,7 @@ class HomeBannerAdapter(
 ) :
     RecyclerView.Adapter<HomeBannerAdapter.ViewHolder>() {
     private var screenWidth = 0
+    private val url = "https://static.cricbuzz.com/a/img/v1/25x18/i1"
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // get screen width
@@ -65,11 +66,19 @@ class HomeBannerAdapter(
                         Glide.with(ivTeam1Pic.context)
                             .load(it)
                             .into(ivTeam1Pic)
+                    } else {
+                        Glide.with(ivTeam1Pic.context)
+                            .load("$url/c${matche.matchInfo?.team1?.imageId.toString()}/.jpg")
+                            .into(ivTeam1Pic)
                     }
 
                     if (it.contains(matche.matchInfo?.team2?.imageId.toString())) {
                         Glide.with(ivTeam2Pic.context)
                             .load(it)
+                            .into(ivTeam2Pic)
+                    } else {
+                        Glide.with(ivTeam2Pic.context)
+                            .load("$url/c${matche.matchInfo?.team2?.imageId.toString()}/.jpg")
                             .into(ivTeam2Pic)
                     }
                 }
