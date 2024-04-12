@@ -21,6 +21,7 @@ import com.chaudharylabs.cricbuzzclone.ui.adapters.TopStoriesAdapter
 import com.chaudharylabs.cricbuzzclone.ui.utils.DotsIndicatorDecoration
 import com.chaudharylabs.cricbuzzclone.viewmodels.MatchesViewModel
 import com.chaudharylabs.cricbuzzclone.viewmodels.TopStoriesViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -30,7 +31,6 @@ import java.util.Locale
 class HomeFragment : Fragment() {
     private var list: ArrayList<Matche> = ArrayList()
     private var newList: ArrayList<Matche> = ArrayList()
-    private var date: ArrayList<String> = ArrayList()
     private var teamImageUrlList: ArrayList<String> = ArrayList()
     private lateinit var binding: FragmentHomeBinding
     private lateinit var matchesViewModel: MatchesViewModel
@@ -185,59 +185,55 @@ class HomeFragment : Fragment() {
         }
 
     private fun getList(matchesResponse: MatchesResponse?) {
-        matchesResponse?.let { matches ->
+        lifecycleScope.launch(Dispatchers.IO) {
+            matchesResponse?.let { matches ->
 
-            matches.typeMatches?.forEach { a ->
-                a.seriesMatches?.forEach { b ->
-                    b.seriesAdWrapper?.matches?.forEach {
-                        list.add(it)
+                matches.typeMatches?.forEach { a ->
+                    a.seriesMatches?.forEach { b ->
+                        b.seriesAdWrapper?.matches?.forEach {
+                            list.add(it)
+                        }
                     }
                 }
-            }
 
-            getFormattedList(list)
+                getFormattedList(list)
+            }
         }
     }
 
-    private fun getFormattedList(list: java.util.ArrayList<Matche>?) {
-        println(list)
+    private fun getFormattedList(list: ArrayList<Matche>?) {
 
-        val currentDate = sdf.format(System.currentTimeMillis())
-        val firstDate: Date? = sdf.parse(currentDate)
+        lifecycleScope.launch(Dispatchers.IO) {
+            // invoke some suspend functions or execute potentially long running code
 
-        list?.forEach {
+            val currentDate = sdf.format(System.currentTimeMillis())
+            val firstDate: Date? = sdf.parse(currentDate)
 
-            val secondDate: Date? = sdf.parse(sdf.format(it.matchInfo?.startDate?.toLong()))
+            list?.forEach {
 
-            val cmp = firstDate?.compareTo(secondDate)
-            if (cmp != null) {
-                when {
-                    cmp > 0 -> {
-                        newList.add(it)
-                        date.add(sdf.format(it.matchInfo?.startDate?.toLong()))
-                        println("sitaramhanuman $date")
-                        println("sitaramhanuman $newList")
-                    }
+                val secondDate: Date? = sdf.parse(sdf.format(it.matchInfo?.startDate?.toLong()))
 
-                    cmp < 0 -> {
-                        println("sitaramhanuman $newList")
-                    }
+                val cmp = firstDate?.compareTo(secondDate)
+                if (cmp != null) {
+                    when {
+                        cmp > 0 -> {
+                            newList.add(it)
+                        }
 
-                    else -> {
-                        newList.add(it)
-                        date.add(sdf.format(it.matchInfo?.startDate?.toLong()))
-                        println("sitaramhanuman $date")
-                        println("sitaramhanuman $newList")
+                        cmp < 0 -> {}
+
+                        else -> {
+                            newList.add(it)
+                        }
                     }
                 }
+
             }
 
+            matchesViewModel.list.postValue(newList.distinct()
+                .filter { it.matchInfo?.isFantasyEnabled == true } as ArrayList<Matche>)
+
         }
-
-        matchesViewModel.list.value = newList.distinct() as ArrayList<Matche>
-
-        Log.d(TAG, "sitaramhanuman :: ${matchesViewModel.list.value?.size}")
-
     }
 
     private fun loadBanners(matchesResponse: ArrayList<Matche>) {
@@ -272,6 +268,11 @@ class HomeFragment : Fragment() {
             }
             rvBannerList.visibility = View.VISIBLE
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
     }
 
     companion object {
