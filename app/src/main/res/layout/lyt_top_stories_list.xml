@@ -5,6 +5,10 @@
     <data>
 
         <variable
+            name="storyDetailsId"
+            type="String" />
+
+        <variable
             name="presenter"
             type="com.chaudharylabs.cricbuzzclone.ui.HomeFragment" />
     </data>
@@ -14,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginTop="2dp"
+        android:onClick="@{()-> presenter.storyDetails(storyDetailsId)}"
         app:customBackgroundColor="#404040">
 
         <com.google.android.material.imageview.ShapeableImageView

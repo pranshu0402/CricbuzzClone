@@ -2,10 +2,12 @@ package com.chaudharylabs.cricbuzzclone.data.api
 
 import com.chaudharylabs.cricbuzzclone.data.model.matches.MatchesResponse
 import com.chaudharylabs.cricbuzzclone.data.model.top_stoires.TopStoriesResponse
+import com.chaudharylabs.cricbuzzclone.data.model.top_stoires.story_details.StoryDetailsResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
+import retrofit2.http.Url
 
 interface APIInterface {
     @Headers("Content-Type: application/json")
@@ -35,4 +37,12 @@ interface APIInterface {
         @Header("X-RapidAPI-Key") apiKey: String?,
         @Header("X-RapidAPI-Host") apiHost: String?
     ): Response<TopStoriesResponse?>
+
+    @Headers("Content-Type: application/json")
+    @GET("")
+    suspend fun getStoryDetails(
+        @Header("X-RapidAPI-Key") apiKey: String?,
+        @Header("X-RapidAPI-Host") apiHost: String?,
+        @Url newsId: String?
+    ): Response<StoryDetailsResponse?>
 }

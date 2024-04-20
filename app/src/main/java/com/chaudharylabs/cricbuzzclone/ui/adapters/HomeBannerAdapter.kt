@@ -21,7 +21,6 @@ import java.util.Locale
 class HomeBannerAdapter(
     private var present: HomeFragment,
     private var list: List<Matche>,
-    private var teamImageUrlList: ArrayList<String>,
     private val activity: FragmentActivity
 ) :
     RecyclerView.Adapter<HomeBannerAdapter.ViewHolder>() {
@@ -61,27 +60,13 @@ class HomeBannerAdapter(
                 tvMatchNo.text = matche.matchInfo?.matchDesc
                 tvSeriesName.text = " - ${matche.matchInfo?.seriesName}"
 
-                teamImageUrlList.forEach {
-                    if (it.contains(matche.matchInfo?.team1?.imageId.toString())) {
-                        Glide.with(ivTeam1Pic.context)
-                            .load(it)
-                            .into(ivTeam1Pic)
-                    } else {
-                        Glide.with(ivTeam1Pic.context)
-                            .load("$url/c${matche.matchInfo?.team1?.imageId.toString()}/.jpg")
-                            .into(ivTeam1Pic)
-                    }
+                Glide.with(ivTeam1Pic.context)
+                    .load("$url/c${matche.matchInfo?.team1?.imageId.toString()}/.jpg")
+                    .into(ivTeam1Pic)
 
-                    if (it.contains(matche.matchInfo?.team2?.imageId.toString())) {
-                        Glide.with(ivTeam2Pic.context)
-                            .load(it)
-                            .into(ivTeam2Pic)
-                    } else {
-                        Glide.with(ivTeam2Pic.context)
-                            .load("$url/c${matche.matchInfo?.team2?.imageId.toString()}/.jpg")
-                            .into(ivTeam2Pic)
-                    }
-                }
+                Glide.with(ivTeam2Pic.context)
+                    .load("$url/c${matche.matchInfo?.team2?.imageId.toString()}/.jpg")
+                    .into(ivTeam2Pic)
 
                 if (matche.matchInfo?.state == "Preview") {
                     tvStartDate.visibility = View.VISIBLE

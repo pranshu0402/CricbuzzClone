@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.chaudharylabs.cricbuzzclone.R
 import com.chaudharylabs.cricbuzzclone.data.api.NetworkResult
@@ -18,6 +18,7 @@ import com.chaudharylabs.cricbuzzclone.data.model.top_stoires.TopStoriesResponse
 import com.chaudharylabs.cricbuzzclone.databinding.FragmentHomeBinding
 import com.chaudharylabs.cricbuzzclone.ui.adapters.HomeBannerAdapter
 import com.chaudharylabs.cricbuzzclone.ui.adapters.TopStoriesAdapter
+import com.chaudharylabs.cricbuzzclone.ui.utils.Constants.STORY_ID
 import com.chaudharylabs.cricbuzzclone.ui.utils.DotsIndicatorDecoration
 import com.chaudharylabs.cricbuzzclone.viewmodels.MatchesViewModel
 import com.chaudharylabs.cricbuzzclone.viewmodels.TopStoriesViewModel
@@ -28,10 +29,9 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment() {
     private var list: ArrayList<Matche> = ArrayList()
     private var newList: ArrayList<Matche> = ArrayList()
-    private var teamImageUrlList: ArrayList<String> = ArrayList()
     private lateinit var binding: FragmentHomeBinding
     private lateinit var matchesViewModel: MatchesViewModel
     private lateinit var topStoriesViewModel: TopStoriesViewModel
@@ -56,8 +56,6 @@ class HomeFragment : Fragment() {
 
         matchesViewModel = ViewModelProvider(this)[MatchesViewModel::class.java]
         topStoriesViewModel = ViewModelProvider(this)[TopStoriesViewModel::class.java]
-
-        getTeamImageUrlList()
 
         getMatches()
 
@@ -102,18 +100,18 @@ class HomeFragment : Fragment() {
             }
         }
 
-    private fun getTeamImageUrlList() {
-        teamImageUrlList.clear()
-        teamImageUrlList.add("https://static.cricbuzz.com/a/img/v1/24x18/i1/c225641/chennai-super-kings.jpg")
-        teamImageUrlList.add("https://static.cricbuzz.com/a/img/v1/24x18/i1/c225647/rajasthan-royals.jpg")
-        teamImageUrlList.add("https://static.cricbuzz.com/a/img/v1/24x18/i1/c225646/kolkata-knight-riders.jpg")
-        teamImageUrlList.add("https://static.cricbuzz.com/a/img/v1/24x18/i1/c225648/punjab-kings.jpg")
-        teamImageUrlList.add("https://static.cricbuzz.com/a/img/v1/24x18/i1/c225643/royal-challengers-bengaluru.jpg")
-        teamImageUrlList.add("https://static.cricbuzz.com/a/img/v1/24x18/i1/c235085/gujarat-titans.jpg")
-        teamImageUrlList.add("https://static.cricbuzz.com/a/img/v1/24x18/i1/c225644/delhi-capitals.jpg")
-        teamImageUrlList.add("https://static.cricbuzz.com/a/img/v1/24x18/i1/c389444/lucknow-super-giants.jpg")
-        teamImageUrlList.add("https://static.cricbuzz.com/a/img/v1/24x18/i1/c225645/mumbai-indians.jpg")
-        teamImageUrlList.add("https://static.cricbuzz.com/a/img/v1/24x18/i1/c225649/sunrisers-hyderabad.jpg")
+    fun storyDetails(storyId: String?) {
+        Log.d(TAG, "storyId:- $storyId")
+
+        val bundle = Bundle()
+        bundle.putString(STORY_ID, storyId)
+
+        if (findNavController().currentDestination?.label == getString(R.string.fragment_home) && isAdded) {
+            findNavController().safeNavigateWithArgs(
+                HomeFragmentDirections.actionHomeFragmentToStoryDetailsFragment(),
+                bundle
+            )
+        }
     }
 
     private fun getMatches() {
@@ -245,7 +243,6 @@ class HomeFragment : Fragment() {
                         HomeBannerAdapter(
                             this@HomeFragment,
                             matches,
-                            teamImageUrlList,
                             it
                         )
                     }

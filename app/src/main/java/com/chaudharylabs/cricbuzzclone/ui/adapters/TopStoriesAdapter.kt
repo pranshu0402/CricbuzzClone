@@ -1,7 +1,6 @@
 package com.chaudharylabs.cricbuzzclone.ui.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -25,13 +24,7 @@ class TopStoriesAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-
-        if (list[position].story == null) {
-            list.drop(position)
-        } else {
-            viewHolder.bind(list[position].story)
-            viewHolder.itemView.visibility = View.VISIBLE
-        }
+        viewHolder.bind(list[position].story)
     }
 
     override fun getItemCount(): Int {
@@ -44,6 +37,7 @@ class TopStoriesAdapter(
             binding.apply {
                 this.presenter = present
                 tvStoryTitle.text = story?.hline
+                storyDetailsId = story?.id.toString()
 
                 val imageUrl =
                     "https://www.cricbuzz.com/a/img/v1/595x396/i1/c${story?.imageId}/.jpg"

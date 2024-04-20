@@ -3,6 +3,7 @@ package com.chaudharylabs.cricbuzzclone.data.api.repositories
 import android.app.Application
 import com.chaudharylabs.cricbuzzclone.data.api.NetworkResult
 import com.chaudharylabs.cricbuzzclone.data.model.top_stoires.TopStoriesResponse
+import com.chaudharylabs.cricbuzzclone.data.model.top_stoires.story_details.StoryDetailsResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -19,6 +20,25 @@ class TopStoriesRepository(application: Application) : BaseRepository(applicatio
             try {
                 emit(NetworkResult.Loading())
                 val response = retrofitInterface.getTopStories(apiKey, apiHost)
+                if (response.isSuccessful && response.body() != null) {
+                    emit(NetworkResult.Success(response.body()))
+                } else {
+                    emit(NetworkResult.Error(response.message()))
+                }
+            } catch (e: Exception) {
+                emit(NetworkResult.Error(e.message.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getStoryDetails(
+        url: String
+    ): Flow<NetworkResult<StoryDetailsResponse>> {
+        return flow {
+            try {
+                emit(NetworkResult.Loading())
+                val response =
+                    retrofitInterface.getStoryDetails(apiKey, apiHost, "news/v1/detail/$url")
                 if (response.isSuccessful && response.body() != null) {
                     emit(NetworkResult.Success(response.body()))
                 } else {

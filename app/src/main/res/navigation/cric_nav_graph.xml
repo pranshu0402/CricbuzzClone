@@ -8,8 +8,12 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.chaudharylabs.cricbuzzclone.ui.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        android:label="@string/fragment_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_storyDetailsFragment"
+            app:destination="@id/storyDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/matchesFragment"
         android:name="com.chaudharylabs.cricbuzzclone.ui.MatchesFragment"
@@ -20,4 +24,8 @@
         android:name="com.chaudharylabs.cricbuzzclone.ui.NewsFragment"
         android:label="fragment_news"
         tools:layout="@layout/fragment_news" />
+    <fragment
+        android:id="@+id/storyDetailsFragment"
+        android:name="com.chaudharylabs.cricbuzzclone.ui.StoryDetailsFragment"
+        android:label="@string/story_details_label" />
 </navigation>
