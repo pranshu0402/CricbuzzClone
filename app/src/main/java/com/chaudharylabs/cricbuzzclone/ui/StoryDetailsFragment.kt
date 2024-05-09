@@ -81,13 +81,13 @@ class StoryDetailsFragment : BaseFragment() {
                             tvEditor.text = it.authors?.get(0)?.name
                             tvTimestamp.text = getDateFromMilliseconds(it.lastUpdatedTime?.toLong())
 
-                            it.content?.forEach {
-                                tvData.text = it.toString()
-                            }
-
-                            for (i in 0 until it.content?.size!!) {
-                                Log.i("Results", it.content[i].toString())
-                                tvData.text = it.content[i].content?.contentValue.toString()
+                            it.content?.let {
+                                tvData1.text = it[0].content?.contentValue
+                                tvData2.text = it[1].content?.contentValue
+                                tvData3.text = it[2].content?.contentValue
+                                tvData4.text = it[3].content?.contentValue
+                                tvData5.text = it[4].content?.contentValue
+                                tvData6.text = it[5].content?.contentValue
                             }
                         }
                     }

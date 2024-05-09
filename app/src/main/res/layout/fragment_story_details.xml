@@ -19,7 +19,7 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_story_pic"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="250dp"
             android:scaleType="centerCrop"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,7 +34,7 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="200dp">
+            android:layout_marginTop="250dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -60,7 +60,7 @@
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/averta_regular"
                     android:textColor="@color/primary_light_blue"
-                    android:textSize="11sp"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_story_title" />
 
@@ -71,12 +71,12 @@
                     android:layout_marginTop="12dp"
                     android:fontFamily="@font/averta_regular"
                     android:textColor="@color/primary_soft"
-                    android:textSize="11sp"
+                    android:textSize="12sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_editor" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_data"
+                    android:id="@+id/tv_data1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
@@ -85,6 +85,116 @@
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_timestamp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_data2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:fontFamily="@font/averta_regular"
+                    android:textColor="@color/primary_soft"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_data1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_data3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:fontFamily="@font/averta_regular"
+                    android:textColor="@color/primary_soft"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_data2" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_data4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:fontFamily="@font/averta_regular"
+                    android:textColor="@color/primary_soft"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_data3" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_data5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:fontFamily="@font/averta_regular"
+                    android:textColor="@color/primary_soft"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_data4" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_data6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:fontFamily="@font/averta_regular"
+                    android:textColor="@color/primary_soft"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_data5" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_data7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:fontFamily="@font/averta_regular"
+                    android:textColor="@color/primary_soft"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_data6" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_data8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:fontFamily="@font/averta_regular"
+                    android:textColor="@color/primary_soft"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_data7" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_data9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:fontFamily="@font/averta_regular"
+                    android:textColor="@color/primary_soft"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_data8" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_data10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:fontFamily="@font/averta_regular"
+                    android:textColor="@color/primary_soft"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_data9" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_data11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:fontFamily="@font/averta_regular"
+                    android:textColor="@color/primary_soft"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_data10" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
