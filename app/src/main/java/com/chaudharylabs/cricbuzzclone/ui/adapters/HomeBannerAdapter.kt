@@ -137,11 +137,14 @@ class HomeBannerAdapter(
                         val team2Overs = matche.matchScore?.team2Score?.inngs1?.overs.toString()
                             .replace("19.6", "20")
 
-                        tvTeam1Score.text =
+                        val team1Score =
                             "${matche.matchScore?.team1Score?.inngs1?.runs}-${matche.matchScore?.team1Score?.inngs1?.wickets} ($team1Overs)"
-
-                        tvTeam2Score.text =
+                        val team2Score =
                             "${matche.matchScore?.team2Score?.inngs1?.runs}-${matche.matchScore?.team2Score?.inngs1?.wickets} ($team2Overs)"
+
+                        tvTeam1Score.text = team1Score.replace("null-null (null)", "")
+
+                        tvTeam2Score.text = team2Score.replace("null-null (null)", "")
 
 
                         if (matche.matchInfo.stateTitle?.contains(team1) == true) {

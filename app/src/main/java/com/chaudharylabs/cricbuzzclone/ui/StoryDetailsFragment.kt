@@ -81,6 +81,8 @@ class StoryDetailsFragment : BaseFragment() {
                             tvEditor.text = it.authors?.get(0)?.name
                             tvTimestamp.text = getDateFromMilliseconds(it.lastUpdatedTime?.toLong())
 
+                            println(it.content?.size)
+
                             it.content?.let {
                                 tvData1.text = it[0].content?.contentValue
                                 tvData2.text = it[1].content?.contentValue

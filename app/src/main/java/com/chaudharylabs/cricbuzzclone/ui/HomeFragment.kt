@@ -26,12 +26,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
 class HomeFragment : BaseFragment() {
     private var list: ArrayList<Matche> = ArrayList()
-    private var newList: ArrayList<Matche> = ArrayList()
     private lateinit var binding: FragmentHomeBinding
     private lateinit var matchesViewModel: MatchesViewModel
     private lateinit var topStoriesViewModel: TopStoriesViewModel
@@ -186,51 +186,28 @@ class HomeFragment : BaseFragment() {
         lifecycleScope.launch(Dispatchers.Default) {
             matchesResponse?.let { matches ->
 
+                val cal: Calendar = Calendar.getInstance()
+                cal.add(Calendar.DATE, -5)
+                val firstDate: Date? =
+                    sdf.parse(sdf.format(cal.time))
+
                 matches.typeMatches?.forEach { a ->
                     a.seriesMatches?.forEach { b ->
                         b.seriesAdWrapper?.matches?.forEach {
-                            list.add(it)
+
+                            val secondDate: Date? =
+                                sdf.parse(sdf.format(it.matchInfo?.startDate?.toLong()))
+
+                            if (firstDate?.before(secondDate) == true) {
+                                list.add(it)
+                            }
                         }
                     }
                 }
 
-                getFormattedList(list)
+                matchesViewModel.list.postValue(list.distinct()
+                    .filter { it.matchInfo?.isFantasyEnabled == true } as ArrayList<Matche>)
             }
-        }
-    }
-
-    private fun getFormattedList(list: ArrayList<Matche>?) {
-
-        lifecycleScope.launch(Dispatchers.Default) {
-            // invoke some suspend functions or execute potentially long running code
-
-            val currentDate = sdf.format(System.currentTimeMillis())
-            val firstDate: Date? = sdf.parse(currentDate)
-
-            list?.forEach {
-
-                val secondDate: Date? = sdf.parse(sdf.format(it.matchInfo?.startDate?.toLong()))
-
-                val cmp = firstDate?.compareTo(secondDate)
-                if (cmp != null) {
-                    when {
-                        cmp > 0 -> {
-                            newList.add(it)
-                        }
-
-                        cmp < 0 -> {}
-
-                        else -> {
-                            newList.add(it)
-                        }
-                    }
-                }
-
-            }
-
-            matchesViewModel.list.postValue(newList.distinct()
-                .filter { it.matchInfo?.isFantasyEnabled == true } as ArrayList<Matche>)
-
         }
     }
 

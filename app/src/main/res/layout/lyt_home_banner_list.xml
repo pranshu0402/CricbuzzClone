@@ -12,9 +12,9 @@
     <com.chaudharylabs.cricbuzzclone.ui.utils.CricConstraintLayout
         android:id="@+id/lyt_list"
         android:layout_width="match_parent"
-        android:layout_height="135dp"
+        android:layout_height="140dp"
         app:customBackgroundColor="#404040"
-        app:customBackgroundRadius="12dp"
+        app:customBackgroundRadius="8dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp">
 
@@ -131,10 +131,11 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_status"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="14dp"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
