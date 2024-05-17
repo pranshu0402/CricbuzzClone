@@ -69,7 +69,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun getTopStories() {
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             topStoriesViewModel.getTopStories().collect(topStoriesCallback)
         }
     }
@@ -115,7 +115,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun getMatches() {
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             matchesViewModel.getLiveMatches().collect(liveMatchesCallback)
             matchesViewModel.getUpcomingMatches().collect(upcomingMatchesCallback)
             matchesViewModel.getRecentMatches().collect(recentMatchesCallback)
@@ -183,7 +183,7 @@ class HomeFragment : BaseFragment() {
         }
 
     private fun getList(matchesResponse: MatchesResponse?) {
-        lifecycleScope.launch(Dispatchers.IO) {
+        lifecycleScope.launch(Dispatchers.Default) {
             matchesResponse?.let { matches ->
 
                 matches.typeMatches?.forEach { a ->
@@ -201,7 +201,7 @@ class HomeFragment : BaseFragment() {
 
     private fun getFormattedList(list: ArrayList<Matche>?) {
 
-        lifecycleScope.launch(Dispatchers.IO) {
+        lifecycleScope.launch(Dispatchers.Default) {
             // invoke some suspend functions or execute potentially long running code
 
             val currentDate = sdf.format(System.currentTimeMillis())
