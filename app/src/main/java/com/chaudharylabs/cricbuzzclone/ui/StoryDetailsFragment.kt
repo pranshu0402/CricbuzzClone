@@ -1,10 +1,15 @@
 package com.chaudharylabs.cricbuzzclone.ui
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -36,7 +41,7 @@ class StoryDetailsFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_story_details, container, false)
@@ -83,13 +88,53 @@ class StoryDetailsFragment : BaseFragment() {
 
                             println(it.content?.size)
 
-                            it.content?.let {
-                                tvData1.text = it[0].content?.contentValue
-                                tvData2.text = it[1].content?.contentValue
-                                tvData3.text = it[2].content?.contentValue
-                                tvData4.text = it[3].content?.contentValue
-                                tvData5.text = it[4].content?.contentValue
-                                tvData6.text = it[5].content?.contentValue
+                            val l = it.content?.filter { a ->
+                                a.ad == null && a.content != null && a.content.contentType == "text"
+                            }
+
+                            l?.let { list ->
+
+                                lytData.removeAllViews()
+                                lytData.orientation = LinearLayoutCompat.VERTICAL
+
+                                for (element in list) {
+                                    val tv = TextView(lytData.context)
+
+                                    val params: LinearLayout.LayoutParams =
+                                        LinearLayout.LayoutParams(
+                                            LinearLayoutCompat.LayoutParams.WRAP_CONTENT,
+                                            LinearLayoutCompat.LayoutParams.WRAP_CONTENT
+                                        )
+                                    params.setMargins(10, 10, 10, 10)
+                                    tv.layoutParams = params
+
+                                    tv.textSize = 15F
+                                    tv.letterSpacing = 0.02f
+                                    tv.setTextColor(ColorStateList.valueOf(resources.getColor(R.color.white)))
+
+                                    tv.text = "${element.content?.contentValue}"
+                                    tv.typeface = ResourcesCompat.getFont(
+                                        lytData.context,
+                                        R.font.averta_regular
+                                    )
+
+                                    if (!it.format.isNullOrEmpty()) {
+                                        it.format.forEach { format ->
+                                            format.value?.forEach { value ->
+                                                if (value?.id == "${element.content?.contentValue}") {
+                                                    tv.text = "${value.value}"
+                                                    tv.typeface = ResourcesCompat.getFont(
+                                                        lytData.context,
+                                                        R.font.averta_bold
+                                                    )
+                                                }
+                                            }
+                                        }
+                                    }
+
+
+                                    lytData.addView(tv)
+                                }
                             }
                         }
                     }
