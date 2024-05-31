@@ -1,5 +1,9 @@
 package com.chaudharylabs.cricbuzzclone.data.model.matches
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class MatchInfo(
     val currBatTeamId: Int?,
     val endDate: String?,
@@ -19,4 +23,4 @@ data class MatchInfo(
     val team1: Team1?,
     val team2: Team2?,
     val venueInfo: VenueInfo?
-)
+):Parcelable

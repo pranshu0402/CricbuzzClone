@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_homeFragment_to_storyDetailsFragment"
             app:destination="@id/storyDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_matchDetailsFragment"
+            app:destination="@id/matchDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/matchesFragment"
@@ -28,4 +31,8 @@
         android:id="@+id/storyDetailsFragment"
         android:name="com.chaudharylabs.cricbuzzclone.ui.StoryDetailsFragment"
         android:label="@string/story_details_label" />
+    <fragment
+        android:id="@+id/matchDetailsFragment"
+        android:name="com.chaudharylabs.cricbuzzclone.ui.MatchDetailsFragment"
+        android:label="MatchDetailsFragment" />
 </navigation>

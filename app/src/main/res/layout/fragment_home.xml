@@ -21,13 +21,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#2C2C2C"
+        android:background="@color/dark_light"
         tools:context=".ui.HomeFragment">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:background="#212121"
+            android:background="@color/dark_black"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatImageView

@@ -5,6 +5,10 @@
     <data>
 
         <variable
+            name="matche"
+            type="com.chaudharylabs.cricbuzzclone.data.model.matches.Matche" />
+
+        <variable
             name="presenter"
             type="com.chaudharylabs.cricbuzzclone.ui.HomeFragment" />
     </data>
@@ -13,6 +17,7 @@
         android:id="@+id/lyt_list"
         android:layout_width="match_parent"
         android:layout_height="140dp"
+        android:onClick="@{()-> presenter.matchDetails(matche)}"
         app:customBackgroundColor="#404040"
         app:customBackgroundRadius="8dp"
         android:layout_marginStart="10dp"

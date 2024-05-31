@@ -18,6 +18,7 @@ import com.chaudharylabs.cricbuzzclone.data.model.top_stoires.TopStoriesResponse
 import com.chaudharylabs.cricbuzzclone.databinding.FragmentHomeBinding
 import com.chaudharylabs.cricbuzzclone.ui.adapters.HomeBannerAdapter
 import com.chaudharylabs.cricbuzzclone.ui.adapters.TopStoriesAdapter
+import com.chaudharylabs.cricbuzzclone.ui.utils.Constants.MATCH
 import com.chaudharylabs.cricbuzzclone.ui.utils.Constants.STORY_ID
 import com.chaudharylabs.cricbuzzclone.ui.utils.DotsIndicatorDecoration
 import com.chaudharylabs.cricbuzzclone.viewmodels.MatchesViewModel
@@ -59,7 +60,7 @@ class HomeFragment : BaseFragment() {
 
         getMatches()
 
-        getTopStories()
+       // getTopStories()
 
         matchesViewModel.list.observe(viewLifecycleOwner) {
             if (!it.isNullOrEmpty()) {
@@ -116,8 +117,8 @@ class HomeFragment : BaseFragment() {
 
     private fun getMatches() {
         lifecycleScope.launch(Dispatchers.IO) {
-            matchesViewModel.getLiveMatches().collect(liveMatchesCallback)
-            matchesViewModel.getUpcomingMatches().collect(upcomingMatchesCallback)
+            //          matchesViewModel.getLiveMatches().collect(liveMatchesCallback)
+   //         matchesViewModel.getUpcomingMatches().collect(upcomingMatchesCallback)
             matchesViewModel.getRecentMatches().collect(recentMatchesCallback)
         }
     }
@@ -211,20 +212,9 @@ class HomeFragment : BaseFragment() {
         }
     }
 
-    private fun loadBanners(matchesResponse: ArrayList<Matche>) {
+    private fun loadBanners(matchList: ArrayList<Matche>) {
         binding.apply {
-
-            matchesResponse.let { matches ->
-                bannerAdapter =
-                    activity?.let {
-                        HomeBannerAdapter(
-                            this@HomeFragment,
-                            matches,
-                            it
-                        )
-                    }
-            }
-
+            rvBannerList.adapter = HomeBannerAdapter(this@HomeFragment, matchList, activity)
             rvBannerList.setHasFixedSize(true)
             rvBannerList.onFlingListener = null
             val snapHelper = PagerSnapHelper()
@@ -241,6 +231,18 @@ class HomeFragment : BaseFragment() {
                 }
             }
             rvBannerList.visibility = View.VISIBLE
+        }
+    }
+
+    fun matchDetails(match: Matche) {
+        val bundle = Bundle()
+        bundle.putParcelable(MATCH, match)
+
+        if (findNavController().currentDestination?.label == getString(R.string.fragment_home) && isAdded) {
+            findNavController().safeNavigateWithArgs(
+                HomeFragmentDirections.actionHomeFragmentToMatchDetailsFragment(),
+                bundle
+            )
         }
     }
 

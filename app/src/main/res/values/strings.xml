@@ -5,4 +5,10 @@
     <string name="top_stories">TOP STORIES</string>
     <string name="fragment_home">HomeFragment</string>
     <string name="story_details_label">StoryDetailsFragment</string>
+    <string name="info_fragment">INFO</string>
+    <string name="live_fragment">LIVE</string>
+    <string name="scorecard_fragment">SCORECARD</string>
+    <string name="squads_fragment">SQUADS</string>
+    <string name="overs_fragment">OVERS</string>
+    <string name="highlights_fragment">HIGHLIGHTS</string>
 </resources>

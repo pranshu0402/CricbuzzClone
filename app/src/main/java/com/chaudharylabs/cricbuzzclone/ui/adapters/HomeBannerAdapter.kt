@@ -21,7 +21,7 @@ import java.util.Locale
 class HomeBannerAdapter(
     private var present: HomeFragment,
     private var list: List<Matche>,
-    private val activity: FragmentActivity
+    private val activity: FragmentActivity?
 ) :
     RecyclerView.Adapter<HomeBannerAdapter.ViewHolder>() {
     private var screenWidth = 0
@@ -30,7 +30,7 @@ class HomeBannerAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // get screen width
         val displayMetrics = DisplayMetrics()
-        activity.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
+        activity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
         screenWidth = displayMetrics.widthPixels
 
         val inflater = LayoutInflater.from(parent.context)
@@ -45,7 +45,6 @@ class HomeBannerAdapter(
         val params: ViewGroup.LayoutParams = viewHolder.binding.lytList.layoutParams
         params.width = itemWidth.toInt()
         viewHolder.binding.lytList.layoutParams = params
-
     }
 
     override fun getItemCount(): Int {
@@ -57,6 +56,7 @@ class HomeBannerAdapter(
         fun bind(matche: Matche) {
             binding.apply {
                 this.presenter = present
+                this.matche = matche
                 tvMatchNo.text = matche.matchInfo?.matchDesc
                 tvSeriesName.text = " - ${matche.matchInfo?.seriesName}"
 

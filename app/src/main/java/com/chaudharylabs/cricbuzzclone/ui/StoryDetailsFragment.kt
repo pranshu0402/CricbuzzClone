@@ -147,6 +147,10 @@ class StoryDetailsFragment : BaseFragment() {
             }
         }
 
+    fun back(){
+        requireActivity().onBackPressed()
+    }
+
     companion object {
         private const val TAG = "StoryDetailsFragment"
     }
