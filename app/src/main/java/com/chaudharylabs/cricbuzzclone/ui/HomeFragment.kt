@@ -60,7 +60,7 @@ class HomeFragment : BaseFragment() {
 
         getMatches()
 
-       // getTopStories()
+        getTopStories()
 
         matchesViewModel.list.observe(viewLifecycleOwner) {
             if (!it.isNullOrEmpty()) {
@@ -117,8 +117,8 @@ class HomeFragment : BaseFragment() {
 
     private fun getMatches() {
         lifecycleScope.launch(Dispatchers.IO) {
-            //          matchesViewModel.getLiveMatches().collect(liveMatchesCallback)
-   //         matchesViewModel.getUpcomingMatches().collect(upcomingMatchesCallback)
+            matchesViewModel.getLiveMatches().collect(liveMatchesCallback)
+            matchesViewModel.getUpcomingMatches().collect(upcomingMatchesCallback)
             matchesViewModel.getRecentMatches().collect(recentMatchesCallback)
         }
     }

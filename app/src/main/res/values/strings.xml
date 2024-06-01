@@ -11,4 +11,24 @@
     <string name="squads_fragment">SQUADS</string>
     <string name="overs_fragment">OVERS</string>
     <string name="highlights_fragment">HIGHLIGHTS</string>
+    <string name="squads">SQUADS</string>
+    <string name="match">Match</string>
+    <string name="series">Series</string>
+    <string name="referee">referee</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="toss">Toss</string>
+    <string name="venue">Venue</string>
+    <string name="umpires">Umpires</string>
+    <string name="iiirdUmpire">3rd Umpire</string>
+    <string name="venueguide">VENUE GUIDE</string>
+    <string name="stadium">Stadium</string>
+    <string name="city">City</string>
+    <string name="capacity">Capacity</string>
+    <string name="ends">Ends</string>
+    <string name="host">Host to</string>
+    <string name="tvguide">TV GUIDE - IN</string>
+    <string name="streaming">Streaming</string>
+    <string name="tv">TV</string>
+    <string name="info">INFO</string>
 </resources>

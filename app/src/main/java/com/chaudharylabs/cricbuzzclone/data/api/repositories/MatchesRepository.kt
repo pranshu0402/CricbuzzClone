@@ -2,6 +2,7 @@ package com.chaudharylabs.cricbuzzclone.data.api.repositories
 
 import android.app.Application
 import com.chaudharylabs.cricbuzzclone.data.api.NetworkResult
+import com.chaudharylabs.cricbuzzclone.data.model.match_details.MatchDetailsResponse
 import com.chaudharylabs.cricbuzzclone.data.model.matches.MatchesResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -53,6 +54,25 @@ class MatchesRepository(application: Application) : BaseRepository(application) 
             try {
                 emit(NetworkResult.Loading())
                 val response = retrofitInterface.getUpcomingMatches(apiKey, apiHost)
+                if (response.isSuccessful && response.body() != null) {
+                    emit(NetworkResult.Success(response.body()))
+                } else {
+                    emit(NetworkResult.Error(response.message()))
+                }
+            } catch (e: Exception) {
+                emit(NetworkResult.Error(e.message.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getMatchInfo(
+        matchId: String
+    ): Flow<NetworkResult<MatchDetailsResponse>> {
+        return flow {
+            try {
+                emit(NetworkResult.Loading())
+                val response =
+                    retrofitInterface.getMatchInfo(apiKey, apiHost, "mcenter/v1/$matchId")
                 if (response.isSuccessful && response.body() != null) {
                     emit(NetworkResult.Success(response.body()))
                 } else {
