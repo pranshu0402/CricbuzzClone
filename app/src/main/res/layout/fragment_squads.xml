@@ -1,20 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/dark_light"
-    android:padding="20dp"
-    tools:context=".ui.SquadsFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Squads"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <variable
+            name="team1"
+            type="com.chaudharylabs.cricbuzzclone.ui.adapters.Team1Adapter" />
+
+        <variable
+            name="team2"
+            type="com.chaudharylabs.cricbuzzclone.ui.adapters.Team2Adapter" />
+
+        <variable
+            name="bench1"
+            type="com.chaudharylabs.cricbuzzclone.ui.adapters.Bench1Adapter" />
+
+        <variable
+            name="bench2"
+            type="com.chaudharylabs.cricbuzzclone.ui.adapters.Bench2Adapter" />
+
+        <variable
+            name="staff1"
+            type="com.chaudharylabs.cricbuzzclone.ui.adapters.Staff1Adapter" />
+
+        <variable
+            name="staff2"
+            type="com.chaudharylabs.cricbuzzclone.ui.adapters.Staff2Adapter" />
+
+        <variable
+            name="presenter"
+            type="com.chaudharylabs.cricbuzzclone.ui.SquadsFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dark_light"
+        tools:context=".ui.SquadsFragment">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_team1"
+            android:layout_width="24dp"
+            android:layout_height="18dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_team1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/iv_team1"
+            app:layout_constraintStart_toEndOf="@id/iv_team1"
+            app:layout_constraintTop_toTopOf="@id/iv_team1" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_team2"
+            android:layout_width="24dp"
+            android:layout_height="18dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_team2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/iv_team2"
+            app:layout_constraintEnd_toStartOf="@id/iv_team2"
+            app:layout_constraintTop_toTopOf="@id/iv_team2" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_team2">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_playingXI"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/black"
+                    android:gravity="center"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:text="@string/playing_xi"
+                    android:textColor="@color/white"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/lyt_team"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/tv_playingXI">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_team1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="1dp"
+                        android:layout_weight="1"
+                        app:adapter="@{team1}"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_team2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="1dp"
+                        android:layout_weight="1"
+                        app:adapter="@{team2}"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_bench"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/black"
+                    android:gravity="center"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:text="@string/bench"
+                    android:textColor="@color/white"
+                    app:layout_constraintTop_toBottomOf="@id/lyt_team" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/lyt_bench"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/tv_bench">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_bench1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="1dp"
+                        android:layout_weight="1"
+                        app:adapter="@{bench1}"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_bench2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="1dp"
+                        android:layout_weight="1"
+                        app:adapter="@{bench2}"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_staff"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/black"
+                    android:gravity="center"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:text="@string/staff"
+                    android:textColor="@color/white"
+                    app:layout_constraintTop_toBottomOf="@id/lyt_bench" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/lyt_staff"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/tv_staff">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_staff1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="1dp"
+                        android:layout_weight="1"
+                        app:adapter="@{staff1}"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_staff2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="1dp"
+                        android:layout_weight="1"
+                        app:adapter="@{staff2}"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    app:layout_constraintTop_toBottomOf="@id/lyt_staff" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

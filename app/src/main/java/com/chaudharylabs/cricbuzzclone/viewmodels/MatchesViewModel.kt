@@ -5,7 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.chaudharylabs.cricbuzzclone.data.api.NetworkResult
 import com.chaudharylabs.cricbuzzclone.data.api.repositories.MatchesRepository
-import com.chaudharylabs.cricbuzzclone.data.model.match_details.MatchDetailsResponse
+import com.chaudharylabs.cricbuzzclone.data.model.match_details.info.MatchDetailsResponse
+import com.chaudharylabs.cricbuzzclone.data.model.match_details.squads.SquadsResponse
 import com.chaudharylabs.cricbuzzclone.data.model.matches.Matche
 import com.chaudharylabs.cricbuzzclone.data.model.matches.MatchesResponse
 import kotlinx.coroutines.flow.Flow
@@ -33,5 +34,12 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
 
     suspend fun getMatchInfo(matchId: String): Flow<NetworkResult<MatchDetailsResponse>> {
         return matchesRepository.getMatchInfo(matchId)
+    }
+
+    suspend fun getSquads(
+        matchId: String,
+        teamId: String
+    ): Flow<NetworkResult<SquadsResponse>> {
+        return matchesRepository.getSquads(matchId, teamId)
     }
 }

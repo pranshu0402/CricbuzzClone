@@ -9,7 +9,7 @@
 
         <variable
             name="match"
-            type="com.chaudharylabs.cricbuzzclone.data.model.match_details.MatchDetailsResponse" />
+            type="com.chaudharylabs.cricbuzzclone.data.model.match_details.info.MatchDetailsResponse" />
 
         <variable
             name="presenter"

@@ -31,4 +31,7 @@
     <string name="streaming">Streaming</string>
     <string name="tv">TV</string>
     <string name="info">INFO</string>
+    <string name="bench">Bench</string>
+    <string name="playing_xi">Playing XI</string>
+    <string name="staff">Staff</string>
 </resources>

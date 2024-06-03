@@ -10,7 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.chaudharylabs.cricbuzzclone.R
 import com.chaudharylabs.cricbuzzclone.data.api.NetworkResult
-import com.chaudharylabs.cricbuzzclone.data.model.match_details.MatchDetailsResponse
+import com.chaudharylabs.cricbuzzclone.data.model.match_details.info.MatchDetailsResponse
 import com.chaudharylabs.cricbuzzclone.data.model.matches.Matche
 import com.chaudharylabs.cricbuzzclone.databinding.FragmentInfoBinding
 import com.chaudharylabs.cricbuzzclone.viewmodels.MatchesViewModel

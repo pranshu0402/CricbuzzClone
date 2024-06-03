@@ -60,7 +60,7 @@ class HomeFragment : BaseFragment() {
 
         getMatches()
 
-        getTopStories()
+       // getTopStories()
 
         matchesViewModel.list.observe(viewLifecycleOwner) {
             if (!it.isNullOrEmpty()) {
@@ -118,8 +118,8 @@ class HomeFragment : BaseFragment() {
     private fun getMatches() {
         lifecycleScope.launch(Dispatchers.IO) {
             matchesViewModel.getLiveMatches().collect(liveMatchesCallback)
-            matchesViewModel.getUpcomingMatches().collect(upcomingMatchesCallback)
-            matchesViewModel.getRecentMatches().collect(recentMatchesCallback)
+//            matchesViewModel.getUpcomingMatches().collect(upcomingMatchesCallback)
+            //    matchesViewModel.getRecentMatches().collect(recentMatchesCallback)
         }
     }
 
@@ -191,6 +191,8 @@ class HomeFragment : BaseFragment() {
                 cal.add(Calendar.DATE, -5)
                 val firstDate: Date? =
                     sdf.parse(sdf.format(cal.time))
+
+                list.clear()
 
                 matches.typeMatches?.forEach { a ->
                     a.seriesMatches?.forEach { b ->

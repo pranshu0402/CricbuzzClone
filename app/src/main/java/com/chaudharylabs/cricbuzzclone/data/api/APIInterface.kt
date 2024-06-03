@@ -1,6 +1,7 @@
 package com.chaudharylabs.cricbuzzclone.data.api
 
-import com.chaudharylabs.cricbuzzclone.data.model.match_details.MatchDetailsResponse
+import com.chaudharylabs.cricbuzzclone.data.model.match_details.info.MatchDetailsResponse
+import com.chaudharylabs.cricbuzzclone.data.model.match_details.squads.SquadsResponse
 import com.chaudharylabs.cricbuzzclone.data.model.matches.MatchesResponse
 import com.chaudharylabs.cricbuzzclone.data.model.top_stoires.TopStoriesResponse
 import com.chaudharylabs.cricbuzzclone.data.model.top_stoires.story_details.StoryDetailsResponse
@@ -54,4 +55,12 @@ interface APIInterface {
         @Header("X-RapidAPI-Host") apiHost: String?,
         @Url matchId: String?
     ): Response<MatchDetailsResponse?>
+
+    @Headers("Content-Type: application/json")
+    @GET("")
+    suspend fun getSquads(
+        @Header("X-RapidAPI-Key") apiKey: String?,
+        @Header("X-RapidAPI-Host") apiHost: String?,
+        @Url squads: String?
+    ): Response<SquadsResponse?>
 }

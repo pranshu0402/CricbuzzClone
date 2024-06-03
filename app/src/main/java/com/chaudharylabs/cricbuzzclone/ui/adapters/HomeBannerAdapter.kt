@@ -13,6 +13,7 @@ import com.chaudharylabs.cricbuzzclone.R
 import com.chaudharylabs.cricbuzzclone.data.model.matches.Matche
 import com.chaudharylabs.cricbuzzclone.databinding.LytHomeBannerListBinding
 import com.chaudharylabs.cricbuzzclone.ui.HomeFragment
+import com.chaudharylabs.cricbuzzclone.ui.utils.Constants.URL
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -25,7 +26,6 @@ class HomeBannerAdapter(
 ) :
     RecyclerView.Adapter<HomeBannerAdapter.ViewHolder>() {
     private var screenWidth = 0
-    private val url = "https://static.cricbuzz.com/a/img/v1/25x18/i1"
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // get screen width
@@ -61,11 +61,11 @@ class HomeBannerAdapter(
                 tvSeriesName.text = " - ${matche.matchInfo?.seriesName}"
 
                 Glide.with(ivTeam1Pic.context)
-                    .load("$url/c${matche.matchInfo?.team1?.imageId.toString()}/.jpg")
+                    .load("${URL}/c${matche.matchInfo?.team1?.imageId.toString()}/.jpg")
                     .into(ivTeam1Pic)
 
                 Glide.with(ivTeam2Pic.context)
-                    .load("$url/c${matche.matchInfo?.team2?.imageId.toString()}/.jpg")
+                    .load("$URL/c${matche.matchInfo?.team2?.imageId.toString()}/.jpg")
                     .into(ivTeam2Pic)
 
                 if (matche.matchInfo?.state == "Preview") {
@@ -124,7 +124,7 @@ class HomeBannerAdapter(
                         )
                     }
 
-                    if (matche.matchInfo?.state == "Complete") {
+                    if (matche.matchInfo?.state == "Complete" || matche.matchInfo?.state == "In Progress" || matche.matchInfo?.state == "Innings Break") {
 
                         tvTeam1Name.text = matche.matchInfo.team1?.teamSName
                         tvTeam2Name.text = matche.matchInfo.team2?.teamSName

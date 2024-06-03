@@ -2,7 +2,8 @@ package com.chaudharylabs.cricbuzzclone.data.api.repositories
 
 import android.app.Application
 import com.chaudharylabs.cricbuzzclone.data.api.NetworkResult
-import com.chaudharylabs.cricbuzzclone.data.model.match_details.MatchDetailsResponse
+import com.chaudharylabs.cricbuzzclone.data.model.match_details.info.MatchDetailsResponse
+import com.chaudharylabs.cricbuzzclone.data.model.match_details.squads.SquadsResponse
 import com.chaudharylabs.cricbuzzclone.data.model.matches.MatchesResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -73,6 +74,25 @@ class MatchesRepository(application: Application) : BaseRepository(application) 
                 emit(NetworkResult.Loading())
                 val response =
                     retrofitInterface.getMatchInfo(apiKey, apiHost, "mcenter/v1/$matchId")
+                if (response.isSuccessful && response.body() != null) {
+                    emit(NetworkResult.Success(response.body()))
+                } else {
+                    emit(NetworkResult.Error(response.message()))
+                }
+            } catch (e: Exception) {
+                emit(NetworkResult.Error(e.message.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getSquads(
+        matchId: String, teamId: String
+    ): Flow<NetworkResult<SquadsResponse>> {
+        return flow {
+            try {
+                emit(NetworkResult.Loading())
+                val response =
+                    retrofitInterface.getSquads(apiKey, apiHost, "mcenter/v1/$matchId/team/$teamId")
                 if (response.isSuccessful && response.body() != null) {
                     emit(NetworkResult.Success(response.body()))
                 } else {

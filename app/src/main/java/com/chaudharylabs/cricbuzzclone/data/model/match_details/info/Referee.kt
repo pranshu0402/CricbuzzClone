@@ -1,4 +1,4 @@
-package com.chaudharylabs.cricbuzzclone.data.model.match_details
+package com.chaudharylabs.cricbuzzclone.data.model.match_details.info
 
 data class Referee(
     val country: String?,
