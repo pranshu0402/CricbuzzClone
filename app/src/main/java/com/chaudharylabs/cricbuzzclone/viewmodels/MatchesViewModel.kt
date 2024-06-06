@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.chaudharylabs.cricbuzzclone.data.api.NetworkResult
 import com.chaudharylabs.cricbuzzclone.data.api.repositories.MatchesRepository
 import com.chaudharylabs.cricbuzzclone.data.model.match_details.info.MatchDetailsResponse
+import com.chaudharylabs.cricbuzzclone.data.model.match_details.overs.OversResponse
 import com.chaudharylabs.cricbuzzclone.data.model.match_details.squads.SquadsResponse
 import com.chaudharylabs.cricbuzzclone.data.model.matches.Matche
 import com.chaudharylabs.cricbuzzclone.data.model.matches.MatchesResponse
@@ -41,5 +42,13 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
         teamId: String
     ): Flow<NetworkResult<SquadsResponse>> {
         return matchesRepository.getSquads(matchId, teamId)
+    }
+
+    suspend fun getOvers(
+        matchId: String,
+        iId: String,
+        tms: String
+    ): Flow<NetworkResult<OversResponse>> {
+        return matchesRepository.getOvers(matchId, iId, tms)
     }
 }

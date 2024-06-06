@@ -55,6 +55,11 @@ class InfoFragment : BaseFragment() {
         FlowCollector { response ->
             when (response) {
                 is NetworkResult.Loading -> {
+                    binding.apply {
+                        tvInfo.visibility = View.INVISIBLE
+                        tvVenueGuide.visibility = View.INVISIBLE
+                        tvGuide.visibility = View.INVISIBLE
+                    }
                 }
 
                 is NetworkResult.Success -> {
@@ -64,6 +69,10 @@ class InfoFragment : BaseFragment() {
                             binding.apply {
 
                                 match = it
+
+                                tvInfo.visibility = View.VISIBLE
+                                tvVenueGuide.visibility = View.VISIBLE
+                                tvGuide.visibility = View.VISIBLE
 
                                 if (!it.broadcastInfo.isNullOrEmpty()) {
                                     it.broadcastInfo.forEach { a ->

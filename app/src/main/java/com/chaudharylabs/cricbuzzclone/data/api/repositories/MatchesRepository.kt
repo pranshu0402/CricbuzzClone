@@ -3,8 +3,11 @@ package com.chaudharylabs.cricbuzzclone.data.api.repositories
 import android.app.Application
 import com.chaudharylabs.cricbuzzclone.data.api.NetworkResult
 import com.chaudharylabs.cricbuzzclone.data.model.match_details.info.MatchDetailsResponse
+import com.chaudharylabs.cricbuzzclone.data.model.match_details.overs.OversResponse
 import com.chaudharylabs.cricbuzzclone.data.model.match_details.squads.SquadsResponse
 import com.chaudharylabs.cricbuzzclone.data.model.matches.MatchesResponse
+import com.chaudharylabs.cricbuzzclone.ui.utils.Constants.API_HOST
+import com.chaudharylabs.cricbuzzclone.ui.utils.Constants.API_KEY
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -12,15 +15,13 @@ import kotlinx.coroutines.flow.flowOn
 
 class MatchesRepository(application: Application) : BaseRepository(application) {
 
-    private val apiKey = "f80e239580msh700af856dd70624p1ba082jsn44ef85800156"
-    private val apiHost = "cricbuzz-cricket.p.rapidapi.com"
-
     suspend fun getLiveMatches(
     ): Flow<NetworkResult<MatchesResponse>> {
         return flow {
             try {
                 emit(NetworkResult.Loading())
-                val response = retrofitInterface.getLiveMatches(apiKey, apiHost)
+                val response =
+                    retrofitInterface.getLiveMatches(API_KEY, API_HOST)
                 if (response.isSuccessful && response.body() != null) {
                     emit(NetworkResult.Success(response.body()))
                 } else {
@@ -37,7 +38,7 @@ class MatchesRepository(application: Application) : BaseRepository(application) 
         return flow {
             try {
                 emit(NetworkResult.Loading())
-                val response = retrofitInterface.getRecentMatches(apiKey, apiHost)
+                val response = retrofitInterface.getRecentMatches(API_KEY, API_HOST)
                 if (response.isSuccessful && response.body() != null) {
                     emit(NetworkResult.Success(response.body()))
                 } else {
@@ -54,7 +55,7 @@ class MatchesRepository(application: Application) : BaseRepository(application) 
         return flow {
             try {
                 emit(NetworkResult.Loading())
-                val response = retrofitInterface.getUpcomingMatches(apiKey, apiHost)
+                val response = retrofitInterface.getUpcomingMatches(API_KEY, API_HOST)
                 if (response.isSuccessful && response.body() != null) {
                     emit(NetworkResult.Success(response.body()))
                 } else {
@@ -73,7 +74,7 @@ class MatchesRepository(application: Application) : BaseRepository(application) 
             try {
                 emit(NetworkResult.Loading())
                 val response =
-                    retrofitInterface.getMatchInfo(apiKey, apiHost, "mcenter/v1/$matchId")
+                    retrofitInterface.getMatchInfo(API_KEY, API_HOST, "mcenter/v1/$matchId")
                 if (response.isSuccessful && response.body() != null) {
                     emit(NetworkResult.Success(response.body()))
                 } else {
@@ -92,7 +93,30 @@ class MatchesRepository(application: Application) : BaseRepository(application) 
             try {
                 emit(NetworkResult.Loading())
                 val response =
-                    retrofitInterface.getSquads(apiKey, apiHost, "mcenter/v1/$matchId/team/$teamId")
+                    retrofitInterface.getSquads(
+                        API_KEY,
+                        API_HOST,
+                        "mcenter/v1/$matchId/team/$teamId"
+                    )
+                if (response.isSuccessful && response.body() != null) {
+                    emit(NetworkResult.Success(response.body()))
+                } else {
+                    emit(NetworkResult.Error(response.message()))
+                }
+            } catch (e: Exception) {
+                emit(NetworkResult.Error(e.message.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getOvers(
+        matchId: String, iId: String, tms: String
+    ): Flow<NetworkResult<OversResponse>> {
+        return flow {
+            try {
+                emit(NetworkResult.Loading())
+                val response =
+                    retrofitInterface.getOvers(API_KEY, API_HOST, "mcenter/v1/$matchId/overs")
                 if (response.isSuccessful && response.body() != null) {
                     emit(NetworkResult.Success(response.body()))
                 } else {

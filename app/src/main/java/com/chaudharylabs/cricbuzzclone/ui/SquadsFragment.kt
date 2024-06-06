@@ -15,7 +15,6 @@ import com.chaudharylabs.cricbuzzclone.data.model.match_details.squads.SquadsRes
 import com.chaudharylabs.cricbuzzclone.data.model.matches.Matche
 import com.chaudharylabs.cricbuzzclone.databinding.FragmentSquadsBinding
 import com.chaudharylabs.cricbuzzclone.ui.adapters.Bench1Adapter
-import com.chaudharylabs.cricbuzzclone.ui.adapters.Bench2Adapter
 import com.chaudharylabs.cricbuzzclone.ui.adapters.Staff1Adapter
 import com.chaudharylabs.cricbuzzclone.ui.adapters.Staff2Adapter
 import com.chaudharylabs.cricbuzzclone.ui.adapters.Team1Adapter
@@ -105,7 +104,10 @@ class SquadsFragment : BaseFragment() {
                                                 it.players?.playingXI!!
                                             )
                                         rvBench1.adapter =
-                                            Bench1Adapter(this@SquadsFragment, it.players.bench!!)
+                                            Bench1Adapter(
+                                                this@SquadsFragment,
+                                                it.players.bench?.filter { it?.isSupportStaff == null }!!
+                                            )
                                         rvStaff1.adapter =
                                             Staff1Adapter(
                                                 this@SquadsFragment,
@@ -128,6 +130,11 @@ class SquadsFragment : BaseFragment() {
         FlowCollector { response ->
             when (response) {
                 is NetworkResult.Loading -> {
+                    binding.apply {
+                        tvPlayingXI.visibility = View.INVISIBLE
+                        tvBench.visibility = View.INVISIBLE
+                        tvStaff.visibility = View.INVISIBLE
+                    }
                 }
 
                 is NetworkResult.Success -> {
@@ -142,13 +149,21 @@ class SquadsFragment : BaseFragment() {
                                 !it.players?.bench.isNullOrEmpty()
                             ) {
                                 binding.apply {
+
+                                    tvPlayingXI.visibility = View.VISIBLE
+                                    tvBench.visibility = View.VISIBLE
+                                    tvStaff.visibility = View.VISIBLE
+
                                     rvTeam2.adapter =
                                         Team2Adapter(
                                             this@SquadsFragment,
                                             it.players?.playingXI!!
                                         )
                                     rvBench2.adapter =
-                                        Bench2Adapter(this@SquadsFragment, it.players.bench!!)
+                                        Bench1Adapter(
+                                            this@SquadsFragment,
+                                            it.players.bench?.filter { it?.isSupportStaff == null }!!
+                                        )
                                     rvStaff2.adapter =
                                         Staff2Adapter(
                                             this@SquadsFragment,
