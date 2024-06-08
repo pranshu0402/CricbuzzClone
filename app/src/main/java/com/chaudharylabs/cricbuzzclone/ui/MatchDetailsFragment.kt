@@ -56,8 +56,7 @@ class MatchDetailsFragment : Fragment() {
                 this@MatchDetailsFragment.getString(R.string.live_fragment),
                 this@MatchDetailsFragment.getString(R.string.scorecard_fragment),
                 this@MatchDetailsFragment.getString(R.string.squads_fragment),
-                this@MatchDetailsFragment.getString(R.string.overs_fragment),
-                this@MatchDetailsFragment.getString(R.string.highlights_fragment),
+                this@MatchDetailsFragment.getString(R.string.overs_fragment)
             )
 
             TabLayoutMediator(tabLayout, viewPager) { tab, position ->

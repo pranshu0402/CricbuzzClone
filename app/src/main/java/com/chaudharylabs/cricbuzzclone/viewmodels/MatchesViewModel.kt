@@ -45,10 +45,16 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
     }
 
     suspend fun getOvers(
+        matchId: String
+    ): Flow<NetworkResult<OversResponse>> {
+        return matchesRepository.getOvers(matchId)
+    }
+
+    suspend fun getOversFromTimestamp(
         matchId: String,
         iId: String,
         tms: String
     ): Flow<NetworkResult<OversResponse>> {
-        return matchesRepository.getOvers(matchId, iId, tms)
+        return matchesRepository.getOversFromTimestamp(matchId, iId, tms)
     }
 }

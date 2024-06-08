@@ -110,13 +110,36 @@ class MatchesRepository(application: Application) : BaseRepository(application) 
     }
 
     suspend fun getOvers(
-        matchId: String, iId: String, tms: String
+        matchId: String
     ): Flow<NetworkResult<OversResponse>> {
         return flow {
             try {
                 emit(NetworkResult.Loading())
                 val response =
                     retrofitInterface.getOvers(API_KEY, API_HOST, "mcenter/v1/$matchId/overs")
+                if (response.isSuccessful && response.body() != null) {
+                    emit(NetworkResult.Success(response.body()))
+                } else {
+                    emit(NetworkResult.Error(response.message()))
+                }
+            } catch (e: Exception) {
+                emit(NetworkResult.Error(e.message.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getOversFromTimestamp(
+        matchId: String, iId: String, tms: String
+    ): Flow<NetworkResult<OversResponse>> {
+        return flow {
+            try {
+                emit(NetworkResult.Loading())
+                val response =
+                    retrofitInterface.getOvers(
+                        API_KEY,
+                        API_HOST,
+                        "mcenter/v1/$matchId/overs?iid=$iId&tms=$tms"
+                    )
                 if (response.isSuccessful && response.body() != null) {
                     emit(NetworkResult.Success(response.body()))
                 } else {

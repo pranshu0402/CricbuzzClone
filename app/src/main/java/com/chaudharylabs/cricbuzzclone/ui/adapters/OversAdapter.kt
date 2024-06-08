@@ -1,5 +1,6 @@
 package com.chaudharylabs.cricbuzzclone.ui.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -12,10 +13,11 @@ import com.google.android.material.chip.Chip
 
 
 class OversAdapter(
-    private val oversFragment: OversFragment,
-    private val overSummaryList: List<OverSummary>
+    private val oversFragment: OversFragment
 ) :
     RecyclerView.Adapter<OversAdapter.ViewHolder>() {
+
+    private var list: List<OverSummary> = emptyList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OversAdapter.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding: LytOversItemsBinding =
@@ -24,11 +26,11 @@ class OversAdapter(
     }
 
     override fun onBindViewHolder(holder: OversAdapter.ViewHolder, position: Int) {
-        holder.bind(overSummaryList[position])
+        holder.bind(list[position])
     }
 
     override fun getItemCount(): Int {
-        return overSummaryList.size
+        return list.size
     }
 
     inner class ViewHolder(var binding: LytOversItemsBinding) :
@@ -37,37 +39,45 @@ class OversAdapter(
             binding.apply {
                 present = oversFragment
                 tvOverNo.text = "Ov ${overSummary.overNum?.toInt()?.plus(1)}"
-                tvRuns.text = overSummary.runs.toString()
-                val names = "${overSummary.bowlNames?.joinToString(separator = "&")}to" +
-                        "${overSummary.batStrikerNames?.joinToString(separator = "&")}"
+                tvRuns.text = "${overSummary.runs} runs"
+                val names = "${overSummary.bowlNames?.joinToString(separator = " & ")} to " +
+                        "${overSummary.batStrikerNames?.joinToString(separator = " & ")}"
 
                 if (overSummary.batNonStrikerNames.isNullOrEmpty()) {
                     tvName.text = names
                 } else {
                     tvName.text =
-                        "$names&${overSummary.batNonStrikerNames?.joinToString(separator = "&")}"
+                        "$names&${overSummary.batNonStrikerNames?.joinToString(separator = " & ")}"
                 }
 
-                val x = stringToWords(overSummary.o_summary.toString())
-                println(x)
-
-                x.let {
-                    it?.forEach { _ ->
-                        val chip = Chip(chOver.context)
-                        chip.text = overSummary.o_summary
-                        chip.chipCornerRadius = 50f
-                        chip.setChipBackgroundColorResource(R.color.white)
-                        chip.setTextColor(chOver.context.resources.getColor(R.color.black))
-                        chOver.addView(chip)
+                stringToWords(overSummary.o_summary.toString()).let {
+                    it?.forEach { d ->
+                        binding.chOver.addView(createTagChip(chOver.context, d))
                     }
                 }
             }
         }
+    }
 
+    fun notifyList(overSummaryList: List<OverSummary>) {
+        list = overSummaryList
+        notifyDataSetChanged()
+    }
+
+    private fun createTagChip(context: Context, chipName: String): Chip {
+        return Chip(context).apply {
+            text = chipName
+            chipCornerRadius = 50f
+            setChipBackgroundColorResource(R.color.white)
+            setTextColor(context.resources.getColor(R.color.black))
+            chipStartPadding = 2f
+            chipEndPadding = 2f
+            setEnsureMinTouchTargetSize(false)
+        }
 
     }
 
     fun stringToWords(s: String?) = s?.trim()?.splitToSequence(' ')
-        ?.filter { it.isNotEmpty() } // or: .filter { it.isNotBlank() }
+        ?.filter { it.isNotEmpty() }
         ?.toList()
 }

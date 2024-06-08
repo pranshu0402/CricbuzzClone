@@ -2,7 +2,6 @@ package com.chaudharylabs.cricbuzzclone.ui.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.chaudharylabs.cricbuzzclone.ui.HighlightsFragment
 import com.chaudharylabs.cricbuzzclone.ui.InfoFragment
 import com.chaudharylabs.cricbuzzclone.ui.LiveFragment
 import com.chaudharylabs.cricbuzzclone.ui.MatchDetailsFragment
@@ -19,7 +18,6 @@ class TabPagerAdapter(var presenter: MatchDetailsFragment) : FragmentStateAdapte
             2 -> ScorecardFragment()
             3 -> SquadsFragment()
             4 -> OversFragment()
-            5 -> HighlightsFragment()
             else -> throw IllegalStateException("Unexpected position $position")
         }
     }
@@ -29,6 +27,6 @@ class TabPagerAdapter(var presenter: MatchDetailsFragment) : FragmentStateAdapte
     }
 
     companion object {
-        private const val TABS = 6
+        private const val TABS = 5
     }
 }
