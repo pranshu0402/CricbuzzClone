@@ -47,12 +47,12 @@ class OversAdapter(
                     tvName.text = names
                 } else {
                     tvName.text =
-                        "$names&${overSummary.batNonStrikerNames?.joinToString(separator = " & ")}"
+                        "$names&${overSummary.batNonStrikerNames.joinToString(separator = " & ")}"
                 }
 
                 stringToWords(overSummary.o_summary.toString()).let {
                     it?.forEach { d ->
-                        binding.chOver.addView(createTagChip(chOver.context, d))
+                        chOver.addView(createTagChip(chOver.context, d))
                     }
                 }
             }

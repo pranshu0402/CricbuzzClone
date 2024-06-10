@@ -150,14 +150,13 @@ class OversFragment : BaseFragment() {
                                     }
                                 }
 
-                                lifecycleScope.launch(Dispatchers.Default) {
-                                    it.overSummaryList?.let { list ->
-                                        overList.clear()
-                                        overList = list as ArrayList<OverSummary>
-                                        overList.distinct()
+                                it.overSummaryList?.let { list ->
+                                    overList.addAll(list)
+                                    lifecycleScope.launch(Dispatchers.Default) {
                                         getParameters(it.overSummaryList)
                                     }
                                 }
+
                             }
                         }
                     }
@@ -181,7 +180,8 @@ class OversFragment : BaseFragment() {
 
                 if (iId.toInt() == 1 && overNumber == 0.6) {
                     lifecycleScope.launch {
-                        binding.adapter?.notifyList(overList.distinct())
+                        binding.adapter?.notifyList(overList)
+                        Log.d(TAG, "Overs call complete")
                     }
                 } else {
                     getOversFromTimestamp(
@@ -212,10 +212,8 @@ class OversFragment : BaseFragment() {
                         Log.d(TAG, "response Success :: $it")
                         it.overSummaryList?.let { list ->
                             lifecycleScope.launch(Dispatchers.Default) {
-                                list.forEach { over ->
-                                    overList.add(over)
-                                }
-                                overList.distinct()
+                                overList.remove(overList.last())
+                                overList.addAll(list)
                                 getParameters(it.overSummaryList)
                             }
                         }
