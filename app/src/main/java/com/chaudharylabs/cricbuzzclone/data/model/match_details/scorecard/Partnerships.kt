@@ -1,0 +1,30 @@
+package com.chaudharylabs.cricbuzzclone.data.model.match_details.scorecard
+
+data class Partnerships(
+    val bat1Boundaries: Int?,
+    val bat1Fives: Int?,
+    val bat1Id: Int?,
+    val bat1Name: String?,
+    val bat1Ones: Int?,
+    val bat1Runs: Int?,
+    val bat1Sixers: Int?,
+    val bat1Threes: Int?,
+    val bat1Twos: Int?,
+    val bat1balls: Int?,
+    val bat1fours: Int?,
+    val bat1sixes: Int?,
+    val bat2Boundaries: Int?,
+    val bat2Fives: Int?,
+    val bat2Id: Int?,
+    val bat2Name: String?,
+    val bat2Ones: Int?,
+    val bat2Runs: Int?,
+    val bat2Sixers: Int?,
+    val bat2Threes: Int?,
+    val bat2Twos: Int?,
+    val bat2balls: Int?,
+    val bat2fours: Int?,
+    val bat2sixes: Int?,
+    val totalBalls: Int?,
+    val totalRuns: Int?
+)

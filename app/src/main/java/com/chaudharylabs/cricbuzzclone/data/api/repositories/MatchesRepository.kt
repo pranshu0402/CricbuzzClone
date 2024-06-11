@@ -4,6 +4,7 @@ import android.app.Application
 import com.chaudharylabs.cricbuzzclone.data.api.NetworkResult
 import com.chaudharylabs.cricbuzzclone.data.model.match_details.info.MatchDetailsResponse
 import com.chaudharylabs.cricbuzzclone.data.model.match_details.overs.OversResponse
+import com.chaudharylabs.cricbuzzclone.data.model.match_details.scorecard.ScorecardResponse
 import com.chaudharylabs.cricbuzzclone.data.model.match_details.squads.SquadsResponse
 import com.chaudharylabs.cricbuzzclone.data.model.matches.MatchesResponse
 import com.chaudharylabs.cricbuzzclone.ui.utils.Constants.API_HOST
@@ -140,6 +141,25 @@ class MatchesRepository(application: Application) : BaseRepository(application) 
                         API_HOST,
                         "mcenter/v1/$matchId/overs?iid=$iId&tms=$tms"
                     )
+                if (response.isSuccessful && response.body() != null) {
+                    emit(NetworkResult.Success(response.body()))
+                } else {
+                    emit(NetworkResult.Error(response.message()))
+                }
+            } catch (e: Exception) {
+                emit(NetworkResult.Error(e.message.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getScoreCard(
+        matchId: String
+    ): Flow<NetworkResult<ScorecardResponse>> {
+        return flow {
+            try {
+                emit(NetworkResult.Loading())
+                val response =
+                    retrofitInterface.getScoreCard(API_KEY, API_HOST, matchId)
                 if (response.isSuccessful && response.body() != null) {
                     emit(NetworkResult.Success(response.body()))
                 } else {

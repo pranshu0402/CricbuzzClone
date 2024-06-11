@@ -1,20 +1,828 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/dark_light"
-    android:padding="20dp"
-    tools:context=".ui.ScorecardFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Scorecard"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <variable
+            name="batterAdapter"
+            type="com.chaudharylabs.cricbuzzclone.ui.adapters.BatterScorecardAdapter" />
+
+        <variable
+            name="bowlerAdapter"
+            type="com.chaudharylabs.cricbuzzclone.ui.adapters.BowlerScorecardAdapter" />
+
+        <variable
+            name="fallOfWicketsAdapter"
+            type="com.chaudharylabs.cricbuzzclone.ui.adapters.FallOfWicketsScorecardAdapter" />
+
+        <variable
+            name="partnershipsAdapter"
+            type="com.chaudharylabs.cricbuzzclone.ui.adapters.PartnershipScorecardAdapter" />
+
+        <variable
+            name="batterAdapter1"
+            type="com.chaudharylabs.cricbuzzclone.ui.adapters.BatterScorecardAdapter" />
+
+        <variable
+            name="bowlerAdapter1"
+            type="com.chaudharylabs.cricbuzzclone.ui.adapters.BowlerScorecardAdapter" />
+
+        <variable
+            name="fallOfWicketsAdapter1"
+            type="com.chaudharylabs.cricbuzzclone.ui.adapters.FallOfWicketsScorecardAdapter" />
+
+        <variable
+            name="partnershipsAdapter1"
+            type="com.chaudharylabs.cricbuzzclone.ui.adapters.PartnershipScorecardAdapter" />
+
+        <variable
+            name="presenter"
+            type="com.chaudharylabs.cricbuzzclone.ui.ScorecardFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/primary_light_black"
+        tools:context=".ui.ScorecardFragment">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/primary_light_blue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_status">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/lyt_team1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/dark_light"
+                        android:padding="20dp"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_team1Name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/primary_light_blue"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/iv_team1DropDown"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/keyboard_arrow_down_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_team1Overs"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="20dp"
+                            android:textColor="@color/primary_soft"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/iv_team1DropDown"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_team1Wickets"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="14dp"
+                            android:textColor="@color/primary_soft"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/tv_team1Overs"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_team1Runs"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/primary_soft"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/tv_team1Wickets"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/lyt_team1_data"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/lyt_team1">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/lyt_batter1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/dark_light_1"
+                            android:paddingStart="20dp"
+                            android:paddingTop="8dp"
+                            android:paddingEnd="20dp"
+                            android:paddingBottom="8dp"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_team1Batter"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="Batter"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.5" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_team1R"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="R"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_team1Batter"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.1" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_team1B"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="B"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_team1R"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.1" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_team1_4s"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="4s"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_team1B"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.1" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_team1_6s"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="6s"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_team1_4s"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.1" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_team1_SR"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="SR"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_team1_6s"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.1" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_team1_Batter"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:adapter="@{batterAdapter}"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:layout_constraintTop_toBottomOf="@id/lyt_batter1" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/lyt_extras1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/dark_light_1"
+                            android:paddingStart="20dp"
+                            android:paddingTop="8dp"
+                            android:paddingEnd="20dp"
+                            android:paddingBottom="8dp"
+                            app:layout_constraintTop_toBottomOf="@id/rv_team1_Batter">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_extras1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="Extras"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.5" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_ExtraRun1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="12dp"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/tv_extraRuns1"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_extraRuns1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/lyt_team1_bowlers"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/dark_light_1"
+                            android:paddingStart="20dp"
+                            android:paddingTop="8dp"
+                            android:paddingEnd="20dp"
+                            android:paddingBottom="8dp"
+                            app:layout_constraintTop_toBottomOf="@id/lyt_extras1">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_team1Bowler"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="Bowler"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.5" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_team1_Overs"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="O"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_team1Bowler"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.1" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_team1M"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="M"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_team1_Overs"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.1" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_team1_R"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="R"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_team1M"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.1" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_team1_W"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="W"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_team1_R"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.1" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_team1_ER"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="ER"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_team1_W"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.1" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_team1_Bowlers"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:adapter="@{bowlerAdapter}"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:layout_constraintTop_toBottomOf="@id/lyt_team1_bowlers" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/lyt_fallOfWickets1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/dark_light_1"
+                            android:paddingStart="20dp"
+                            android:paddingTop="8dp"
+                            android:paddingEnd="20dp"
+                            android:paddingBottom="8dp"
+                            app:layout_constraintTop_toBottomOf="@id/rv_team1_Bowlers">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_fow1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="Fall of wickets"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.5" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_score1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="50dp"
+                                android:layout_marginEnd="12dp"
+                                android:text="Score"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_fow1"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_over1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="40dp"
+                                android:text="Over"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_score1"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_team1_fow"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:adapter="@{fallOfWicketsAdapter}"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:layout_constraintTop_toBottomOf="@id/lyt_fallOfWickets1" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/lyt_partnerships1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/dark_light_1"
+                            android:paddingStart="20dp"
+                            android:paddingTop="8dp"
+                            android:paddingEnd="20dp"
+                            android:paddingBottom="8dp"
+                            app:layout_constraintTop_toBottomOf="@id/rv_team1_fow">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_partnerships1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="Partnerships"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.5" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_team1_partnerships1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:adapter="@{partnershipsAdapter}"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:layout_constraintTop_toBottomOf="@id/lyt_partnerships1" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/lyt_team2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/dark_light"
+                        android:padding="20dp"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_team2Name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/primary_light_blue"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/iv_team2DropDown"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/keyboard_arrow_down_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_team2Overs"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="20dp"
+                            android:textColor="@color/primary_soft"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/iv_team2DropDown"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_team2Wickets"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="14dp"
+                            android:textColor="@color/primary_soft"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/tv_team2Overs"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_team2Runs"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/primary_soft"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/tv_team2Wickets"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/lyt_team2_data"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/lyt_team2">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/lyt_batter"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/dark_light_1"
+                            android:paddingStart="20dp"
+                            android:paddingTop="8dp"
+                            android:paddingEnd="20dp"
+                            android:paddingBottom="8dp"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_team2Batter"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="Batter"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.5" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_team2R"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="R"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_team2Batter"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.1" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_team2B"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="B"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_team2R"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.1" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_team2_4s"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="4s"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_team2B"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.1" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_team2_6s"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="6s"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_team2_4s"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.1" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_team2_SR"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="SR"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_team2_6s"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.1" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_team2_Batter"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:adapter="@{batterAdapter1}"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:layout_constraintTop_toBottomOf="@id/lyt_batter" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/lyt_extras"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/dark_light_1"
+                            android:paddingStart="20dp"
+                            android:paddingTop="8dp"
+                            android:paddingEnd="20dp"
+                            android:paddingBottom="8dp"
+                            app:layout_constraintTop_toBottomOf="@id/rv_team2_Batter">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_extras"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="Extras"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.5" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_ExtraRun"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="12dp"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/tv_extraRuns"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_extraRuns"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/lyt_team2_bowlers"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/dark_light_1"
+                            android:paddingStart="20dp"
+                            android:paddingTop="8dp"
+                            android:paddingEnd="20dp"
+                            android:paddingBottom="8dp"
+                            app:layout_constraintTop_toBottomOf="@id/lyt_extras">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_team2Bowler"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="Bowler"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.5" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_team2_Overs"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="O"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_team2Bowler"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.1" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_team2M"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="M"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_team2_Overs"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.1" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_team2_R"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="R"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_team2M"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.1" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_team2_W"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="W"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_team2_R"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.1" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_team2_ER"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="ER"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_team2_W"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.1" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_team2_Bowlers"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:adapter="@{bowlerAdapter1}"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:layout_constraintTop_toBottomOf="@id/lyt_team2_bowlers" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/lyt_fallOfWickets"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/dark_light_1"
+                            android:paddingStart="20dp"
+                            android:paddingTop="8dp"
+                            android:paddingEnd="20dp"
+                            android:paddingBottom="8dp"
+                            app:layout_constraintTop_toBottomOf="@id/rv_team2_Bowlers">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_fow"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="Fall of wickets"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.5" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_score"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="50dp"
+                                android:layout_marginEnd="12dp"
+                                android:text="Score"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_fow"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_over"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="40dp"
+                                android:text="Over"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_score"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_team2_fow"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:adapter="@{fallOfWicketsAdapter1}"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:layout_constraintTop_toBottomOf="@id/lyt_fallOfWickets" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/lyt_partnerships"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/dark_light_1"
+                            android:paddingStart="20dp"
+                            android:paddingTop="8dp"
+                            android:paddingEnd="20dp"
+                            android:paddingBottom="8dp"
+                            app:layout_constraintTop_toBottomOf="@id/rv_team2_fow">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_partnerships"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="Partnerships"
+                                android:textColor="@color/primary_soft"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_percent="0.5" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_team1_partnerships"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:adapter="@{partnershipsAdapter1}"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:layout_constraintTop_toBottomOf="@id/lyt_partnerships" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

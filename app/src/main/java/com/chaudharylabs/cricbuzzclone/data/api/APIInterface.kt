@@ -2,6 +2,7 @@ package com.chaudharylabs.cricbuzzclone.data.api
 
 import com.chaudharylabs.cricbuzzclone.data.model.match_details.info.MatchDetailsResponse
 import com.chaudharylabs.cricbuzzclone.data.model.match_details.overs.OversResponse
+import com.chaudharylabs.cricbuzzclone.data.model.match_details.scorecard.ScorecardResponse
 import com.chaudharylabs.cricbuzzclone.data.model.match_details.squads.SquadsResponse
 import com.chaudharylabs.cricbuzzclone.data.model.matches.MatchesResponse
 import com.chaudharylabs.cricbuzzclone.data.model.top_stoires.TopStoriesResponse
@@ -10,6 +11,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
+import retrofit2.http.Path
 import retrofit2.http.Url
 
 interface APIInterface {
@@ -72,4 +74,12 @@ interface APIInterface {
         @Header("X-RapidAPI-Host") apiHost: String?,
         @Url overs: String?
     ): Response<OversResponse?>
+
+    @Headers("Content-Type: application/json")
+    @GET("mcenter/v1/{matchId}/hscard")
+    suspend fun getScoreCard(
+        @Header("X-RapidAPI-Key") apiKey: String?,
+        @Header("X-RapidAPI-Host") apiHost: String?,
+        @Path("matchId") matchId: String?
+    ): Response<ScorecardResponse?>
 }

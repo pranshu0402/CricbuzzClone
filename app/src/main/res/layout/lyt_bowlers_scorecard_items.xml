@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="bowler"
+            type="com.chaudharylabs.cricbuzzclone.data.model.match_details.scorecard.Bowl" />
+
+        <variable
+            name="presenter"
+            type="com.chaudharylabs.cricbuzzclone.ui.ScorecardFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_light_black"
+        android:paddingStart="20dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="10dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_bowler_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{bowler.bowlName}"
+            android:textColor="@color/primary_light_blue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.4" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_bowler_over"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="@{String.valueOf(bowler.overs)}"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toEndOf="@id/tv_bowler_name"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_bowler_maiden"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="@{String.valueOf(bowler.maidens)}"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toEndOf="@id/tv_bowler_over"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_bowler_runs"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="@{String.valueOf(bowler.runs)}"
+            android:textColor="@color/primary_soft"
+            app:layout_constraintStart_toEndOf="@id/tv_bowler_maiden"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_bowler_wickets"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="@{String.valueOf(bowler.wickets)}"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toEndOf="@id/tv_bowler_runs"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_bowler_er"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="@{String.valueOf(bowler.economy)}"
+            android:textColor="@color/primary_soft"
+            app:layout_constraintStart_toEndOf="@id/tv_bowler_wickets"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

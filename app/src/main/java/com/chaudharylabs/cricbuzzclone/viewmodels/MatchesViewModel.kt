@@ -7,6 +7,7 @@ import com.chaudharylabs.cricbuzzclone.data.api.NetworkResult
 import com.chaudharylabs.cricbuzzclone.data.api.repositories.MatchesRepository
 import com.chaudharylabs.cricbuzzclone.data.model.match_details.info.MatchDetailsResponse
 import com.chaudharylabs.cricbuzzclone.data.model.match_details.overs.OversResponse
+import com.chaudharylabs.cricbuzzclone.data.model.match_details.scorecard.ScorecardResponse
 import com.chaudharylabs.cricbuzzclone.data.model.match_details.squads.SquadsResponse
 import com.chaudharylabs.cricbuzzclone.data.model.matches.Matche
 import com.chaudharylabs.cricbuzzclone.data.model.matches.MatchesResponse
@@ -56,5 +57,11 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
         tms: String
     ): Flow<NetworkResult<OversResponse>> {
         return matchesRepository.getOversFromTimestamp(matchId, iId, tms)
+    }
+
+    suspend fun getScoreCard(
+        matchId: String
+    ): Flow<NetworkResult<ScorecardResponse>> {
+        return matchesRepository.getScoreCard(matchId)
     }
 }
