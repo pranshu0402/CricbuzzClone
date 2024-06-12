@@ -16,9 +16,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primary_light_black"
+        android:background="@color/bottom_nav_background"
         android:paddingStart="20dp"
         android:paddingTop="10dp"
+        android:layout_marginTop="1dp"
         android:paddingEnd="20dp"
         android:paddingBottom="10dp">
 
@@ -80,7 +81,7 @@
             android:id="@+id/tv_bowler_er"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="end"
+            android:gravity="center"
             android:text="@{String.valueOf(bowler.economy)}"
             android:textColor="@color/primary_soft"
             app:layout_constraintStart_toEndOf="@id/tv_bowler_wickets"

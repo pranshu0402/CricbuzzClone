@@ -52,7 +52,7 @@ class ScorecardFragment : BaseFragment() {
         println(match?.matchInfo?.matchId)
 
         lifecycleScope.launch {
-            viewModel.getScoreCard(match?.matchInfo?.matchId.toString()).collect(scorecardCallback)
+            viewModel.getScoreCard("87647").collect(scorecardCallback)
         }
     }
 
@@ -67,30 +67,45 @@ class ScorecardFragment : BaseFragment() {
                         Log.d(TAG, "response Success :: $it")
 
                         binding.apply {
+
                             tvStatus.text = it.matchHeader?.status
 
                             it.scoreCard.let { scorecard ->
 
                                 tvTeam1Name.text =
-                                    match?.matchInfo?.team1?.teamName
+                                    scorecard?.get(0)?.batTeamDetails?.batTeamName.toString()
 
                                 tvTeam2Name.text =
-                                    match?.matchInfo?.team2?.teamName
+                                    scorecard?.get(1)?.batTeamDetails?.batTeamName.toString()
 
-                                tvExtraRuns1.text =
-                                    "b ${scorecard?.get(0)?.extrasData?.byes}" +
-                                            ", lb ${scorecard?.get(0)?.extrasData?.legByes}" +
-                                            ", w ${scorecard?.get(0)?.extrasData?.wides}" +
-                                            ", nb ${scorecard?.get(0)?.extrasData?.noBalls}" +
-                                            ", p ${scorecard?.get(0)?.extrasData?.penalty}"
+                                tvTeam1Runs.text = scorecard?.get(0)?.scoreDetails?.runs.toString()
+                                tvTeam1Wickets.text =
+                                    "-${scorecard?.get(0)?.scoreDetails?.wickets.toString()}"
+                                tvTeam1Overs.text =
+                                    "(${scorecard?.get(0)?.scoreDetails?.overs.toString()})"
+
+                                tvTeam2Runs.text = scorecard?.get(1)?.scoreDetails?.runs.toString()
+                                tvTeam2Wickets.text =
+                                    "-${scorecard?.get(1)?.scoreDetails?.wickets.toString()}"
+                                tvTeam2Overs.text =
+                                    "(${scorecard?.get(1)?.scoreDetails?.overs.toString()})"
+
+                                tvTotalExtras1.text = "${scorecard?.get(0)?.extrasData?.total}"
+                                tvTotalExtras2.text = "${scorecard?.get(1)?.extrasData?.total}"
+
+                                tvExtraRuns1.text = "b ${scorecard?.get(0)?.extrasData?.byes}" +
+                                        ", lb ${scorecard?.get(0)?.extrasData?.legByes}" +
+                                        ", w ${scorecard?.get(0)?.extrasData?.wides}" +
+                                        ", nb ${scorecard?.get(0)?.extrasData?.noBalls}" +
+                                        ", p ${scorecard?.get(0)?.extrasData?.penalty}"
 
 
-                                tvExtraRuns.text =
-                                    "b ${scorecard?.get(1)?.extrasData?.byes}" +
-                                            ", lb ${scorecard?.get(1)?.extrasData?.legByes}" +
-                                            ", w ${scorecard?.get(1)?.extrasData?.wides}" +
-                                            ", nb ${scorecard?.get(1)?.extrasData?.noBalls}" +
-                                            ", p ${scorecard?.get(1)?.extrasData?.penalty}"
+                                tvExtraRuns.text = "${scorecard?.get(1)?.extrasData?.total}" +
+                                        "b ${scorecard?.get(1)?.extrasData?.byes}" +
+                                        ", lb ${scorecard?.get(1)?.extrasData?.legByes}" +
+                                        ", w ${scorecard?.get(1)?.extrasData?.wides}" +
+                                        ", nb ${scorecard?.get(1)?.extrasData?.noBalls}" +
+                                        ", p ${scorecard?.get(1)?.extrasData?.penalty}"
 
                                 val batList: ArrayList<Bat?> = ArrayList()
                                 val bowlList: ArrayList<Bowl?> = ArrayList()
@@ -150,11 +165,6 @@ class ScorecardFragment : BaseFragment() {
                                         partnershipList.add(score.partnershipsData?.pat_9)
                                         partnershipList.add(score.partnershipsData?.pat_10)
                                     }
-
-                                    batList.filterNotNull()
-                                    bowlList.filterNotNull()
-                                    wicketList.filterNotNull()
-                                    partnershipList.filterNotNull()
                                 }
 
                                 if (scorecard?.isNotEmpty() == true && scorecard.size == 2) {
@@ -255,15 +265,6 @@ class ScorecardFragment : BaseFragment() {
                                         partnershipList1.add(score.partnershipsData?.pat_10)
                                     }
 
-                                    batList.filterNotNull()
-                                    bowlList.filterNotNull()
-                                    wicketList.filterNotNull()
-                                    partnershipList.filterNotNull()
-
-                                    batList1.filterNotNull()
-                                    bowlList1.filterNotNull()
-                                    wicketList1.filterNotNull()
-                                    partnershipList1.filterNotNull()
                                 }
 
                                 batterAdapter =

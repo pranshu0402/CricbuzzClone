@@ -36,7 +36,15 @@ class BatterScorecardAdapter(
                 this.presenter = present
 
                 binding.apply {
-                    tvBatterName.text = bat?.batName
+
+                    if (bat?.isCaptain == true) {
+                        tvBatterName.text = "${bat.batName}(c)"
+                    } else if (bat?.isKeeper == true) {
+                        tvBatterName.text = "${bat.batName}(wk)"
+                    } else {
+                        tvBatterName.text = bat?.batName
+                    }
+
                     tvBatterRun.text = bat?.runs.toString()
                     tvBatterBall.text = bat?.balls.toString()
                     tvBatter4s.text = bat?.fours.toString()

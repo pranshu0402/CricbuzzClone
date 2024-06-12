@@ -16,9 +16,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primary_light_black"
+        android:background="@color/bottom_nav_background"
         android:paddingStart="20dp"
         android:paddingTop="10dp"
+        android:layout_marginTop="1dp"
         android:paddingEnd="20dp"
         android:paddingBottom="10dp">
 
@@ -36,7 +37,7 @@
             android:id="@+id/tv_batter1_run"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="4dp"
             android:text="@{String.valueOf(partnership.bat1Runs)}"
             android:textColor="@color/primary_soft"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -59,6 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{partnership.bat2Name}"
+            android:layout_marginEnd="4dp"
             android:textColor="@color/primary_light_blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/tv_batter2_run"
