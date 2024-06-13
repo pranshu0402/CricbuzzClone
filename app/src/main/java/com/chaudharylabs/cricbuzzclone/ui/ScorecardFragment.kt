@@ -52,7 +52,7 @@ class ScorecardFragment : BaseFragment() {
         println(match?.matchInfo?.matchId)
 
         lifecycleScope.launch {
-            viewModel.getScoreCard("87647").collect(scorecardCallback)
+            viewModel.getScoreCard(match?.matchInfo?.matchId.toString()).collect(scorecardCallback)
         }
     }
 

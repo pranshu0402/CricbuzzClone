@@ -3,6 +3,7 @@ package com.chaudharylabs.cricbuzzclone.data.api.repositories
 import android.app.Application
 import com.chaudharylabs.cricbuzzclone.data.api.NetworkResult
 import com.chaudharylabs.cricbuzzclone.data.model.match_details.info.MatchDetailsResponse
+import com.chaudharylabs.cricbuzzclone.data.model.match_details.live.LiveResponse
 import com.chaudharylabs.cricbuzzclone.data.model.match_details.overs.OversResponse
 import com.chaudharylabs.cricbuzzclone.data.model.match_details.scorecard.ScorecardResponse
 import com.chaudharylabs.cricbuzzclone.data.model.match_details.squads.SquadsResponse
@@ -160,6 +161,25 @@ class MatchesRepository(application: Application) : BaseRepository(application) 
                 emit(NetworkResult.Loading())
                 val response =
                     retrofitInterface.getScoreCard(API_KEY, API_HOST, matchId)
+                if (response.isSuccessful && response.body() != null) {
+                    emit(NetworkResult.Success(response.body()))
+                } else {
+                    emit(NetworkResult.Error(response.message()))
+                }
+            } catch (e: Exception) {
+                emit(NetworkResult.Error(e.message.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getCommentaries(
+        matchId: String
+    ): Flow<NetworkResult<LiveResponse>> {
+        return flow {
+            try {
+                emit(NetworkResult.Loading())
+                val response =
+                    retrofitInterface.getCommentaries(API_KEY, API_HOST, matchId)
                 if (response.isSuccessful && response.body() != null) {
                     emit(NetworkResult.Success(response.body()))
                 } else {

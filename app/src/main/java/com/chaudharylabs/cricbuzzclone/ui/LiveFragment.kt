@@ -1,60 +1,179 @@
 package com.chaudharylabs.cricbuzzclone.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.chaudharylabs.cricbuzzclone.R
+import com.chaudharylabs.cricbuzzclone.data.api.NetworkResult
+import com.chaudharylabs.cricbuzzclone.data.model.match_details.live.LiveResponse
+import com.chaudharylabs.cricbuzzclone.data.model.matches.Matche
+import com.chaudharylabs.cricbuzzclone.databinding.FragmentLiveBinding
+import com.chaudharylabs.cricbuzzclone.ui.adapters.LiveAdapter
+import com.chaudharylabs.cricbuzzclone.ui.utils.Constants
+import com.chaudharylabs.cricbuzzclone.viewmodels.MatchesViewModel
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class LiveFragment : BaseFragment() {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [LiveFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class LiveFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentLiveBinding
+    private val viewModel: MatchesViewModel by activityViewModels()
+    private var matche: Matche? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_live, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_live, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LiveFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LiveFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.apply {
+            presenter = this@LiveFragment
+            lifecycleOwner = this@LiveFragment
+            executePendingBindings()
+        }
+
+        matche = viewModel.match.value
+        println(matche?.matchInfo?.matchId)
+
+        lifecycleScope.launch {
+            viewModel.getCommentaries(matche?.matchInfo?.matchId.toString()).collect(liveCallback)
+//            viewModel.getCommentaries("87668").collect(liveCallback)
+        }
+    }
+
+    private val liveCallback: FlowCollector<NetworkResult<LiveResponse>> =
+        FlowCollector { response ->
+            when (response) {
+                is NetworkResult.Loading -> {
+                }
+
+                is NetworkResult.Success -> {
+                    response.data?.let {
+                        Log.d(TAG, "response Success :: $it")
+
+                        binding.apply {
+
+                            tvTeam1.text = matche?.matchInfo?.team1?.teamSName
+                            tvTeam2.text = matche?.matchInfo?.team2?.teamSName
+                            tvStatus.text = it.matchHeader?.status
+
+                            if (!it.matchHeader?.playersOfTheMatch.isNullOrEmpty()) {
+                                val playerOfTheMatchUrl =
+                                    "${Constants.PROFILE_URL}/c${
+                                        it.matchHeader?.playersOfTheMatch?.get(
+                                            0
+                                        )?.faceImageId.toString()
+                                    }/.jpg"
+
+                                tvMom.text =
+                                    it.matchHeader?.playersOfTheMatch?.get(0)?.fullName.toString()
+                                Glide.with(ivPlayer).load(playerOfTheMatchUrl).into(ivPlayer)
+                            }
+
+                            if (it.matchHeader?.result?.winningteamId == it.matchHeader?.team1?.id) {
+                                tvTeam1.setTextColor(resources.getColor(R.color.white))
+                                tvTeam2.setTextColor(resources.getColor(R.color.primary_soft))
+                                tvTeam1Runs.setTextColor(resources.getColor(R.color.white))
+                                tvTeam2Runs.setTextColor(resources.getColor(R.color.primary_soft))
+                            }
+
+                            if (it.matchHeader?.result?.winningteamId == it.matchHeader?.team2?.id) {
+                                tvTeam1.setTextColor(resources.getColor(R.color.primary_soft))
+                                tvTeam2.setTextColor(resources.getColor(R.color.white))
+                                tvTeam1Runs.setTextColor(resources.getColor(R.color.primary_soft))
+                                tvTeam2Runs.setTextColor(resources.getColor(R.color.white))
+                            }
+
+                            it.miniscore?.matchScoreDetails?.inningsScoreList.let { scores ->
+                                scores?.forEach { score ->
+                                    if (score?.batTeamName == matche?.matchInfo?.team1?.teamSName) {
+                                        if (score?.wickets == 10) {
+                                            if (score.overs.toString().contains(".6")) {
+                                                tvTeam1Runs.text =
+                                                    "${score.score}(${
+                                                        score.overs?.toInt()?.plus(1).toString()
+                                                            .replace(".6", "")
+                                                    })"
+                                            } else {
+                                                tvTeam1Runs.text =
+                                                    "${score.score}(${score.overs})"
+                                            }
+                                        } else {
+
+                                            if (score?.overs.toString().contains(".6")) {
+                                                tvTeam1Runs.text =
+                                                    "${score?.score}-${score?.wickets}(${
+                                                        score?.overs?.toInt()?.plus(1).toString()
+                                                            .replace(".6", "")
+                                                    })"
+                                            } else {
+                                                tvTeam1Runs.text =
+                                                    "${score?.score}-${score?.wickets}(${score?.overs})"
+                                            }
+                                        }
+                                    }
+
+                                    if (score?.batTeamName == matche?.matchInfo?.team2?.teamSName) {
+                                        if (score?.wickets == 10) {
+                                            if (score.overs.toString().contains(".6")) {
+                                                tvTeam2Runs.text =
+                                                    "${score.score}(${
+                                                        score.overs?.toInt()?.plus(1).toString()
+                                                            .replace(".6", "")
+                                                    })"
+                                            } else {
+                                                tvTeam2Runs.text =
+                                                    "${score.score}(${score.overs})"
+                                            }
+                                        } else {
+                                            if (score?.overs.toString().contains(".6")) {
+                                                tvTeam2Runs.text =
+                                                    "${score?.score}-${score?.wickets}(${
+                                                        score?.overs?.toInt()?.plus(1).toString()
+                                                            .replace(".6", "")
+                                                    })"
+                                            } else {
+                                                tvTeam2Runs.text =
+                                                    "${score?.score}-${score?.wickets}(${score?.overs})"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            it.commentaryList?.let { commentaryList ->
+                                adapter = it.commentarySnippetList?.let { commentarySnippetList ->
+                                    LiveAdapter(
+                                        this@LiveFragment,
+                                        commentaryList,
+                                        commentarySnippetList
+                                    )
+                                }
+                            }
+
+                        }
+                    }
+                }
+
+                is NetworkResult.Error -> {
+                    Log.e(TAG, "response Error :: ${response.message}")
                 }
             }
+
+        }
+
+    companion object {
+        private const val TAG = "LiveFragment"
     }
 }

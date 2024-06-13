@@ -1,6 +1,7 @@
 package com.chaudharylabs.cricbuzzclone.data.api
 
 import com.chaudharylabs.cricbuzzclone.data.model.match_details.info.MatchDetailsResponse
+import com.chaudharylabs.cricbuzzclone.data.model.match_details.live.LiveResponse
 import com.chaudharylabs.cricbuzzclone.data.model.match_details.overs.OversResponse
 import com.chaudharylabs.cricbuzzclone.data.model.match_details.scorecard.ScorecardResponse
 import com.chaudharylabs.cricbuzzclone.data.model.match_details.squads.SquadsResponse
@@ -82,4 +83,12 @@ interface APIInterface {
         @Header("X-RapidAPI-Host") apiHost: String?,
         @Path("matchId") matchId: String?
     ): Response<ScorecardResponse?>
+
+    @Headers("Content-Type: application/json")
+    @GET("mcenter/v1/{matchId}/comm")
+    suspend fun getCommentaries(
+        @Header("X-RapidAPI-Key") apiKey: String?,
+        @Header("X-RapidAPI-Host") apiHost: String?,
+        @Path("matchId") matchId: String?
+    ): Response<LiveResponse?>
 }

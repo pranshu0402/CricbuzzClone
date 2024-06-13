@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.chaudharylabs.cricbuzzclone.data.api.NetworkResult
 import com.chaudharylabs.cricbuzzclone.data.api.repositories.MatchesRepository
 import com.chaudharylabs.cricbuzzclone.data.model.match_details.info.MatchDetailsResponse
+import com.chaudharylabs.cricbuzzclone.data.model.match_details.live.LiveResponse
 import com.chaudharylabs.cricbuzzclone.data.model.match_details.overs.OversResponse
 import com.chaudharylabs.cricbuzzclone.data.model.match_details.scorecard.ScorecardResponse
 import com.chaudharylabs.cricbuzzclone.data.model.match_details.squads.SquadsResponse
@@ -63,5 +64,11 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
         matchId: String
     ): Flow<NetworkResult<ScorecardResponse>> {
         return matchesRepository.getScoreCard(matchId)
+    }
+
+    suspend fun getCommentaries(
+        matchId: String
+    ): Flow<NetworkResult<LiveResponse>> {
+        return matchesRepository.getCommentaries(matchId)
     }
 }
