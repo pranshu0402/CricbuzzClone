@@ -7,14 +7,14 @@
 
         <variable
             name="presenter"
-            type="com.chaudharylabs.cricbuzzclone.ui.StoryDetailsFragment" />
+            type="com.chaudharylabs.cricbuzzclone.ui.home.StoryDetailsFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#404040"
-        tools:context=".ui.StoryDetailsFragment">
+        tools:context=".ui.home.StoryDetailsFragment">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_story_pic"

@@ -6,7 +6,7 @@
 
         <variable
             name="present"
-            type="com.chaudharylabs.cricbuzzclone.ui.OversFragment" />
+            type="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.OversFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

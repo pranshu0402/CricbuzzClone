@@ -7,46 +7,46 @@
 
         <variable
             name="batterAdapter"
-            type="com.chaudharylabs.cricbuzzclone.ui.adapters.BatterScorecardAdapter" />
+            type="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.adapter.BatterScorecardAdapter" />
 
         <variable
             name="bowlerAdapter"
-            type="com.chaudharylabs.cricbuzzclone.ui.adapters.BowlerScorecardAdapter" />
+            type="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.adapter.BowlerScorecardAdapter" />
 
         <variable
             name="fallOfWicketsAdapter"
-            type="com.chaudharylabs.cricbuzzclone.ui.adapters.FallOfWicketsScorecardAdapter" />
+            type="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.adapter.FallOfWicketsScorecardAdapter" />
 
         <variable
             name="partnershipsAdapter"
-            type="com.chaudharylabs.cricbuzzclone.ui.adapters.PartnershipScorecardAdapter" />
+            type="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.adapter.PartnershipScorecardAdapter" />
 
         <variable
             name="batterAdapter1"
-            type="com.chaudharylabs.cricbuzzclone.ui.adapters.BatterScorecardAdapter" />
+            type="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.adapter.BatterScorecardAdapter" />
 
         <variable
             name="bowlerAdapter1"
-            type="com.chaudharylabs.cricbuzzclone.ui.adapters.BowlerScorecardAdapter" />
+            type="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.adapter.BowlerScorecardAdapter" />
 
         <variable
             name="fallOfWicketsAdapter1"
-            type="com.chaudharylabs.cricbuzzclone.ui.adapters.FallOfWicketsScorecardAdapter" />
+            type="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.adapter.FallOfWicketsScorecardAdapter" />
 
         <variable
             name="partnershipsAdapter1"
-            type="com.chaudharylabs.cricbuzzclone.ui.adapters.PartnershipScorecardAdapter" />
+            type="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.adapter.PartnershipScorecardAdapter" />
 
         <variable
             name="presenter"
-            type="com.chaudharylabs.cricbuzzclone.ui.ScorecardFragment" />
+            type="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.ScorecardFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/primary_light_black"
-        tools:context=".ui.ScorecardFragment">
+        tools:context=".ui.home.matche_details.ScorecardFragment">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_status"

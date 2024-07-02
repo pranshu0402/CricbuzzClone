@@ -7,18 +7,18 @@
 
         <variable
             name="adapter"
-            type="com.chaudharylabs.cricbuzzclone.ui.adapters.LiveAdapter" />
+            type="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.adapter.LiveAdapter" />
 
         <variable
             name="presenter"
-            type="com.chaudharylabs.cricbuzzclone.ui.LiveFragment" />
+            type="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.LiveFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/dark_light"
-        tools:context=".ui.LiveFragment">
+        tools:context=".ui.home.matche_details.LiveFragment">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/lyt_team"

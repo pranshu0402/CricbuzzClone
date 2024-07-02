@@ -7,38 +7,38 @@
 
         <variable
             name="team1"
-            type="com.chaudharylabs.cricbuzzclone.ui.adapters.Team1Adapter" />
+            type="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.adapter.Team1Adapter" />
 
         <variable
             name="team2"
-            type="com.chaudharylabs.cricbuzzclone.ui.adapters.Team2Adapter" />
+            type="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.adapter.Team2Adapter" />
 
         <variable
             name="bench1"
-            type="com.chaudharylabs.cricbuzzclone.ui.adapters.Bench1Adapter" />
+            type="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.adapter.Bench1Adapter" />
 
         <variable
             name="bench2"
-            type="com.chaudharylabs.cricbuzzclone.ui.adapters.Bench2Adapter" />
+            type="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.adapter.Bench2Adapter" />
 
         <variable
             name="staff1"
-            type="com.chaudharylabs.cricbuzzclone.ui.adapters.Staff1Adapter" />
+            type="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.adapter.Staff1Adapter" />
 
         <variable
             name="staff2"
-            type="com.chaudharylabs.cricbuzzclone.ui.adapters.Staff2Adapter" />
+            type="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.adapter.Staff2Adapter" />
 
         <variable
             name="presenter"
-            type="com.chaudharylabs.cricbuzzclone.ui.SquadsFragment" />
+            type="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.SquadsFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/dark_light"
-        tools:context=".ui.SquadsFragment">
+        tools:context=".ui.home.matche_details.SquadsFragment">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_team1"

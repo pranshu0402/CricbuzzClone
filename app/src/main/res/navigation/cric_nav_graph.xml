@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.chaudharylabs.cricbuzzclone.ui.HomeFragment"
+        android:name="com.chaudharylabs.cricbuzzclone.ui.home.HomeFragment"
         android:label="@string/fragment_home"
         tools:layout="@layout/fragment_home">
         <action
@@ -19,20 +19,20 @@
     </fragment>
     <fragment
         android:id="@+id/matchesFragment"
-        android:name="com.chaudharylabs.cricbuzzclone.ui.MatchesFragment"
+        android:name="com.chaudharylabs.cricbuzzclone.ui.matches.MatchesFragment"
         android:label="fragment_matches"
         tools:layout="@layout/fragment_matches" />
     <fragment
         android:id="@+id/newsFragment"
-        android:name="com.chaudharylabs.cricbuzzclone.ui.NewsFragment"
+        android:name="com.chaudharylabs.cricbuzzclone.ui.news.NewsFragment"
         android:label="fragment_news"
         tools:layout="@layout/fragment_news" />
     <fragment
         android:id="@+id/storyDetailsFragment"
-        android:name="com.chaudharylabs.cricbuzzclone.ui.StoryDetailsFragment"
+        android:name="com.chaudharylabs.cricbuzzclone.ui.home.StoryDetailsFragment"
         android:label="@string/story_details_label" />
     <fragment
         android:id="@+id/matchDetailsFragment"
-        android:name="com.chaudharylabs.cricbuzzclone.ui.MatchDetailsFragment"
+        android:name="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.MatchDetailsFragment"
         android:label="MatchDetailsFragment" />
 </navigation>

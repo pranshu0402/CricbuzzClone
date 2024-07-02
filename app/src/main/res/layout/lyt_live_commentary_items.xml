@@ -6,23 +6,73 @@
 
         <variable
             name="present"
-            type="com.chaudharylabs.cricbuzzclone.ui.LiveFragment" />
+            type="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.LiveFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/bottom_nav_background"
-        android:paddingStart="20dp"
         android:paddingTop="10dp"
         android:paddingEnd="20dp"
+        android:paddingStart="1dp"
         android:paddingBottom="10dp">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/lyt_liveFeed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_over"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/averta_semibold"
+                android:gravity="start"
+                android:letterSpacing="0.01"
+                android:lineSpacingExtra="2sp"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.1" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/ch_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/black"
+                app:chipBackgroundColor="@color/white"
+                app:chipCornerRadius="50dp"
+                app:chipEndPadding="2dp"
+                app:chipStartPadding="2dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_over" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_liveFeed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:letterSpacing="0.01"
+                android:lineSpacingExtra="2sp"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@id/tv_over"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.9" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_liveFeed"
+            android:id="@+id/tv_feed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:letterSpacing="0.01"
+            android:layout_marginStart="19dp"
+            android:layout_marginEnd="0dp"
             android:lineSpacingExtra="2sp"
             android:textColor="@color/white"
             android:textSize="14sp"

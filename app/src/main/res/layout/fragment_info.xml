@@ -13,14 +13,14 @@
 
         <variable
             name="presenter"
-            type="com.chaudharylabs.cricbuzzclone.ui.InfoFragment" />
+            type="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.InfoFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/dark_light"
-        tools:context=".ui.InfoFragment">
+        tools:context=".ui.home.matche_details.InfoFragment">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"

@@ -10,7 +10,7 @@
 
         <variable
             name="presenter"
-            type="com.chaudharylabs.cricbuzzclone.ui.HomeFragment" />
+            type="com.chaudharylabs.cricbuzzclone.ui.home.HomeFragment" />
     </data>
 
     <com.chaudharylabs.cricbuzzclone.ui.utils.CricConstraintLayout

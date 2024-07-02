@@ -10,7 +10,7 @@
 
         <variable
             name="presenter"
-            type="com.chaudharylabs.cricbuzzclone.ui.ScorecardFragment" />
+            type="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.ScorecardFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
