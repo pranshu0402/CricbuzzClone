@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.flowOn
 
 class NewsRepository(application: Application) : BaseRepository(application) {
 
-    suspend fun getTopStories(
+    suspend fun getAllStories(
     ): Flow<NetworkResult<TopStoriesResponse>> {
         return flow {
             try {

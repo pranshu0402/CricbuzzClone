@@ -11,9 +11,9 @@ import kotlinx.coroutines.flow.Flow
 class NewsViewModel(application: Application) : AndroidViewModel(application) {
     private var newsRepository: NewsRepository = NewsRepository(application)
 
-    suspend fun getTopStories(
+    suspend fun getAllStories(
     ): Flow<NetworkResult<TopStoriesResponse>> {
-        return newsRepository.getTopStories()
+        return newsRepository.getAllStories()
     }
 
     suspend fun getStoryDetails(
