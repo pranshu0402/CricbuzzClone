@@ -35,9 +35,13 @@
     <string name="staff">Staff</string>
     <string name="player_of_the_match">Player of the match</string>
     <string name="all_stories">ALL STORIES</string>
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="categories_fragment">CATEGORIES</string>
     <string name="premium_fragment">PREMIUM</string>
     <string name="topics_fragment">TOPICS</string>
+    <string name="fragment_news">NewsFragment</string>
+    <string name="fragment_all_stories">AllStoriesFragment</string>
+    <string name="fragment_premium_stories">PremiumNewsFragment</string>
+    <string name="fragment_categories">CategoriesFragment</string>
+    <string name="fragment_topics">TopicsFragment</string>
+    <string name="news">News</string>
 </resources>

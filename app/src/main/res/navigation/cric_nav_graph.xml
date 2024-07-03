@@ -25,8 +25,18 @@
     <fragment
         android:id="@+id/newsFragment"
         android:name="com.chaudharylabs.cricbuzzclone.ui.news.NewsFragment"
-        android:label="fragment_news"
-        tools:layout="@layout/fragment_news" />
+        android:label="@string/fragment_news"
+        tools:layout="@layout/fragment_news">
+        <action
+            android:id="@+id/action_newsFragment_to_storyDetailsFragment"
+            app:destination="@id/storyDetailsFragment" />
+        <action
+            android:id="@+id/action_newsFragment_to_categoryChildFragment"
+            app:destination="@id/categoryChildFragment" />
+        <action
+            android:id="@+id/action_newsFragment_to_topicsChildFragment"
+            app:destination="@id/topicsChildFragment" />
+    </fragment>
     <fragment
         android:id="@+id/storyDetailsFragment"
         android:name="com.chaudharylabs.cricbuzzclone.ui.home.StoryDetailsFragment"
@@ -35,4 +45,28 @@
         android:id="@+id/matchDetailsFragment"
         android:name="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.MatchDetailsFragment"
         android:label="MatchDetailsFragment" />
+    <fragment
+        android:id="@+id/allStoriesFragment"
+        android:name="com.chaudharylabs.cricbuzzclone.ui.news.all_stories.AllStoriesFragment"
+        android:label="@string/fragment_all_stories">
+        <action
+            android:id="@+id/action_allStoriesFragment_to_storyDetailsFragment"
+            app:destination="@id/storyDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/premiumNewsFragment"
+        android:name="com.chaudharylabs.cricbuzzclone.ui.news.premium_editorials.PremiumNewsFragment"
+        android:label="@string/fragment_premium_stories">
+        <action
+            android:id="@+id/action_premiumNewsFragment_to_storyDetailsFragment"
+            app:destination="@id/storyDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryChildFragment"
+        android:name="com.chaudharylabs.cricbuzzclone.ui.news.categories.CategoryChildFragment"
+        android:label="CategoryChildFragment" />
+    <fragment
+        android:id="@+id/topicsChildFragment"
+        android:name="com.chaudharylabs.cricbuzzclone.ui.news.topics.TopicsChildFragment"
+        android:label="TopicsChildFragment" />
 </navigation>

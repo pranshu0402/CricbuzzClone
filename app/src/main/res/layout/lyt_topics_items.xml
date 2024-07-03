@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="story"
+            type="com.chaudharylabs.cricbuzzclone.data.model.news.topics.TopicsResponse.Topic" />
+
+        <variable
+            name="presenter"
+            type="com.chaudharylabs.cricbuzzclone.ui.news.topics.TopicsFragment" />
+    </data>
+
+    <com.chaudharylabs.cricbuzzclone.ui.utils.CricConstraintLayout
+        android:id="@+id/lyt_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:onClick="@{()-> presenter.topics(story)}"
+        android:padding="14dp"
+        app:customBackgroundColor="#404040">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_story_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/averta_semibold"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_story_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/averta_semibold"
+            android:textColor="@color/primary_soft"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/tv_story_title" />
+
+    </com.chaudharylabs.cricbuzzclone.ui.utils.CricConstraintLayout>
+</layout>

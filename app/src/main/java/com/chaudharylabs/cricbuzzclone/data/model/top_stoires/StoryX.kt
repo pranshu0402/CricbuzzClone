@@ -1,5 +1,9 @@
 package com.chaudharylabs.cricbuzzclone.data.model.top_stoires
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class StoryX(
     val context: String?,
     val hline: String?,
@@ -11,4 +15,4 @@ data class StoryX(
     val source: String?,
     val storyType: String?,
     val coverImage: CoverImage?
-)
+):Parcelable

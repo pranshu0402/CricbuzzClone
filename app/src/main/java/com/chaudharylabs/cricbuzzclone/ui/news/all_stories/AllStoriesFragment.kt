@@ -14,7 +14,7 @@ import com.chaudharylabs.cricbuzzclone.data.api.NetworkResult
 import com.chaudharylabs.cricbuzzclone.data.model.top_stoires.TopStoriesResponse
 import com.chaudharylabs.cricbuzzclone.databinding.FragmentAllStoriesBinding
 import com.chaudharylabs.cricbuzzclone.ui.BaseFragment
-import com.chaudharylabs.cricbuzzclone.ui.home.HomeFragmentDirections
+import com.chaudharylabs.cricbuzzclone.ui.news.NewsFragmentDirections
 import com.chaudharylabs.cricbuzzclone.ui.news.NewsViewModel
 import com.chaudharylabs.cricbuzzclone.ui.utils.Constants
 import kotlinx.coroutines.flow.FlowCollector
@@ -79,11 +79,14 @@ class AllStoriesFragment : BaseFragment() {
         val bundle = Bundle()
         bundle.putString(Constants.STORY_ID, storyId)
 
-        if (findNavController().currentDestination?.label == getString(R.string.fragment_home) && isAdded) {
+        if (findNavController().currentDestination?.label == getString(R.string.fragment_news) && isAdded) {
             findNavController().safeNavigateWithArgs(
-                HomeFragmentDirections.actionHomeFragmentToStoryDetailsFragment(),
+                NewsFragmentDirections.actionNewsFragmentToStoryDetailsFragment(),
                 bundle
             )
+        } else {
+            println(findNavController().currentDestination?.label)
+            println(findNavController().currentDestination?.label)
         }
     }
 
