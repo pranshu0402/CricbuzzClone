@@ -64,9 +64,17 @@
     <fragment
         android:id="@+id/categoryChildFragment"
         android:name="com.chaudharylabs.cricbuzzclone.ui.news.categories.CategoryChildFragment"
-        android:label="CategoryChildFragment" />
+        android:label="CategoryChildFragment">
+        <action
+            android:id="@+id/action_categoryChildFragment_to_storyDetailsFragment"
+            app:destination="@id/storyDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/topicsChildFragment"
         android:name="com.chaudharylabs.cricbuzzclone.ui.news.topics.TopicsChildFragment"
-        android:label="TopicsChildFragment" />
+        android:label="TopicsChildFragment">
+        <action
+            android:id="@+id/action_topicsChildFragment_to_storyDetailsFragment"
+            app:destination="@id/storyDetailsFragment" />
+    </fragment>
 </navigation>

@@ -34,6 +34,7 @@ class TopicsChildAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(storyX: StoryX?) {
             binding.apply {
+                presenter = present
                 tvStoryTitle.text = storyX?.hline
                 storyDetailsId = storyX?.id.toString()
                 tvStoryDesc.text = storyX?.intro

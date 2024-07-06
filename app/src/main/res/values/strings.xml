@@ -43,5 +43,7 @@
     <string name="fragment_premium_stories">PremiumNewsFragment</string>
     <string name="fragment_categories">CategoriesFragment</string>
     <string name="fragment_topics">TopicsFragment</string>
+    <string name="fragment_categories_child">CategoryChildFragment</string>
+    <string name="fragment_topics_child">TopicsChildFragment</string>
     <string name="news">News</string>
 </resources>

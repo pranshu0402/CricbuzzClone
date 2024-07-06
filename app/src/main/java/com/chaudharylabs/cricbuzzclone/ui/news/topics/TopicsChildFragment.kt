@@ -15,7 +15,6 @@ import com.chaudharylabs.cricbuzzclone.data.model.news.topics.TopicsResponse
 import com.chaudharylabs.cricbuzzclone.data.model.top_stoires.TopStoriesResponse
 import com.chaudharylabs.cricbuzzclone.databinding.FragmentTopicsChildBinding
 import com.chaudharylabs.cricbuzzclone.ui.BaseFragment
-import com.chaudharylabs.cricbuzzclone.ui.news.NewsFragmentDirections
 import com.chaudharylabs.cricbuzzclone.ui.news.NewsViewModel
 import com.chaudharylabs.cricbuzzclone.ui.utils.Constants
 import kotlinx.coroutines.flow.FlowCollector
@@ -39,7 +38,7 @@ class TopicsChildFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_topics_child, container, false)
         return binding.root
@@ -93,9 +92,9 @@ class TopicsChildFragment : BaseFragment() {
         val bundle = Bundle()
         bundle.putString(Constants.STORY_ID, storyId)
 
-        if (findNavController().currentDestination?.label == getString(R.string.fragment_news) && isAdded) {
+        if (findNavController().currentDestination?.label == getString(R.string.fragment_topics_child) && isAdded) {
             findNavController().safeNavigateWithArgs(
-                NewsFragmentDirections.actionNewsFragmentToStoryDetailsFragment(),
+                TopicsChildFragmentDirections.actionTopicsChildFragmentToStoryDetailsFragment(),
                 bundle
             )
         }
