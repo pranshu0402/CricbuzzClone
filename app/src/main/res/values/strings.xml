@@ -46,4 +46,8 @@
     <string name="fragment_categories_child">CategoryChildFragment</string>
     <string name="fragment_topics_child">TopicsChildFragment</string>
     <string name="news">News</string>
+    <string name="current_matches">Current Matches</string>
+    <string name="live_matches_fragment">LIVE</string>
+    <string name="upcoming_matches_fragment">UPCOMING</string>
+    <string name="recent_matches_fragment">RECENT</string>
 </resources>
