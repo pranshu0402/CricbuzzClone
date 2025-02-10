@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Inngs1(
     val inningsId: Int?,
-    val overs: Double?,
-    val runs: Int?,
-    val wickets: Int?
+    var overs: Double?,
+    var runs: Int?,
+    var wickets: Int?
 ) : Parcelable

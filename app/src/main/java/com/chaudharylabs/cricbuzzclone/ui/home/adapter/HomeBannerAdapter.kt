@@ -137,6 +137,30 @@ class HomeBannerAdapter(
                         val team2Overs = matche.matchScore?.team2Score?.inngs1?.overs.toString()
                             .replace("19.6", "20")
 
+                        if (matche.matchScore?.team1Score?.inngs1?.runs.toString() == "null") {
+                            matche.matchScore?.team1Score?.inngs1?.runs = 0
+                        }
+
+                        if (matche.matchScore?.team1Score?.inngs1?.wickets.toString() == "null") {
+                            matche.matchScore?.team1Score?.inngs1?.wickets = 0
+                        }
+
+                        if (matche.matchScore?.team1Score?.inngs1?.overs.toString() == "null") {
+                            matche.matchScore?.team1Score?.inngs1?.overs = 0.0
+                        }
+
+                        if (matche.matchScore?.team2Score?.inngs1?.runs.toString() == "null") {
+                            matche.matchScore?.team2Score?.inngs1?.runs = 0
+                        }
+
+                        if (matche.matchScore?.team2Score?.inngs1?.wickets.toString() == "null") {
+                            matche.matchScore?.team2Score?.inngs1?.wickets = 0
+                        }
+
+                        if (matche.matchScore?.team2Score?.inngs1?.overs.toString() == "null") {
+                            matche.matchScore?.team2Score?.inngs1?.overs = 0.0
+                        }
+
                         val team1Score =
                             "${matche.matchScore?.team1Score?.inngs1?.runs}-${matche.matchScore?.team1Score?.inngs1?.wickets} ($team1Overs)"
                         val team2Score =
