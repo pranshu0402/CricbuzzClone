@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="matchesAdapter"
+            type="com.chaudharylabs.cricbuzzclone.ui.matches.adapter.LiveMatchesAdapter" />
+
+        <variable
+            name="presenter"
+            type="com.chaudharylabs.cricbuzzclone.ui.matches.ui.LiveMatchesFragment" />
+    </data>
+
+    <com.chaudharylabs.cricbuzzclone.ui.utils.CricConstraintLayout
+        android:id="@+id/lyt_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:customBackgroundColor="#404040"
+        app:customBackgroundRadius="8dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_seriesName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_matches"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:adapter="@{matchesAdapter}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/txt_seriesName" />
+
+    </com.chaudharylabs.cricbuzzclone.ui.utils.CricConstraintLayout>
+</layout>

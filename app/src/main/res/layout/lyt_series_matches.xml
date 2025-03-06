@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="liveSeriesMatchesAdapter"
+            type="com.chaudharylabs.cricbuzzclone.ui.matches.adapter.LiveSeriesMatchesAdapter" />
+
+        <variable
+            name="presenter"
+            type="com.chaudharylabs.cricbuzzclone.ui.matches.ui.LiveMatchesFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_light_black">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_seriesMatches"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:adapter="@{liveSeriesMatchesAdapter}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

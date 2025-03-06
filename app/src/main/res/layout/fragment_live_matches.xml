@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="liveTypeMatchesAdapter"
+            type="com.chaudharylabs.cricbuzzclone.ui.matches.adapter.LiveTypeMatchesAdapter" />
+
+        <variable
             name="presenter"
             type="com.chaudharylabs.cricbuzzclone.ui.matches.ui.LiveMatchesFragment" />
     </data>
@@ -29,17 +33,14 @@
 
         </HorizontalScrollView>
 
-        <TextView
-            android:id="@+id/tv_match_type"
-            android:layout_width="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_typeMatches"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:text="@string/live_matches_fragment"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginTop="16dp"
+            app:adapter="@{liveTypeMatchesAdapter}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/hsv_chip" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
