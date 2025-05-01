@@ -77,4 +77,8 @@
             android:id="@+id/action_topicsChildFragment_to_storyDetailsFragment"
             app:destination="@id/storyDetailsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/liveMatchesFragment"
+        android:name="com.chaudharylabs.cricbuzzclone.ui.matches.ui.LiveMatchesFragment"
+        android:label="LiveMatchesFragment" />
 </navigation>

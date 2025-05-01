@@ -10,16 +10,23 @@
             type="com.chaudharylabs.cricbuzzclone.data.model.matches.Matche" />
 
         <variable
-            name="presenter"
+            name="liveMatchesFragmentPresenter"
             type="com.chaudharylabs.cricbuzzclone.ui.matches.ui.LiveMatchesFragment" />
+
+        <variable
+            name="upcomingMatchesFragmentPresenter"
+            type="com.chaudharylabs.cricbuzzclone.ui.matches.ui.UpcomingMatchesFragment" />
+
+        <variable
+            name="recentMatchesFragmentPresenter"
+            type="com.chaudharylabs.cricbuzzclone.ui.matches.ui.RecentMatchesFragment" />
     </data>
 
-    <com.chaudharylabs.cricbuzzclone.ui.utils.CricConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/lyt_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:customBackgroundColor="#404040"
-        app:customBackgroundRadius="8dp">
+        android:background="#404040">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_matchDesc"
@@ -146,5 +153,5 @@
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/lyt_team_name" />
-    </com.chaudharylabs.cricbuzzclone.ui.utils.CricConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

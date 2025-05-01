@@ -9,20 +9,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.chaudharylabs.cricbuzzclone.R
 import com.chaudharylabs.cricbuzzclone.data.model.matches.Matche
+import com.chaudharylabs.cricbuzzclone.databinding.LytHomeBannerListBinding
 import com.chaudharylabs.cricbuzzclone.databinding.LytMatcheItemsBinding
 import com.chaudharylabs.cricbuzzclone.ui.matches.ui.LiveMatchesFragment
+import com.chaudharylabs.cricbuzzclone.ui.matches.ui.RecentMatchesFragment
+import com.chaudharylabs.cricbuzzclone.ui.matches.ui.UpcomingMatchesFragment
 import com.chaudharylabs.cricbuzzclone.ui.utils.Constants.URL
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-
-class LiveMatchesAdapter(
-    private val liveMatchesFragment: LiveMatchesFragment,
-    private val list: List<Matche>
+class MatchesAdapter(
+    private var liveMatchesFragment: LiveMatchesFragment?,
+    private var upcomingMatchesFragment: UpcomingMatchesFragment?,
+    private var recentMatchesFragment: RecentMatchesFragment?,
+    private var list: List<Matche>
 ) :
-    RecyclerView.Adapter<LiveMatchesAdapter.ViewHolder>() {
+    RecyclerView.Adapter<MatchesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -31,8 +35,8 @@ class LiveMatchesAdapter(
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(list[position])
+    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+        viewHolder.bind(list[position])
     }
 
     override fun getItemCount(): Int {
@@ -43,11 +47,23 @@ class LiveMatchesAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(matche: Matche) {
             binding.apply {
-                presenter = liveMatchesFragment
-                match = matche
+
+                if (liveMatchesFragment != null) {
+                    this.liveMatchesFragmentPresenter = liveMatchesFragment
+                }
+                if (upcomingMatchesFragment != null) {
+                    this.upcomingMatchesFragmentPresenter = upcomingMatchesFragment
+                }
+                if (recentMatchesFragment != null) {
+                    this.recentMatchesFragmentPresenter = recentMatchesFragment
+                }
+
+                this.match = matche
+                tvMatchDesc.text = matche.matchInfo?.matchDesc
+                tvSeriesName.text = " - ${matche.matchInfo?.seriesName}"
 
                 Glide.with(ivTeam1Pic.context)
-                    .load("$URL/c${matche.matchInfo?.team1?.imageId.toString()}/.jpg")
+                    .load("${URL}/c${matche.matchInfo?.team1?.imageId.toString()}/.jpg")
                     .into(ivTeam1Pic)
 
                 Glide.with(ivTeam2Pic.context)
@@ -235,4 +251,5 @@ class LiveMatchesAdapter(
             date
         }
     }
+
 }

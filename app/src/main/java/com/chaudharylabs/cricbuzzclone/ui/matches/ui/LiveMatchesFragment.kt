@@ -13,13 +13,11 @@ import com.chaudharylabs.cricbuzzclone.data.api.NetworkResult
 import com.chaudharylabs.cricbuzzclone.data.model.matches.MatchesResponse
 import com.chaudharylabs.cricbuzzclone.databinding.FragmentLiveMatchesBinding
 import com.chaudharylabs.cricbuzzclone.ui.BaseFragment
-import com.chaudharylabs.cricbuzzclone.ui.matches.adapter.LiveTypeMatchesAdapter
+import com.chaudharylabs.cricbuzzclone.ui.matches.adapter.TypeMatcheAdapter
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 class LiveMatchesFragment : BaseFragment() {
 
@@ -73,7 +71,7 @@ class LiveMatchesFragment : BaseFragment() {
 
     private fun getLiveMatches() {
         lifecycleScope.launch(Dispatchers.IO) {
-            matchesTabViewModel.getRecentMatches().collect(liveMatchesCallback)
+            matchesTabViewModel.getLiveMatches().collect(liveMatchesCallback)
         }
     }
 
@@ -89,7 +87,12 @@ class LiveMatchesFragment : BaseFragment() {
                         if (it.typeMatches != null) {
                             lifecycleScope.launch {
                                 binding.rvTypeMatches.adapter =
-                                    LiveTypeMatchesAdapter(this@LiveMatchesFragment, it.typeMatches)
+                                    TypeMatcheAdapter(
+                                        this@LiveMatchesFragment,
+                                        null,
+                                        null,
+                                        it.typeMatches
+                                    )
                             }
                         }
                     }

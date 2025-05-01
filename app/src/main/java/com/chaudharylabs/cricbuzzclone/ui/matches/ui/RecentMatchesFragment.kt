@@ -1,60 +1,112 @@
 package com.chaudharylabs.cricbuzzclone.ui.matches.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.chaudharylabs.cricbuzzclone.R
+import com.chaudharylabs.cricbuzzclone.data.api.NetworkResult
+import com.chaudharylabs.cricbuzzclone.data.model.matches.MatchesResponse
+import com.chaudharylabs.cricbuzzclone.databinding.FragmentLiveMatchesBinding
+import com.chaudharylabs.cricbuzzclone.databinding.FragmentRecentMatchesBinding
+import com.chaudharylabs.cricbuzzclone.ui.BaseFragment
+import com.chaudharylabs.cricbuzzclone.ui.matches.adapter.TypeMatcheAdapter
+import com.google.android.material.chip.Chip
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [RecentMatchesFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class RecentMatchesFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+class RecentMatchesFragment : BaseFragment() {
+    private lateinit var binding: FragmentRecentMatchesBinding
+    private lateinit var matchesTabViewModel: MatchesTabViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recent_matches, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_recent_matches, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RecentMatchesFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RecentMatchesFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.apply {
+            presenter = this@RecentMatchesFragment
+            lifecycleOwner = this@RecentMatchesFragment
+            executePendingBindings()
+        }
+        setBottomNavVisibility(View.VISIBLE)
+
+        matchesTabViewModel = ViewModelProvider(this)[MatchesTabViewModel::class.java]
+
+        setupChip()
+
+        getLiveMatches()
+    }
+
+    private fun setupChip() {
+        val nameList =
+            arrayListOf("All", "International", "League", "Domestic", "Women")
+        for (name in nameList) {
+            val chip = createChip(name)
+            binding.cgChip.addView(chip)
+        }
+    }
+
+    private fun createChip(label: String): Chip {
+        val chip = requireActivity().layoutInflater.inflate(
+            R.layout.lyt_choice_chip,
+            null,
+            false
+        ) as Chip
+        chip.text = label
+        chip.isChipIconVisible = false
+        return chip
+    }
+
+    private fun getLiveMatches() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            matchesTabViewModel.getRecentMatches().collect(liveMatchesCallback)
+        }
+    }
+
+    private val liveMatchesCallback: FlowCollector<NetworkResult<MatchesResponse>> =
+        FlowCollector { response ->
+            when (response) {
+                is NetworkResult.Loading -> {
                 }
+
+                is NetworkResult.Success -> {
+                    response.data?.let {
+                        Log.d(TAG, "liveMatches response Success :: $it")
+                        if (it.typeMatches != null) {
+                            lifecycleScope.launch {
+                                binding.rvTypeMatches.adapter =
+                                    TypeMatcheAdapter(
+                                        null,
+                                        null,
+                                        this@RecentMatchesFragment,
+                                        it.typeMatches
+                                    )
+                            }
+                        }
+                    }
+                }
+
+                is NetworkResult.Error -> {
+                    Log.e(TAG, "liveMatches response Error :: ${response.message}")
+                }
+
             }
+        }
+
+    companion object {
+        private const val TAG = "RecentMatchesFragment"
     }
 }
