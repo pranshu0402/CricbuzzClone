@@ -9,9 +9,11 @@ Retrieves data from the Rapid API
 
 <h2>Screenshot</h2>
 
-![Screenshot_20250418_162046_new](https://github.com/user-attachments/assets/a9f31f15-1255-4614-ba08-e643e54ff6ef)
-![Screenshot_20250418_162056_new](https://github.com/user-attachments/assets/49432b0a-48cc-4566-b57d-beeb78651b52)
-![Screenshot_20250501_180628_new](https://github.com/user-attachments/assets/5e21e828-3218-4a2b-b0e8-a560da27823f)
-![Screenshot_20250501_180602_new](https://github.com/user-attachments/assets/520a4cd7-fb8f-4695-b944-96e81b668968)
-![Screenshot_20250501_180557_new](https://github.com/user-attachments/assets/0f9a958b-231a-4602-9372-5962f2498be8)
-![Screenshot_20250501_180548_new](https://github.com/user-attachments/assets/f8b1f8ed-fbd6-40a7-9f7f-d65b2038c720)
+![Screenshot_20250418_162046 (1)](https://github.com/user-attachments/assets/7fe53876-4e88-4112-a6c4-beaf3997600a)
+![Screenshot_20250418_162056 (1)](https://github.com/user-attachments/assets/e02f0236-110c-4755-b456-d778e0802f3d)
+![Screenshot_20250501_180602 (1)](https://github.com/user-attachments/assets/7b5a8174-d23c-4613-ae5c-36954aea3931)
+
+![Screenshot_20250501_180557 (1) (1)](https://github.com/user-attachments/assets/9d59f02a-f549-4d69-9edd-8288aa79aa0a)
+![Screenshot_20250501_180548 (1)](https://github.com/user-attachments/assets/502e14e1-20e1-434a-a74a-5615d730c556)
+![Screenshot_20250501_180628 (1)](https://github.com/user-attachments/assets/f48a1f36-572b-4b92-99fc-cf2907245a4d)
+
