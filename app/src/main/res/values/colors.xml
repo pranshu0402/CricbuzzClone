@@ -6,13 +6,14 @@
     <color name="primary_dark_green">#79CB7D</color>
     <color name="primary_soft">#cbc8c9</color>
     <color name="dark_light">#2C2C2C</color>
-    <color name="dark_light_2">#3C3C3C</color>
+    <color name="dark_light_2">#353535</color>
     <color name="dark_light_1">#5B5A5A</color>
     <color name="dark_black">#212121</color>
     <color name="primary_light_black">#3C3C3C</color>
     <color name="bottom_nav_background">#302D2D</color>
-    <color name="primary_brown">#D84315</color>
-    <color name="primary_light_blue">#059EFA</color>
+    <color name="primary_brown">#F89D18</color>
+    <color name="primary_red">#F44336</color>
+    <color name="primary_light_blue">#50BAFA</color>
     <color name="primary_purple">#CE95F1</color>
     <color name="primary_browns">#DEB87B</color>
 </resources>
