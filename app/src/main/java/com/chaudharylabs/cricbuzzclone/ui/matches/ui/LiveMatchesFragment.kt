@@ -8,12 +8,15 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.chaudharylabs.cricbuzzclone.R
 import com.chaudharylabs.cricbuzzclone.data.api.NetworkResult
+import com.chaudharylabs.cricbuzzclone.data.model.matches.Matche
 import com.chaudharylabs.cricbuzzclone.data.model.matches.MatchesResponse
 import com.chaudharylabs.cricbuzzclone.databinding.FragmentLiveMatchesBinding
 import com.chaudharylabs.cricbuzzclone.ui.BaseFragment
 import com.chaudharylabs.cricbuzzclone.ui.matches.adapter.TypeMatcheAdapter
+import com.chaudharylabs.cricbuzzclone.ui.utils.Constants.MATCH
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.FlowCollector
@@ -72,6 +75,20 @@ class LiveMatchesFragment : BaseFragment() {
     private fun getLiveMatches() {
         lifecycleScope.launch(Dispatchers.IO) {
             matchesTabViewModel.getLiveMatches().collect(liveMatchesCallback)
+        }
+    }
+
+    fun goToLive(matche: Matche) {
+        val bundle = Bundle()
+        bundle.putParcelable(MATCH, matche)
+
+        lifecycleScope.launchWhenResumed {
+            if (findNavController().currentDestination?.label == "LiveFragment" && isAdded) {
+                findNavController().safeNavigateWithArgs(
+                    LiveMatchesFragmentDirections.actionLiveMatchesFragmentToLiveFragment(),
+                    bundle
+                )
+            }
         }
     }
 

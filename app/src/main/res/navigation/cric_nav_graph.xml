@@ -80,5 +80,35 @@
     <fragment
         android:id="@+id/liveMatchesFragment"
         android:name="com.chaudharylabs.cricbuzzclone.ui.matches.ui.LiveMatchesFragment"
-        android:label="LiveMatchesFragment" />
+        android:label="LiveMatchesFragment">
+        <action
+            android:id="@+id/action_liveMatchesFragment_to_liveFragment"
+            app:destination="@id/liveFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/upcomingMatchesFragment"
+        android:name="com.chaudharylabs.cricbuzzclone.ui.matches.ui.UpcomingMatchesFragment"
+        android:label="UpcomingMatchesFragment">
+        <action
+            android:id="@+id/action_upcomingMatchesFragment_to_infoFragment"
+            app:destination="@id/infoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recentMatchesFragment"
+        android:name="com.chaudharylabs.cricbuzzclone.ui.matches.ui.RecentMatchesFragment"
+        android:label="RecentMatchesFragment">
+        <action
+            android:id="@+id/action_recentMatchesFragment_to_liveFragment"
+            app:destination="@id/liveFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/liveFragment"
+        android:name="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.LiveFragment"
+        android:label="LiveFragment" />
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.InfoFragment"
+        android:label="InfoFragment" />
+
+
 </navigation>

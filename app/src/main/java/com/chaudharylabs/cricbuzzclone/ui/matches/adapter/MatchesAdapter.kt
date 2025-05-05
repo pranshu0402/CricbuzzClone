@@ -49,12 +49,54 @@ class MatchesAdapter(
 
                 if (liveMatchesFragment != null) {
                     this.liveMatchesFragmentPresenter = liveMatchesFragment
+
+                    if (matche.matchInfo?.state == "Complete") {
+                        tvStatus.setTextColor(
+                            AppCompatResources.getColorStateList(
+                                tvStatus.context, R.color.primary_light_blue
+                            )
+                        )
+                    } else {
+                        tvStatus.setTextColor(
+                            AppCompatResources.getColorStateList(
+                                tvStatus.context, R.color.primary_red
+                            )
+                        )
+                    }
+
+                    lytList.setOnClickListener {
+                        liveMatchesFragment?.goToLive(matche)
+                    }
                 }
                 if (upcomingMatchesFragment != null) {
                     this.upcomingMatchesFragmentPresenter = upcomingMatchesFragment
+
+                    if (matche.matchInfo?.state == "Upcoming") {
+                        tvStartDate.setTextColor(
+                            AppCompatResources.getColorStateList(
+                                tvStartDate.context, R.color.primary_brown
+                            )
+                        )
+                    }
+
+                    lytList.setOnClickListener {
+                        upcomingMatchesFragment?.goToInfo(matche)
+                    }
                 }
                 if (recentMatchesFragment != null) {
                     this.recentMatchesFragmentPresenter = recentMatchesFragment
+
+                    if (matche.matchInfo?.state == "Complete") {
+                        tvStatus.setTextColor(
+                            AppCompatResources.getColorStateList(
+                                tvStatus.context, R.color.primary_light_blue
+                            )
+                        )
+                    }
+
+                    lytList.setOnClickListener {
+                        recentMatchesFragment?.goToLive(matche)
+                    }
                 }
 
                 this.match = matche
@@ -75,13 +117,13 @@ class MatchesAdapter(
 
                 tvTeam1Name.setTextColor(
                     AppCompatResources.getColorStateList(
-                        tvStartDate.context, R.color.white
+                        tvTeam1Name.context, R.color.white
                     )
                 )
 
                 tvTeam2Name.setTextColor(
                     AppCompatResources.getColorStateList(
-                        tvStartDate.context, R.color.white
+                        tvTeam2Name.context, R.color.white
                     )
                 )
 
@@ -92,76 +134,46 @@ class MatchesAdapter(
                     tvStartDate.text = getDateFromMilliseconds(l)
                 }
 
+                if (matche.matchInfo?.state == "Rain") {
+                    tvStartDate.visibility = View.GONE
+                    tvStatus.visibility = View.VISIBLE
+                    lytTeamScore.visibility = View.GONE
+                }
+
                 if (matche.matchInfo?.state == "Preview") {
                     tvStartDate.visibility = View.VISIBLE
                     tvStatus.visibility = View.GONE
                     lytTeamScore.visibility = View.GONE
-
-                    tvStartDate.setTextColor(
-                        AppCompatResources.getColorStateList(
-                            tvStartDate.context, R.color.primary_brown
-                        )
-                    )
                 }
 
                 if (matche.matchInfo?.state == "In Progress") {
                     tvStartDate.visibility = View.GONE
                     tvStatus.visibility = View.VISIBLE
                     lytTeamScore.visibility = View.VISIBLE
-
-                    tvStatus.setTextColor(
-                        AppCompatResources.getColorStateList(
-                            tvStartDate.context, R.color.primary_brown
-                        )
-                    )
                 }
 
                 if (matche.matchInfo?.state == "Toss") {
-                    tvStartDate.visibility = View.VISIBLE
-                    tvStatus.visibility = View.GONE
+                    tvStartDate.visibility = View.GONE
+                    tvStatus.visibility = View.VISIBLE
                     lytTeamScore.visibility = View.GONE
-
-                    tvStartDate.setTextColor(
-                        AppCompatResources.getColorStateList(
-                            tvStartDate.context, R.color.primary_brown
-                        )
-                    )
                 }
 
                 if (matche.matchInfo?.state == "Upcoming") {
                     tvStartDate.visibility = View.VISIBLE
                     tvStatus.visibility = View.GONE
                     lytTeamScore.visibility = View.GONE
-
-                    tvStartDate.setTextColor(
-                        AppCompatResources.getColorStateList(
-                            tvStartDate.context, R.color.primary_brown
-                        )
-                    )
                 }
 
                 if (matche.matchInfo?.state == "Innings Break") {
                     tvStartDate.visibility = View.GONE
                     tvStatus.visibility = View.VISIBLE
                     lytTeamScore.visibility = View.VISIBLE
-
-                    tvStartDate.setTextColor(
-                        AppCompatResources.getColorStateList(
-                            tvStartDate.context, R.color.primary_brown
-                        )
-                    )
                 }
 
                 if (matche.matchInfo?.state == "Complete") {
                     tvStartDate.visibility = View.GONE
                     tvStatus.visibility = View.VISIBLE
                     lytTeamScore.visibility = View.VISIBLE
-
-                    tvStatus.setTextColor(
-                        AppCompatResources.getColorStateList(
-                            tvStartDate.context, R.color.primary_light_blue
-                        )
-                    )
                 }
 
                 val team1Overs = matche.matchScore?.team1Score?.inngs1?.overs.toString()
@@ -206,23 +218,23 @@ class MatchesAdapter(
                 if (matche.matchInfo?.stateTitle?.contains(team1) == true) {
                     tvTeam1Score.setTextColor(
                         AppCompatResources.getColorStateList(
-                            tvStartDate.context, R.color.white
+                            tvTeam1Score.context, R.color.white
                         )
                     )
                     tvTeam1Name.setTextColor(
                         AppCompatResources.getColorStateList(
-                            tvStartDate.context, R.color.white
+                            tvTeam1Name.context, R.color.white
                         )
                     )
                 } else {
                     tvTeam1Score.setTextColor(
                         AppCompatResources.getColorStateList(
-                            tvStartDate.context, R.color.primary_soft
+                            tvTeam1Score.context, R.color.primary_soft
                         )
                     )
                     tvTeam1Name.setTextColor(
                         AppCompatResources.getColorStateList(
-                            tvStartDate.context, R.color.primary_soft
+                            tvTeam1Name.context, R.color.primary_soft
                         )
                     )
                 }
@@ -230,23 +242,23 @@ class MatchesAdapter(
                 if (matche.matchInfo?.stateTitle?.contains(team2) == true) {
                     tvTeam2Score.setTextColor(
                         AppCompatResources.getColorStateList(
-                            tvStartDate.context, R.color.white
+                            tvTeam2Score.context, R.color.white
                         )
                     )
                     tvTeam2Name.setTextColor(
                         AppCompatResources.getColorStateList(
-                            tvStartDate.context, R.color.white
+                            tvTeam2Name.context, R.color.white
                         )
                     )
                 } else {
                     tvTeam2Score.setTextColor(
                         AppCompatResources.getColorStateList(
-                            tvStartDate.context, R.color.primary_soft
+                            tvTeam2Score.context, R.color.primary_soft
                         )
                     )
                     tvTeam2Name.setTextColor(
                         AppCompatResources.getColorStateList(
-                            tvStartDate.context, R.color.primary_soft
+                            tvTeam2Name.context, R.color.primary_soft
                         )
                     )
                 }
