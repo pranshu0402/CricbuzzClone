@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">CricbuzzClone</string>
-    <string name="cricbuzz_clone">Cricbuzz Clone</string>
     <string name="matches">MATCHES</string>
     <string name="top_stories">TOP STORIES</string>
     <string name="fragment_home">HomeFragment</string>
@@ -41,8 +40,6 @@
     <string name="fragment_news">NewsFragment</string>
     <string name="fragment_all_stories">AllStoriesFragment</string>
     <string name="fragment_premium_stories">PremiumNewsFragment</string>
-    <string name="fragment_categories">CategoriesFragment</string>
-    <string name="fragment_topics">TopicsFragment</string>
     <string name="fragment_categories_child">CategoryChildFragment</string>
     <string name="fragment_topics_child">TopicsChildFragment</string>
     <string name="news">News</string>

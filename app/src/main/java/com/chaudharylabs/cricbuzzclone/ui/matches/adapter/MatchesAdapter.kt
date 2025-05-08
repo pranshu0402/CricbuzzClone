@@ -63,24 +63,16 @@ class MatchesAdapter(
                             )
                         )
                     }
-
-                    lytList.setOnClickListener {
-                        liveMatchesFragment?.goToLive(matche)
-                    }
                 }
                 if (upcomingMatchesFragment != null) {
                     this.upcomingMatchesFragmentPresenter = upcomingMatchesFragment
 
-                    if (matche.matchInfo?.state == "Upcoming") {
+                    if (matche.matchInfo?.state == "Upcoming" || matche.matchInfo?.state == "Preview") {
                         tvStartDate.setTextColor(
                             AppCompatResources.getColorStateList(
                                 tvStartDate.context, R.color.primary_brown
                             )
                         )
-                    }
-
-                    lytList.setOnClickListener {
-                        upcomingMatchesFragment?.goToInfo(matche)
                     }
                 }
                 if (recentMatchesFragment != null) {
@@ -92,10 +84,6 @@ class MatchesAdapter(
                                 tvStatus.context, R.color.primary_light_blue
                             )
                         )
-                    }
-
-                    lytList.setOnClickListener {
-                        recentMatchesFragment?.goToLive(matche)
                     }
                 }
 
