@@ -1,4 +1,4 @@
-package com.chaudharylabs.cricbuzzclone.ui.matches.adapter
+package com.chaudharylabs.cricbuzzclone.ui.matches.upcoming
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,28 +9,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.chaudharylabs.cricbuzzclone.R
 import com.chaudharylabs.cricbuzzclone.data.model.matches.Matche
-import com.chaudharylabs.cricbuzzclone.databinding.LytHomeBannerListBinding
-import com.chaudharylabs.cricbuzzclone.databinding.LytMatcheItemsBinding
-import com.chaudharylabs.cricbuzzclone.ui.matches.ui.LiveMatchesFragment
-import com.chaudharylabs.cricbuzzclone.ui.matches.ui.RecentMatchesFragment
-import com.chaudharylabs.cricbuzzclone.ui.matches.ui.UpcomingMatchesFragment
+import com.chaudharylabs.cricbuzzclone.databinding.LytUpcomingMatchItemsBinding
 import com.chaudharylabs.cricbuzzclone.ui.utils.Constants.URL
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class MatchesAdapter(
-    private var liveMatchesFragment: LiveMatchesFragment?,
-    private var upcomingMatchesFragment: UpcomingMatchesFragment?,
-    private var recentMatchesFragment: RecentMatchesFragment?,
+class UpcomingMatchesAdapter(
+    private var upcomingMatchesFragment: UpcomingMatchesFragment,
     private var list: List<Matche>
-) : RecyclerView.Adapter<MatchesAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<UpcomingMatchesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding: LytMatcheItemsBinding =
-            DataBindingUtil.inflate(inflater, R.layout.lyt_matche_items, parent, false)
+        val binding: LytUpcomingMatchItemsBinding =
+            DataBindingUtil.inflate(inflater, R.layout.lyt_upcoming_match_items, parent, false)
         return ViewHolder(binding)
     }
 
@@ -42,63 +36,32 @@ class MatchesAdapter(
         return list.size
     }
 
-    inner class ViewHolder(var binding: LytMatcheItemsBinding) :
+    inner class ViewHolder(var binding: LytUpcomingMatchItemsBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(matche: Matche) {
+        fun bind(match: Matche) {
             binding.apply {
+                this.presenter = upcomingMatchesFragment
 
-                if (liveMatchesFragment != null) {
-                    this.liveMatchesFragmentPresenter = liveMatchesFragment
-
-                    if (matche.matchInfo?.state == "Complete") {
-                        tvStatus.setTextColor(
-                            AppCompatResources.getColorStateList(
-                                tvStatus.context, R.color.primary_light_blue
-                            )
+                if (match.matchInfo?.state == "Upcoming" || match.matchInfo?.state == "Preview") {
+                    tvStartDate.setTextColor(
+                        AppCompatResources.getColorStateList(
+                            tvStartDate.context, R.color.primary_brown
                         )
-                    } else {
-                        tvStatus.setTextColor(
-                            AppCompatResources.getColorStateList(
-                                tvStatus.context, R.color.primary_red
-                            )
-                        )
-                    }
-                }
-                if (upcomingMatchesFragment != null) {
-                    this.upcomingMatchesFragmentPresenter = upcomingMatchesFragment
-
-                    if (matche.matchInfo?.state == "Upcoming" || matche.matchInfo?.state == "Preview") {
-                        tvStartDate.setTextColor(
-                            AppCompatResources.getColorStateList(
-                                tvStartDate.context, R.color.primary_brown
-                            )
-                        )
-                    }
-                }
-                if (recentMatchesFragment != null) {
-                    this.recentMatchesFragmentPresenter = recentMatchesFragment
-
-                    if (matche.matchInfo?.state == "Complete") {
-                        tvStatus.setTextColor(
-                            AppCompatResources.getColorStateList(
-                                tvStatus.context, R.color.primary_light_blue
-                            )
-                        )
-                    }
+                    )
                 }
 
-                this.match = matche
+                this.match = match
 
                 Glide.with(ivTeam1Pic.context)
-                    .load("${URL}/c${matche.matchInfo?.team1?.imageId.toString()}/.jpg")
+                    .load("${URL}/c${match.matchInfo?.team1?.imageId.toString()}/.jpg")
                     .into(ivTeam1Pic)
 
                 Glide.with(ivTeam2Pic.context)
-                    .load("$URL/c${matche.matchInfo?.team2?.imageId.toString()}/.jpg")
+                    .load("$URL/c${match.matchInfo?.team2?.imageId.toString()}/.jpg")
                     .into(ivTeam2Pic)
 
-                val team1 = matche.matchInfo?.team1?.teamSName.toString()
-                val team2 = matche.matchInfo?.team2?.teamSName.toString()
+                val team1 = match.matchInfo?.team1?.teamSName.toString()
+                val team2 = match.matchInfo?.team2?.teamSName.toString()
 
                 tvTeam1Name.text = team1
                 tvTeam2Name.text = team2
@@ -115,95 +78,101 @@ class MatchesAdapter(
                     )
                 )
 
-                tvStatus.text = matche.matchInfo?.status
+                tvStatus.text = match.matchInfo?.status
 
-                val l = matche.matchInfo?.startDate?.toLongOrNull()
+                val l = match.matchInfo?.startDate?.toLongOrNull()
                 if (l != null) {
                     tvStartDate.text = getDateFromMilliseconds(l)
                 }
 
-                if (matche.matchInfo?.state == "Rain") {
+                if (match.matchInfo?.state == "Delay") {
                     tvStartDate.visibility = View.GONE
                     tvStatus.visibility = View.VISIBLE
                     lytTeamScore.visibility = View.GONE
                 }
 
-                if (matche.matchInfo?.state == "Preview") {
+                if (match.matchInfo?.state == "Rain") {
+                    tvStartDate.visibility = View.GONE
+                    tvStatus.visibility = View.VISIBLE
+                    lytTeamScore.visibility = View.GONE
+                }
+
+                if (match.matchInfo?.state == "Preview") {
                     tvStartDate.visibility = View.VISIBLE
                     tvStatus.visibility = View.GONE
                     lytTeamScore.visibility = View.GONE
                 }
 
-                if (matche.matchInfo?.state == "In Progress") {
+                if (match.matchInfo?.state == "In Progress") {
                     tvStartDate.visibility = View.GONE
                     tvStatus.visibility = View.VISIBLE
                     lytTeamScore.visibility = View.VISIBLE
                 }
 
-                if (matche.matchInfo?.state == "Toss") {
+                if (match.matchInfo?.state == "Toss") {
                     tvStartDate.visibility = View.GONE
                     tvStatus.visibility = View.VISIBLE
                     lytTeamScore.visibility = View.GONE
                 }
 
-                if (matche.matchInfo?.state == "Upcoming") {
+                if (match.matchInfo?.state == "Upcoming") {
                     tvStartDate.visibility = View.VISIBLE
                     tvStatus.visibility = View.GONE
                     lytTeamScore.visibility = View.GONE
                 }
 
-                if (matche.matchInfo?.state == "Innings Break") {
+                if (match.matchInfo?.state == "Innings Break") {
                     tvStartDate.visibility = View.GONE
                     tvStatus.visibility = View.VISIBLE
                     lytTeamScore.visibility = View.VISIBLE
                 }
 
-                if (matche.matchInfo?.state == "Complete") {
+                if (match.matchInfo?.state == "Complete") {
                     tvStartDate.visibility = View.GONE
                     tvStatus.visibility = View.VISIBLE
                     lytTeamScore.visibility = View.VISIBLE
                 }
 
-                val team1Overs = matche.matchScore?.team1Score?.inngs1?.overs.toString()
+                val team1Overs = match.matchScore?.team1Score?.inngs1?.overs.toString()
                     .replace("19.6", "20")
-                val team2Overs = matche.matchScore?.team2Score?.inngs1?.overs.toString()
+                val team2Overs = match.matchScore?.team2Score?.inngs1?.overs.toString()
                     .replace("19.6", "20")
 
-                if (matche.matchScore?.team1Score?.inngs1?.runs.toString() == "null") {
-                    matche.matchScore?.team1Score?.inngs1?.runs = 0
+                if (match.matchScore?.team1Score?.inngs1?.runs.toString() == "null") {
+                    match.matchScore?.team1Score?.inngs1?.runs = 0
                 }
 
-                if (matche.matchScore?.team1Score?.inngs1?.wickets.toString() == "null") {
-                    matche.matchScore?.team1Score?.inngs1?.wickets = 0
+                if (match.matchScore?.team1Score?.inngs1?.wickets.toString() == "null") {
+                    match.matchScore?.team1Score?.inngs1?.wickets = 0
                 }
 
-                if (matche.matchScore?.team1Score?.inngs1?.overs.toString() == "null") {
-                    matche.matchScore?.team1Score?.inngs1?.overs = 0.0
+                if (match.matchScore?.team1Score?.inngs1?.overs.toString() == "null") {
+                    match.matchScore?.team1Score?.inngs1?.overs = 0.0
                 }
 
-                if (matche.matchScore?.team2Score?.inngs1?.runs.toString() == "null") {
-                    matche.matchScore?.team2Score?.inngs1?.runs = 0
+                if (match.matchScore?.team2Score?.inngs1?.runs.toString() == "null") {
+                    match.matchScore?.team2Score?.inngs1?.runs = 0
                 }
 
-                if (matche.matchScore?.team2Score?.inngs1?.wickets.toString() == "null") {
-                    matche.matchScore?.team2Score?.inngs1?.wickets = 0
+                if (match.matchScore?.team2Score?.inngs1?.wickets.toString() == "null") {
+                    match.matchScore?.team2Score?.inngs1?.wickets = 0
                 }
 
-                if (matche.matchScore?.team2Score?.inngs1?.overs.toString() == "null") {
-                    matche.matchScore?.team2Score?.inngs1?.overs = 0.0
+                if (match.matchScore?.team2Score?.inngs1?.overs.toString() == "null") {
+                    match.matchScore?.team2Score?.inngs1?.overs = 0.0
                 }
 
                 val team1Score =
-                    "${matche.matchScore?.team1Score?.inngs1?.runs}-${matche.matchScore?.team1Score?.inngs1?.wickets} ($team1Overs)"
+                    "${match.matchScore?.team1Score?.inngs1?.runs}-${match.matchScore?.team1Score?.inngs1?.wickets} ($team1Overs)"
                 val team2Score =
-                    "${matche.matchScore?.team2Score?.inngs1?.runs}-${matche.matchScore?.team2Score?.inngs1?.wickets} ($team2Overs)"
+                    "${match.matchScore?.team2Score?.inngs1?.runs}-${match.matchScore?.team2Score?.inngs1?.wickets} ($team2Overs)"
 
                 tvTeam1Score.text = team1Score.replace("null-null (null)", "")
 
                 tvTeam2Score.text = team2Score.replace("null-null (null)", "")
 
 
-                if (matche.matchInfo?.stateTitle?.contains(team1) == true) {
+                if (match.matchInfo?.stateTitle?.contains(team1) == true) {
                     tvTeam1Score.setTextColor(
                         AppCompatResources.getColorStateList(
                             tvTeam1Score.context, R.color.white
@@ -227,7 +196,7 @@ class MatchesAdapter(
                     )
                 }
 
-                if (matche.matchInfo?.stateTitle?.contains(team2) == true) {
+                if (match.matchInfo?.stateTitle?.contains(team2) == true) {
                     tvTeam2Score.setTextColor(
                         AppCompatResources.getColorStateList(
                             tvTeam2Score.context, R.color.white
@@ -267,6 +236,10 @@ class MatchesAdapter(
         } else {
             format2.format(currentTime)
         }
+    }
+
+    companion object {
+        private const val TAG = "LiveMatchesAdapter"
     }
 
 }

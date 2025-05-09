@@ -14,8 +14,6 @@ import com.chaudharylabs.cricbuzzclone.data.model.match_details.info.MatchDetail
 import com.chaudharylabs.cricbuzzclone.data.model.matches.Matche
 import com.chaudharylabs.cricbuzzclone.databinding.FragmentInfoBinding
 import com.chaudharylabs.cricbuzzclone.ui.BaseFragment
-import com.chaudharylabs.cricbuzzclone.ui.home.matche_details.MatchDetailsFragment.Companion
-import com.chaudharylabs.cricbuzzclone.ui.utils.Constants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.launch
@@ -24,14 +22,6 @@ class InfoFragment : BaseFragment() {
     private val viewModel: MatchesViewModel by activityViewModels()
     private lateinit var binding: FragmentInfoBinding
     private var matche: Matche? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments.let {
-            matche = it?.getParcelable(Constants.MATCH)
-            Log.d(TAG, "match:-$matche")
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,10 +43,8 @@ class InfoFragment : BaseFragment() {
 
         setBottomNavVisibility(View.GONE)
 
-        if (matche == null) {
-            matche = viewModel.match.value
-            println(matche?.matchInfo?.matchId)
-        }
+        matche = viewModel.match.value
+        println(matche?.matchInfo?.matchId)
 
         lifecycleScope.launch(Dispatchers.IO) {
             viewModel.getMatchInfo(matche?.matchInfo?.matchId.toString()).collect(infoCallback)

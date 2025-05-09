@@ -1,4 +1,4 @@
-package com.chaudharylabs.cricbuzzclone.ui.matches.ui
+package com.chaudharylabs.cricbuzzclone.ui.matches.live
 
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +15,8 @@ import com.chaudharylabs.cricbuzzclone.data.model.matches.Matche
 import com.chaudharylabs.cricbuzzclone.data.model.matches.MatchesResponse
 import com.chaudharylabs.cricbuzzclone.databinding.FragmentLiveMatchesBinding
 import com.chaudharylabs.cricbuzzclone.ui.BaseFragment
-import com.chaudharylabs.cricbuzzclone.ui.matches.adapter.TypeMatcheAdapter
+import com.chaudharylabs.cricbuzzclone.ui.matches.MatchesFragmentDirections
+import com.chaudharylabs.cricbuzzclone.ui.matches.MatchesTabViewModel
 import com.chaudharylabs.cricbuzzclone.ui.utils.Constants.MATCH
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.Dispatchers
@@ -39,11 +40,11 @@ class LiveMatchesFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
+            setBottomNavVisibility(View.VISIBLE)
             presenter = this@LiveMatchesFragment
             lifecycleOwner = this@LiveMatchesFragment
             executePendingBindings()
         }
-        setBottomNavVisibility(View.VISIBLE)
 
         matchesTabViewModel = ViewModelProvider(this)[MatchesTabViewModel::class.java]
 
@@ -53,23 +54,10 @@ class LiveMatchesFragment : BaseFragment() {
     }
 
     private fun setupChip() {
-        val nameList =
-            arrayListOf("All", "International", "League", "Domestic", "Women")
-        for (name in nameList) {
-            val chip = createChip(name)
-            binding.cgChip.addView(chip)
+        binding.cgChip.setOnCheckedStateChangeListener { group, checkedIds ->
+            val c: Chip = binding.cgChip.findViewById(binding.cgChip.checkedChipId)
+            println(c.text)
         }
-    }
-
-    private fun createChip(label: String): Chip {
-        val chip = requireActivity().layoutInflater.inflate(
-            R.layout.lyt_choice_chip,
-            null,
-            false
-        ) as Chip
-        chip.text = label
-        chip.isChipIconVisible = false
-        return chip
     }
 
     private fun getLiveMatches() {
@@ -78,14 +66,14 @@ class LiveMatchesFragment : BaseFragment() {
         }
     }
 
-    fun goToLive(matche: Matche) {
+    fun goToLive(match: Matche) {
         val bundle = Bundle()
-        bundle.putParcelable(MATCH, matche)
+        bundle.putParcelable(MATCH, match)
 
         lifecycleScope.launchWhenResumed {
-            if (findNavController().currentDestination?.label == "LiveFragment" && isAdded) {
+            if (findNavController().currentDestination?.label == getString(R.string.fragment_matches) && isAdded) {
                 findNavController().safeNavigateWithArgs(
-                    LiveMatchesFragmentDirections.actionLiveMatchesFragmentToLiveFragment(),
+                    MatchesFragmentDirections.actionMatchesFragmentToMatchDetailsFragment(),
                     bundle
                 )
             }
@@ -104,12 +92,7 @@ class LiveMatchesFragment : BaseFragment() {
                         if (it.typeMatches != null) {
                             lifecycleScope.launch {
                                 binding.rvTypeMatches.adapter =
-                                    TypeMatcheAdapter(
-                                        this@LiveMatchesFragment,
-                                        null,
-                                        null,
-                                        it.typeMatches
-                                    )
+                                    LiveTypeMatcheAdapter(this@LiveMatchesFragment, it.typeMatches)
                             }
                         }
                     }

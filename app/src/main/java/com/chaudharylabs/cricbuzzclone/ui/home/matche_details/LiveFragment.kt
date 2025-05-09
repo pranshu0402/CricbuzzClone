@@ -15,7 +15,6 @@ import com.chaudharylabs.cricbuzzclone.data.model.match_details.live.LiveRespons
 import com.chaudharylabs.cricbuzzclone.data.model.matches.Matche
 import com.chaudharylabs.cricbuzzclone.databinding.FragmentLiveBinding
 import com.chaudharylabs.cricbuzzclone.ui.BaseFragment
-import com.chaudharylabs.cricbuzzclone.ui.home.matche_details.MatchDetailsFragment.Companion
 import com.chaudharylabs.cricbuzzclone.ui.home.matche_details.adapter.LiveAdapter
 import com.chaudharylabs.cricbuzzclone.ui.utils.Constants
 import kotlinx.coroutines.flow.FlowCollector
@@ -26,14 +25,6 @@ class LiveFragment : BaseFragment() {
     private lateinit var binding: FragmentLiveBinding
     private val viewModel: MatchesViewModel by activityViewModels()
     private var matche: Matche? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments.let {
-            matche = it?.getParcelable(Constants.MATCH)
-            Log.d(TAG, "match:-$matche")
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,14 +45,11 @@ class LiveFragment : BaseFragment() {
 
         setBottomNavVisibility(View.GONE)
 
-        if (matche == null) {
-            matche = viewModel.match.value
-            println(matche?.matchInfo?.matchId)
-        }
+        matche = viewModel.match.value
+        println(matche?.matchInfo?.matchId)
 
         lifecycleScope.launch {
             viewModel.getCommentaries(matche?.matchInfo?.matchId.toString()).collect(liveCallback)
-//            viewModel.getCommentaries("87668").collect(liveCallback)
         }
     }
 

@@ -8,33 +8,121 @@
 
         <variable
             name="presenter"
-            type="com.chaudharylabs.cricbuzzclone.ui.matches.ui.UpcomingMatchesFragment" />
+            type="com.chaudharylabs.cricbuzzclone.ui.matches.upcoming.UpcomingMatchesFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/dark_light"
-        tools:context=".ui.matches.ui.UpcomingMatchesFragment">
+        tools:context=".ui.matches.upcoming.UpcomingMatchesFragment">
 
         <HorizontalScrollView
             android:id="@+id/hsv_chip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/primary_light_black"
+            android:scrollIndicators="none"
+            android:scrollbars="none"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/cg_chip"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/ch_upcoming_all"
+                    style="@style/greenChipChoice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:fontFamily="@font/averta_regular"
+                    android:text="@string/all"
+                    android:textAlignment="center"
+                    android:textColor="@color/bottom_nav_text_selector"
+                    android:textSize="13sp"
+                    app:checkedIconEnabled="false"
+                    app:chipCornerRadius="50dp"
+                    app:chipIconEnabled="false"
+                    app:chipStrokeColor="@color/bottom_nav_text_selector"
+                    app:chipStrokeWidth="1dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/ch_upcoming_international"
+                    style="@style/greenChipChoice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/averta_regular"
+                    android:text="@string/international"
+                    android:textAlignment="center"
+                    android:textColor="@color/bottom_nav_text_selector"
+                    android:textSize="13sp"
+                    app:checkedIconEnabled="false"
+                    app:chipCornerRadius="50dp"
+                    app:chipIconEnabled="false"
+                    app:chipStrokeColor="@color/bottom_nav_text_selector"
+                    app:chipStrokeWidth="1dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/ch_upcoming_league"
+                    style="@style/greenChipChoice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/averta_regular"
+                    android:text="@string/league"
+                    android:textAlignment="center"
+                    android:textColor="@color/bottom_nav_text_selector"
+                    android:textSize="13sp"
+                    app:checkedIconEnabled="false"
+                    app:chipCornerRadius="50dp"
+                    app:chipIconEnabled="false"
+                    app:chipStrokeColor="@color/bottom_nav_text_selector"
+                    app:chipStrokeWidth="1dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/ch_upcoming_domestic"
+                    style="@style/greenChipChoice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/averta_regular"
+                    android:text="@string/domestic"
+                    android:textAlignment="center"
+                    android:textColor="@color/bottom_nav_text_selector"
+                    android:textSize="13sp"
+                    app:checkedIconEnabled="false"
+                    app:chipCornerRadius="50dp"
+                    app:chipIconEnabled="false"
+                    app:chipStrokeColor="@color/bottom_nav_text_selector"
+                    app:chipStrokeWidth="1dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/ch_upcoming_women"
+                    style="@style/greenChipChoice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/averta_regular"
+                    android:text="@string/women"
+                    android:textAlignment="center"
+                    android:textColor="@color/bottom_nav_text_selector"
+                    android:textSize="13sp"
+                    app:checkedIconEnabled="false"
+                    app:chipCornerRadius="50dp"
+                    app:chipIconEnabled="false"
+                    app:chipStrokeColor="@color/bottom_nav_text_selector"
+                    app:chipStrokeWidth="1dp" />
+
+            </com.google.android.material.chip.ChipGroup>
 
         </HorizontalScrollView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_typeMatches"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="46dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@+id/hsv_chip" />
 

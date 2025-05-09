@@ -1,4 +1,4 @@
-package com.chaudharylabs.cricbuzzclone.ui.matches.ui
+package com.chaudharylabs.cricbuzzclone.ui.matches
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

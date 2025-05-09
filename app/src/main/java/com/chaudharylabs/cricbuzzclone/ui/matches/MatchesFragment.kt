@@ -5,14 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import com.chaudharylabs.cricbuzzclone.R
 import com.chaudharylabs.cricbuzzclone.databinding.FragmentMatchesBinding
 import com.chaudharylabs.cricbuzzclone.ui.BaseFragment
-import com.chaudharylabs.cricbuzzclone.ui.home.matche_details.MatchesViewModel
-import com.chaudharylabs.cricbuzzclone.ui.home.matche_details.adapter.TabPagerAdapter
-import com.chaudharylabs.cricbuzzclone.ui.matches.adapter.MatchesTabPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MatchesFragment : BaseFragment() {
@@ -36,7 +31,6 @@ class MatchesFragment : BaseFragment() {
             executePendingBindings()
 
             setBottomNavVisibility(View.GONE)
-
             viewPager.adapter = MatchesTabPagerAdapter(this@MatchesFragment)
 
             val tabs = listOf(

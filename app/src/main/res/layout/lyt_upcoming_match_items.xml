@@ -10,16 +10,8 @@
             type="com.chaudharylabs.cricbuzzclone.data.model.matches.Matche" />
 
         <variable
-            name="liveMatchesFragmentPresenter"
-            type="com.chaudharylabs.cricbuzzclone.ui.matches.ui.LiveMatchesFragment" />
-
-        <variable
-            name="upcomingMatchesFragmentPresenter"
-            type="com.chaudharylabs.cricbuzzclone.ui.matches.ui.UpcomingMatchesFragment" />
-
-        <variable
-            name="recentMatchesFragmentPresenter"
-            type="com.chaudharylabs.cricbuzzclone.ui.matches.ui.RecentMatchesFragment" />
+            name="presenter"
+            type="com.chaudharylabs.cricbuzzclone.ui.matches.upcoming.UpcomingMatchesFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
         android:background="#404040"
+        android:onClick="@{()-> presenter.goToInfo(match)}"
         android:padding="15dp">
 
         <androidx.appcompat.widget.AppCompatTextView

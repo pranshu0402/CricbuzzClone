@@ -5,16 +5,8 @@
     <data>
 
         <variable
-            name="liveMatchesFragmentPresenter"
-            type="com.chaudharylabs.cricbuzzclone.ui.matches.ui.LiveMatchesFragment" />
-
-        <variable
-            name="upcomingMatchesFragmentPresenter"
-            type="com.chaudharylabs.cricbuzzclone.ui.matches.ui.UpcomingMatchesFragment" />
-
-        <variable
-            name="recentMatchesFragmentPresenter"
-            type="com.chaudharylabs.cricbuzzclone.ui.matches.ui.RecentMatchesFragment" />
+            name="presenter"
+            type="com.chaudharylabs.cricbuzzclone.ui.matches.upcoming.UpcomingMatchesFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

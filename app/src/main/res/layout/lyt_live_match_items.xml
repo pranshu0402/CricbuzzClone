@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="match"
+            type="com.chaudharylabs.cricbuzzclone.data.model.matches.Matche" />
+
+        <variable
+            name="presenter"
+            type="com.chaudharylabs.cricbuzzclone.ui.matches.live.LiveMatchesFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lyt_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:onClick="@{()-> presenter.goToLive(match)}"
+        android:background="#404040"
+        android:padding="15dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_matchDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@{match.matchInfo.matchDesc}" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_series_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@id/tv_matchDesc"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@{`• ` + match.matchInfo.venueInfo.city}" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/lyt_team_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="6dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_matchDesc">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_team1_pic"
+                android:layout_width="24dp"
+                android:layout_height="18dp"
+                android:layout_marginTop="6dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_team1_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_team1_pic"
+                app:layout_constraintStart_toEndOf="@id/iv_team1_pic"
+                app:layout_constraintTop_toTopOf="@id/iv_team1_pic" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_team2_pic"
+                android:layout_width="24dp"
+                android:layout_height="18dp"
+                android:layout_marginTop="12dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_team1_pic" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_team2_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_team2_pic"
+                app:layout_constraintStart_toEndOf="@id/iv_team2_pic"
+                app:layout_constraintTop_toTopOf="@id/iv_team2_pic" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/lyt_team_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="100dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@id/lyt_team_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/lyt_team_name">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_team1_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_team2_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_start_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lyt_team_name" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="14dp"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lyt_team_name" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

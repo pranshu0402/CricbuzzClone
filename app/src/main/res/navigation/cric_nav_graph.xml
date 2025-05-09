@@ -19,8 +19,13 @@
     <fragment
         android:id="@+id/matchesFragment"
         android:name="com.chaudharylabs.cricbuzzclone.ui.matches.MatchesFragment"
-        android:label="fragment_matches"
-        tools:layout="@layout/fragment_matches" />
+        android:label="@string/fragment_matches"
+        tools:layout="@layout/fragment_matches">
+
+        <action
+            android:id="@+id/action_matchesFragment_to_matchDetailsFragment"
+            app:destination="@id/matchDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/newsFragment"
         android:name="com.chaudharylabs.cricbuzzclone.ui.news.NewsFragment"
@@ -78,36 +83,28 @@
     </fragment>
     <fragment
         android:id="@+id/liveMatchesFragment"
-        android:name="com.chaudharylabs.cricbuzzclone.ui.matches.ui.LiveMatchesFragment"
-        android:label="LiveMatchesFragment">
-        <action
-            android:id="@+id/action_liveMatchesFragment_to_liveFragment"
-            app:destination="@id/liveFragment" />
-    </fragment>
+        android:name="com.chaudharylabs.cricbuzzclone.ui.matches.live.LiveMatchesFragment"
+        android:label="@string/liveMatchesFragment"
+        tools:layout="@layout/fragment_live_matches" />
     <fragment
         android:id="@+id/upcomingMatchesFragment"
-        android:name="com.chaudharylabs.cricbuzzclone.ui.matches.ui.UpcomingMatchesFragment"
-        android:label="UpcomingMatchesFragment">
-        <action
-            android:id="@+id/action_upcomingMatchesFragment_to_infoFragment"
-            app:destination="@id/infoFragment" />
-    </fragment>
+        android:name="com.chaudharylabs.cricbuzzclone.ui.matches.upcoming.UpcomingMatchesFragment"
+        android:label="@string/upcomingMatchesFragment"
+        tools:layout="@layout/fragment_upcoming_matches" />
     <fragment
         android:id="@+id/recentMatchesFragment"
-        android:name="com.chaudharylabs.cricbuzzclone.ui.matches.ui.RecentMatchesFragment"
-        android:label="RecentMatchesFragment">
-        <action
-            android:id="@+id/action_recentMatchesFragment_to_liveFragment"
-            app:destination="@id/liveFragment" />
-    </fragment>
+        android:name="com.chaudharylabs.cricbuzzclone.ui.matches.recent.RecentMatchesFragment"
+        android:label="@string/recentMatchesFragment"
+        tools:layout="@layout/fragment_recent_matches" />
     <fragment
         android:id="@+id/liveFragment"
         android:name="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.LiveFragment"
-        android:label="LiveFragment" />
+        android:label="@string/liveFragment"
+        tools:layout="@layout/fragment_live" />
     <fragment
         android:id="@+id/infoFragment"
         android:name="com.chaudharylabs.cricbuzzclone.ui.home.matche_details.InfoFragment"
-        android:label="InfoFragment" />
-
+        android:label="@string/infoFragment"
+        tools:layout="@layout/fragment_info" />
 
 </navigation>

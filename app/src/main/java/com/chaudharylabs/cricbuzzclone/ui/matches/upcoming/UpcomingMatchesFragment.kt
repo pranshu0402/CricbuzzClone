@@ -1,4 +1,4 @@
-package com.chaudharylabs.cricbuzzclone.ui.matches.ui
+package com.chaudharylabs.cricbuzzclone.ui.matches.upcoming
 
 import android.os.Bundle
 import android.util.Log
@@ -13,17 +13,18 @@ import com.chaudharylabs.cricbuzzclone.R
 import com.chaudharylabs.cricbuzzclone.data.api.NetworkResult
 import com.chaudharylabs.cricbuzzclone.data.model.matches.Matche
 import com.chaudharylabs.cricbuzzclone.data.model.matches.MatchesResponse
-import com.chaudharylabs.cricbuzzclone.databinding.FragmentRecentMatchesBinding
+import com.chaudharylabs.cricbuzzclone.databinding.FragmentUpcomingMatchesBinding
 import com.chaudharylabs.cricbuzzclone.ui.BaseFragment
-import com.chaudharylabs.cricbuzzclone.ui.matches.adapter.TypeMatcheAdapter
+import com.chaudharylabs.cricbuzzclone.ui.matches.MatchesFragmentDirections
+import com.chaudharylabs.cricbuzzclone.ui.matches.MatchesTabViewModel
 import com.chaudharylabs.cricbuzzclone.ui.utils.Constants.MATCH
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.launch
 
-class RecentMatchesFragment : BaseFragment() {
-    private lateinit var binding: FragmentRecentMatchesBinding
+class UpcomingMatchesFragment : BaseFragment() {
+    private lateinit var binding: FragmentUpcomingMatchesBinding
     private lateinit var matchesTabViewModel: MatchesTabViewModel
 
     override fun onCreateView(
@@ -31,15 +32,15 @@ class RecentMatchesFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_recent_matches, container, false)
+            DataBindingUtil.inflate(inflater, R.layout.fragment_upcoming_matches, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            presenter = this@RecentMatchesFragment
-            lifecycleOwner = this@RecentMatchesFragment
+            presenter = this@UpcomingMatchesFragment
+            lifecycleOwner = this@UpcomingMatchesFragment
             executePendingBindings()
         }
         setBottomNavVisibility(View.VISIBLE)
@@ -52,39 +53,26 @@ class RecentMatchesFragment : BaseFragment() {
     }
 
     private fun setupChip() {
-        val nameList =
-            arrayListOf("All", "International", "League", "Domestic", "Women")
-        for (name in nameList) {
-            val chip = createChip(name)
-            binding.cgChip.addView(chip)
+        binding.cgChip.setOnCheckedStateChangeListener { group, checkedIds ->
+            val c: Chip = binding.cgChip.findViewById(binding.cgChip.checkedChipId)
+            println(c.text)
         }
-    }
-
-    private fun createChip(label: String): Chip {
-        val chip = requireActivity().layoutInflater.inflate(
-            R.layout.lyt_choice_chip,
-            null,
-            false
-        ) as Chip
-        chip.text = label
-        chip.isChipIconVisible = false
-        return chip
     }
 
     private fun getLiveMatches() {
         lifecycleScope.launch(Dispatchers.IO) {
-            matchesTabViewModel.getRecentMatches().collect(liveMatchesCallback)
+            matchesTabViewModel.getUpcomingMatches().collect(liveMatchesCallback)
         }
     }
 
-    fun goToLive(matche: Matche) {
+    fun goToInfo(matche: Matche) {
         val bundle = Bundle()
         bundle.putParcelable(MATCH, matche)
 
         lifecycleScope.launchWhenResumed {
-            if (findNavController().currentDestination?.label == "RecentMatchesFragment" && isAdded) {
+            if (findNavController().currentDestination?.label == getString(R.string.fragment_matches) && isAdded) {
                 findNavController().safeNavigateWithArgs(
-                    RecentMatchesFragmentDirections.actionRecentMatchesFragmentToLiveFragment(),
+                    MatchesFragmentDirections.actionMatchesFragmentToMatchDetailsFragment(),
                     bundle
                 )
             }
@@ -103,10 +91,8 @@ class RecentMatchesFragment : BaseFragment() {
                         if (it.typeMatches != null) {
                             lifecycleScope.launch {
                                 binding.rvTypeMatches.adapter =
-                                    TypeMatcheAdapter(
-                                        null,
-                                        null,
-                                        this@RecentMatchesFragment,
+                                    UpcomingTypeMatcheAdapter(
+                                        this@UpcomingMatchesFragment,
                                         it.typeMatches
                                     )
                             }
@@ -122,6 +108,6 @@ class RecentMatchesFragment : BaseFragment() {
         }
 
     companion object {
-        private const val TAG = "RecentMatchesFragment"
+        private const val TAG = "LiveMatchesFragment"
     }
 }

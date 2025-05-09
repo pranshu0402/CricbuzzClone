@@ -47,4 +47,15 @@
     <string name="live_matches_fragment">LIVE</string>
     <string name="upcoming_matches_fragment">UPCOMING</string>
     <string name="recent_matches_fragment">RECENT</string>
+    <string name="fragment_matches">MatchesFragment</string>
+    <string name="liveMatchesFragment">LiveMatchesFragment</string>
+    <string name="upcomingMatchesFragment">UpcomingMatchesFragment</string>
+    <string name="recentMatchesFragment">RecentMatchesFragment</string>
+    <string name="liveFragment">LiveFragment</string>
+    <string name="infoFragment">InfoFragment</string>
+    <string name="all">All</string>
+    <string name="international">International</string>
+    <string name="league">League</string>
+    <string name="domestic">Domestic</string>
+    <string name="women">Women</string>
 </resources>

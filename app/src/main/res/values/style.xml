@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="greenChipChoice" parent="@style/Widget.MaterialComponents.Chip.Choice">
+        <!-- Chip background color selector -->
+        <item name="chipBackgroundColor">@color/chip_bg_color</item>
+    </style>
+
+</resources>
