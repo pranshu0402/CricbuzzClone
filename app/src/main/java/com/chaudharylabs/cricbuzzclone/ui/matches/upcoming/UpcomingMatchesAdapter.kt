@@ -85,6 +85,12 @@ class UpcomingMatchesAdapter(
                     tvStartDate.text = getDateFromMilliseconds(l)
                 }
 
+                if (match.matchInfo?.state == "Stumps") {
+                    tvStartDate.visibility = View.GONE
+                    tvStatus.visibility = View.VISIBLE
+                    lytTeamScore.visibility = View.VISIBLE
+                }
+
                 if (match.matchInfo?.state == "Delay") {
                     tvStartDate.visibility = View.GONE
                     tvStatus.visibility = View.VISIBLE

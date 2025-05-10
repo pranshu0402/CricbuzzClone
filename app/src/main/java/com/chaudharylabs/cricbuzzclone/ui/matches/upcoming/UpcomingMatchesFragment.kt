@@ -13,6 +13,7 @@ import com.chaudharylabs.cricbuzzclone.R
 import com.chaudharylabs.cricbuzzclone.data.api.NetworkResult
 import com.chaudharylabs.cricbuzzclone.data.model.matches.Matche
 import com.chaudharylabs.cricbuzzclone.data.model.matches.MatchesResponse
+import com.chaudharylabs.cricbuzzclone.data.model.matches.TypeMatche
 import com.chaudharylabs.cricbuzzclone.databinding.FragmentUpcomingMatchesBinding
 import com.chaudharylabs.cricbuzzclone.ui.BaseFragment
 import com.chaudharylabs.cricbuzzclone.ui.matches.MatchesFragmentDirections
@@ -26,6 +27,9 @@ import kotlinx.coroutines.launch
 class UpcomingMatchesFragment : BaseFragment() {
     private lateinit var binding: FragmentUpcomingMatchesBinding
     private lateinit var matchesTabViewModel: MatchesTabViewModel
+    private var adapter: UpcomingTypeMatcheAdapter? = null
+    private var typeMatchList: ArrayList<TypeMatche>? = ArrayList()
+    private var filteredMatches: ArrayList<TypeMatche>? = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,20 +50,38 @@ class UpcomingMatchesFragment : BaseFragment() {
         setBottomNavVisibility(View.VISIBLE)
 
         matchesTabViewModel = ViewModelProvider(this)[MatchesTabViewModel::class.java]
-
+        adapter = UpcomingTypeMatcheAdapter(this@UpcomingMatchesFragment)
+        binding.rvTypeMatches.adapter = adapter
         setupChip()
 
-        getLiveMatches()
+        getUpcomingMatches()
     }
 
     private fun setupChip() {
         binding.cgChip.setOnCheckedStateChangeListener { group, checkedIds ->
             val c: Chip = binding.cgChip.findViewById(binding.cgChip.checkedChipId)
-            println(c.text)
+
+            if (c.text == "All") {
+                typeMatchList?.let { adapter?.filterList(it) }
+            } else {
+                filteredMatches =
+                    typeMatchList?.filter { it.matchType == c.text } as ArrayList<TypeMatche>
+
+                if (filteredMatches?.isEmpty() == true) {
+                    binding.tvEmpty.visibility = View.VISIBLE
+                    binding.rvTypeMatches.visibility = View.GONE
+                } else {
+                    binding.tvEmpty.visibility = View.GONE
+                    binding.rvTypeMatches.visibility = View.VISIBLE
+                    filteredMatches?.let {
+                        adapter?.filterList(it)
+                    }
+                }
+            }
         }
     }
 
-    private fun getLiveMatches() {
+    private fun getUpcomingMatches() {
         lifecycleScope.launch(Dispatchers.IO) {
             matchesTabViewModel.getUpcomingMatches().collect(liveMatchesCallback)
         }
@@ -90,11 +112,8 @@ class UpcomingMatchesFragment : BaseFragment() {
                         Log.d(TAG, "liveMatches response Success :: $it")
                         if (it.typeMatches != null) {
                             lifecycleScope.launch {
-                                binding.rvTypeMatches.adapter =
-                                    UpcomingTypeMatcheAdapter(
-                                        this@UpcomingMatchesFragment,
-                                        it.typeMatches
-                                    )
+                                typeMatchList = it.typeMatches as ArrayList<TypeMatche>
+                                adapter?.filterList(it.typeMatches)
                             }
                         }
                     }

@@ -8,11 +8,16 @@ import com.chaudharylabs.cricbuzzclone.R
 import com.chaudharylabs.cricbuzzclone.data.model.matches.TypeMatche
 import com.chaudharylabs.cricbuzzclone.databinding.LytLiveTypeMatchesBinding
 
-class LiveTypeMatcheAdapter(
-    private var liveMatchesFragment: LiveMatchesFragment,
-    private var list: List<TypeMatche>
-) :
+class LiveTypeMatcheAdapter(private var liveMatchesFragment: LiveMatchesFragment) :
     RecyclerView.Adapter<LiveTypeMatcheAdapter.ViewHolder>() {
+
+    private var list: ArrayList<TypeMatche> = ArrayList()
+
+    fun filterList(filterList: ArrayList<TypeMatche>) {
+        list = filterList
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding: LytLiveTypeMatchesBinding =

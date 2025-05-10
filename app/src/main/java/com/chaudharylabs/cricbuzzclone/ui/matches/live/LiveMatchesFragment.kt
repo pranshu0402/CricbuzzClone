@@ -13,6 +13,7 @@ import com.chaudharylabs.cricbuzzclone.R
 import com.chaudharylabs.cricbuzzclone.data.api.NetworkResult
 import com.chaudharylabs.cricbuzzclone.data.model.matches.Matche
 import com.chaudharylabs.cricbuzzclone.data.model.matches.MatchesResponse
+import com.chaudharylabs.cricbuzzclone.data.model.matches.TypeMatche
 import com.chaudharylabs.cricbuzzclone.databinding.FragmentLiveMatchesBinding
 import com.chaudharylabs.cricbuzzclone.ui.BaseFragment
 import com.chaudharylabs.cricbuzzclone.ui.matches.MatchesFragmentDirections
@@ -27,6 +28,9 @@ class LiveMatchesFragment : BaseFragment() {
 
     private lateinit var binding: FragmentLiveMatchesBinding
     private lateinit var matchesTabViewModel: MatchesTabViewModel
+    private var adapter: LiveTypeMatcheAdapter? = null
+    private var typeMatchList: ArrayList<TypeMatche>? = ArrayList()
+    private var filteredMatches: ArrayList<TypeMatche>? = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,7 +51,8 @@ class LiveMatchesFragment : BaseFragment() {
         }
 
         matchesTabViewModel = ViewModelProvider(this)[MatchesTabViewModel::class.java]
-
+        adapter = LiveTypeMatcheAdapter(this@LiveMatchesFragment)
+        binding.rvTypeMatches.adapter = adapter
         setupChip()
 
         getLiveMatches()
@@ -56,7 +61,24 @@ class LiveMatchesFragment : BaseFragment() {
     private fun setupChip() {
         binding.cgChip.setOnCheckedStateChangeListener { group, checkedIds ->
             val c: Chip = binding.cgChip.findViewById(binding.cgChip.checkedChipId)
-            println(c.text)
+
+            if (c.text == "All") {
+                typeMatchList?.let { adapter?.filterList(it) }
+            } else {
+                filteredMatches =
+                    typeMatchList?.filter { it.matchType == c.text } as ArrayList<TypeMatche>
+
+                if (filteredMatches?.isEmpty() == true) {
+                    binding.tvEmpty.visibility = View.VISIBLE
+                    binding.rvTypeMatches.visibility = View.GONE
+                } else {
+                    binding.tvEmpty.visibility = View.GONE
+                    binding.rvTypeMatches.visibility = View.VISIBLE
+                    filteredMatches?.let {
+                        adapter?.filterList(it)
+                    }
+                }
+            }
         }
     }
 
@@ -91,8 +113,8 @@ class LiveMatchesFragment : BaseFragment() {
                         Log.d(TAG, "liveMatches response Success :: $it")
                         if (it.typeMatches != null) {
                             lifecycleScope.launch {
-                                binding.rvTypeMatches.adapter =
-                                    LiveTypeMatcheAdapter(this@LiveMatchesFragment, it.typeMatches)
+                                typeMatchList = it.typeMatches as ArrayList<TypeMatche>
+                                adapter?.filterList(it.typeMatches)
                             }
                         }
                     }
