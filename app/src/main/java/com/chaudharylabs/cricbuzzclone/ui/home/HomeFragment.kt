@@ -69,6 +69,13 @@ class HomeFragment : BaseFragment() {
                 loadBanners(it)
             }
         }
+
+        binding.lytSwipeRefresh.setColorSchemeColors(resources.getColor(R.color.black))
+
+        binding.lytSwipeRefresh.setOnRefreshListener {
+            binding.lytSwipeRefresh.isRefreshing = true
+            getMatches()
+        }
     }
 
     private fun getTopStories() {
@@ -216,6 +223,7 @@ class HomeFragment : BaseFragment() {
 
     private fun loadBanners(matchList: ArrayList<Matche>) {
         binding.apply {
+            lytSwipeRefresh.isRefreshing = false
             rvBannerList.adapter = HomeBannerAdapter(this@HomeFragment, matchList, activity)
             rvBannerList.setHasFixedSize(true)
             rvBannerList.onFlingListener = null
