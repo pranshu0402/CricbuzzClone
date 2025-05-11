@@ -70,57 +70,40 @@ class ScorecardFragment : BaseFragment() {
 
                         binding.apply {
 
-                            tvStatus.text = it.matchHeader?.status
+                            tvStatus.text = it.status
 
                             it.scoreCard.let { scorecard ->
 
-                                tvTeam1Name.text =
-                                    scorecard?.get(0)?.batTeamDetails?.batTeamName.toString()
+                                if (scorecard?.isNotEmpty() == true) {
 
-                                tvTeam2Name.text =
-                                    scorecard?.get(1)?.batTeamDetails?.batTeamName.toString()
+                                    if (scorecard.size == 1) {
+                                        lytFirst.visibility = View.VISIBLE
+                                        lytSecond.visibility = View.GONE
+                                    }
 
-                                tvTeam1Runs.text = scorecard?.get(0)?.scoreDetails?.runs.toString()
-                                tvTeam1Wickets.text =
-                                    "-${scorecard?.get(0)?.scoreDetails?.wickets.toString()}"
-                                tvTeam1Overs.text =
-                                    "(${scorecard?.get(0)?.scoreDetails?.overs.toString()})"
-
-                                tvTeam2Runs.text = scorecard?.get(1)?.scoreDetails?.runs.toString()
-                                tvTeam2Wickets.text =
-                                    "-${scorecard?.get(1)?.scoreDetails?.wickets.toString()}"
-                                tvTeam2Overs.text =
-                                    "(${scorecard?.get(1)?.scoreDetails?.overs.toString()})"
-
-                                tvTotalExtras1.text = "${scorecard?.get(0)?.extrasData?.total}"
-                                tvTotalExtras2.text = "${scorecard?.get(1)?.extrasData?.total}"
-
-                                tvExtraRuns1.text = "b ${scorecard?.get(0)?.extrasData?.byes}" +
-                                        ", lb ${scorecard?.get(0)?.extrasData?.legByes}" +
-                                        ", w ${scorecard?.get(0)?.extrasData?.wides}" +
-                                        ", nb ${scorecard?.get(0)?.extrasData?.noBalls}" +
-                                        ", p ${scorecard?.get(0)?.extrasData?.penalty}"
-
-
-                                tvExtraRuns.text = "${scorecard?.get(1)?.extrasData?.total}" +
-                                        "b ${scorecard?.get(1)?.extrasData?.byes}" +
-                                        ", lb ${scorecard?.get(1)?.extrasData?.legByes}" +
-                                        ", w ${scorecard?.get(1)?.extrasData?.wides}" +
-                                        ", nb ${scorecard?.get(1)?.extrasData?.noBalls}" +
-                                        ", p ${scorecard?.get(1)?.extrasData?.penalty}"
-
-                                val batList: ArrayList<Bat?> = ArrayList()
-                                val bowlList: ArrayList<Bowl?> = ArrayList()
-                                val wicketList: ArrayList<Wkt?> = ArrayList()
-                                val partnershipList: ArrayList<Partnerships?> = ArrayList()
-
-                                val batList1: ArrayList<Bat?> = ArrayList()
-                                val bowlList1: ArrayList<Bowl?> = ArrayList()
-                                val wicketList1: ArrayList<Wkt?> = ArrayList()
-                                val partnershipList1: ArrayList<Partnerships?> = ArrayList()
-
-                                if (scorecard?.isNotEmpty() == true && scorecard.size == 1) {
                                     scorecard[0].let { score ->
+
+                                        val batList: ArrayList<Bat?> = ArrayList()
+                                        val bowlList: ArrayList<Bowl?> = ArrayList()
+                                        val wicketList: ArrayList<Wkt?> = ArrayList()
+                                        val partnershipList: ArrayList<Partnerships?> = ArrayList()
+
+
+                                        tvTeam1Name.text =
+                                            score.batTeamDetails?.batTeamName.toString()
+                                        tvTeam1Runs.text = score.scoreDetails?.runs.toString()
+                                        tvTeam1Wickets.text =
+                                            "-${score.scoreDetails?.wickets.toString()}"
+                                        tvTeam1Overs.text =
+                                            "(${score.scoreDetails?.overs.toString()})"
+                                        tvTotalExtras1.text = "${score.extrasData?.total}"
+
+                                        tvExtraRuns1.text = "b ${score.extrasData?.byes}" +
+                                                ", lb ${score.extrasData?.legByes}" +
+                                                ", w ${score.extrasData?.wides}" +
+                                                ", nb ${score.extrasData?.noBalls}" +
+                                                ", p ${score.extrasData?.penalty}"
+
                                         batList.add(score.batTeamDetails?.batsmenData?.bat_1)
                                         batList.add(score.batTeamDetails?.batsmenData?.bat_2)
                                         batList.add(score.batTeamDetails?.batsmenData?.bat_3)
@@ -166,156 +149,135 @@ class ScorecardFragment : BaseFragment() {
                                         partnershipList.add(score.partnershipsData?.pat_8)
                                         partnershipList.add(score.partnershipsData?.pat_9)
                                         partnershipList.add(score.partnershipsData?.pat_10)
+
+                                        batterAdapter =
+                                            BatterScorecardAdapter(
+                                                this@ScorecardFragment,
+                                                batList.filter { batter -> batter?.outDesc != "" }
+                                            )
+
+                                        bowlerAdapter =
+                                            BowlerScorecardAdapter(
+                                                this@ScorecardFragment,
+                                                bowlList.filterNotNull()
+                                            )
+
+                                        fallOfWicketsAdapter =
+                                            FallOfWicketsScorecardAdapter(
+                                                this@ScorecardFragment,
+                                                wicketList.filterNotNull()
+                                            )
+
+                                        partnershipsAdapter =
+                                            PartnershipScorecardAdapter(
+                                                this@ScorecardFragment,
+                                                partnershipList.filterNotNull()
+                                            )
+                                    }
+
+                                    if (scorecard.size == 2) {
+
+                                        lytFirst.visibility = View.VISIBLE
+                                        lytSecond.visibility = View.VISIBLE
+
+                                        scorecard[1].let { score ->
+
+                                            val batList1: ArrayList<Bat?> = ArrayList()
+                                            val bowlList1: ArrayList<Bowl?> = ArrayList()
+                                            val wicketList1: ArrayList<Wkt?> = ArrayList()
+                                            val partnershipList1: ArrayList<Partnerships?> =
+                                                ArrayList()
+
+
+                                            tvTeam2Name.text =
+                                                score.batTeamDetails?.batTeamName.toString()
+                                            tvTeam2Runs.text = score.scoreDetails?.runs.toString()
+                                            tvTeam2Wickets.text =
+                                                "-${score.scoreDetails?.wickets.toString()}"
+                                            tvTeam2Overs.text =
+                                                "(${score.scoreDetails?.overs.toString()})"
+                                            tvTotalExtras2.text = "${score.extrasData?.total}"
+
+                                            tvExtraRuns.text = "${score.extrasData?.total}" +
+                                                    "b ${score.extrasData?.byes}" +
+                                                    ", lb ${score.extrasData?.legByes}" +
+                                                    ", w ${score.extrasData?.wides}" +
+                                                    ", nb ${score.extrasData?.noBalls}" +
+                                                    ", p ${score.extrasData?.penalty}"
+
+                                            batList1.add(score.batTeamDetails?.batsmenData?.bat_1)
+                                            batList1.add(score.batTeamDetails?.batsmenData?.bat_2)
+                                            batList1.add(score.batTeamDetails?.batsmenData?.bat_3)
+                                            batList1.add(score.batTeamDetails?.batsmenData?.bat_4)
+                                            batList1.add(score.batTeamDetails?.batsmenData?.bat_5)
+                                            batList1.add(score.batTeamDetails?.batsmenData?.bat_6)
+                                            batList1.add(score.batTeamDetails?.batsmenData?.bat_7)
+                                            batList1.add(score.batTeamDetails?.batsmenData?.bat_8)
+                                            batList1.add(score.batTeamDetails?.batsmenData?.bat_9)
+                                            batList1.add(score.batTeamDetails?.batsmenData?.bat_10)
+                                            batList1.add(score.batTeamDetails?.batsmenData?.bat_11)
+
+                                            bowlList1.add(score.bowlTeamDetails?.bowlersData?.bowl_1)
+                                            bowlList1.add(score.bowlTeamDetails?.bowlersData?.bowl_2)
+                                            bowlList1.add(score.bowlTeamDetails?.bowlersData?.bowl_3)
+                                            bowlList1.add(score.bowlTeamDetails?.bowlersData?.bowl_4)
+                                            bowlList1.add(score.bowlTeamDetails?.bowlersData?.bowl_5)
+                                            bowlList1.add(score.bowlTeamDetails?.bowlersData?.bowl_6)
+                                            bowlList1.add(score.bowlTeamDetails?.bowlersData?.bowl_7)
+                                            bowlList1.add(score.bowlTeamDetails?.bowlersData?.bowl_8)
+                                            bowlList1.add(score.bowlTeamDetails?.bowlersData?.bowl_9)
+                                            bowlList1.add(score.bowlTeamDetails?.bowlersData?.bowl_10)
+                                            bowlList1.add(score.bowlTeamDetails?.bowlersData?.bowl_11)
+
+                                            wicketList1.add(score.wicketsData?.wkt_1)
+                                            wicketList1.add(score.wicketsData?.wkt_2)
+                                            wicketList1.add(score.wicketsData?.wkt_3)
+                                            wicketList1.add(score.wicketsData?.wkt_4)
+                                            wicketList1.add(score.wicketsData?.wkt_5)
+                                            wicketList1.add(score.wicketsData?.wkt_6)
+                                            wicketList1.add(score.wicketsData?.wkt_7)
+                                            wicketList1.add(score.wicketsData?.wkt_8)
+                                            wicketList1.add(score.wicketsData?.wkt_9)
+                                            wicketList1.add(score.wicketsData?.wkt_10)
+
+                                            partnershipList1.add(score.partnershipsData?.pat_1)
+                                            partnershipList1.add(score.partnershipsData?.pat_2)
+                                            partnershipList1.add(score.partnershipsData?.pat_3)
+                                            partnershipList1.add(score.partnershipsData?.pat_4)
+                                            partnershipList1.add(score.partnershipsData?.pat_5)
+                                            partnershipList1.add(score.partnershipsData?.pat_6)
+                                            partnershipList1.add(score.partnershipsData?.pat_7)
+                                            partnershipList1.add(score.partnershipsData?.pat_8)
+                                            partnershipList1.add(score.partnershipsData?.pat_9)
+                                            partnershipList1.add(score.partnershipsData?.pat_10)
+
+
+                                            batterAdapter1 =
+                                                BatterScorecardAdapter(
+                                                    this@ScorecardFragment,
+                                                    batList1.filter { batter -> batter?.outDesc != "" }
+                                                )
+
+                                            bowlerAdapter1 =
+                                                BowlerScorecardAdapter(
+                                                    this@ScorecardFragment,
+                                                    bowlList1.filterNotNull()
+                                                )
+
+                                            fallOfWicketsAdapter1 =
+                                                FallOfWicketsScorecardAdapter(
+                                                    this@ScorecardFragment,
+                                                    wicketList1.filterNotNull()
+                                                )
+
+                                            partnershipsAdapter1 =
+                                                PartnershipScorecardAdapter(
+                                                    this@ScorecardFragment,
+                                                    partnershipList1.filterNotNull()
+                                                )
+                                        }
                                     }
                                 }
-
-                                if (scorecard?.isNotEmpty() == true && scorecard.size == 2) {
-
-                                    scorecard[0].let { score ->
-                                        batList.add(score.batTeamDetails?.batsmenData?.bat_1)
-                                        batList.add(score.batTeamDetails?.batsmenData?.bat_2)
-                                        batList.add(score.batTeamDetails?.batsmenData?.bat_3)
-                                        batList.add(score.batTeamDetails?.batsmenData?.bat_4)
-                                        batList.add(score.batTeamDetails?.batsmenData?.bat_5)
-                                        batList.add(score.batTeamDetails?.batsmenData?.bat_6)
-                                        batList.add(score.batTeamDetails?.batsmenData?.bat_7)
-                                        batList.add(score.batTeamDetails?.batsmenData?.bat_8)
-                                        batList.add(score.batTeamDetails?.batsmenData?.bat_9)
-                                        batList.add(score.batTeamDetails?.batsmenData?.bat_10)
-                                        batList.add(score.batTeamDetails?.batsmenData?.bat_11)
-
-                                        bowlList.add(score.bowlTeamDetails?.bowlersData?.bowl_1)
-                                        bowlList.add(score.bowlTeamDetails?.bowlersData?.bowl_2)
-                                        bowlList.add(score.bowlTeamDetails?.bowlersData?.bowl_3)
-                                        bowlList.add(score.bowlTeamDetails?.bowlersData?.bowl_4)
-                                        bowlList.add(score.bowlTeamDetails?.bowlersData?.bowl_5)
-                                        bowlList.add(score.bowlTeamDetails?.bowlersData?.bowl_6)
-                                        bowlList.add(score.bowlTeamDetails?.bowlersData?.bowl_7)
-                                        bowlList.add(score.bowlTeamDetails?.bowlersData?.bowl_8)
-                                        bowlList.add(score.bowlTeamDetails?.bowlersData?.bowl_9)
-                                        bowlList.add(score.bowlTeamDetails?.bowlersData?.bowl_10)
-                                        bowlList.add(score.bowlTeamDetails?.bowlersData?.bowl_11)
-
-                                        wicketList.add(score.wicketsData?.wkt_1)
-                                        wicketList.add(score.wicketsData?.wkt_2)
-                                        wicketList.add(score.wicketsData?.wkt_3)
-                                        wicketList.add(score.wicketsData?.wkt_4)
-                                        wicketList.add(score.wicketsData?.wkt_5)
-                                        wicketList.add(score.wicketsData?.wkt_6)
-                                        wicketList.add(score.wicketsData?.wkt_7)
-                                        wicketList.add(score.wicketsData?.wkt_8)
-                                        wicketList.add(score.wicketsData?.wkt_9)
-                                        wicketList.add(score.wicketsData?.wkt_10)
-
-                                        partnershipList.add(score.partnershipsData?.pat_1)
-                                        partnershipList.add(score.partnershipsData?.pat_2)
-                                        partnershipList.add(score.partnershipsData?.pat_3)
-                                        partnershipList.add(score.partnershipsData?.pat_4)
-                                        partnershipList.add(score.partnershipsData?.pat_5)
-                                        partnershipList.add(score.partnershipsData?.pat_6)
-                                        partnershipList.add(score.partnershipsData?.pat_7)
-                                        partnershipList.add(score.partnershipsData?.pat_8)
-                                        partnershipList.add(score.partnershipsData?.pat_9)
-                                        partnershipList.add(score.partnershipsData?.pat_10)
-                                    }
-
-                                    scorecard[1].let { score ->
-                                        batList1.add(score.batTeamDetails?.batsmenData?.bat_1)
-                                        batList1.add(score.batTeamDetails?.batsmenData?.bat_2)
-                                        batList1.add(score.batTeamDetails?.batsmenData?.bat_3)
-                                        batList1.add(score.batTeamDetails?.batsmenData?.bat_4)
-                                        batList1.add(score.batTeamDetails?.batsmenData?.bat_5)
-                                        batList1.add(score.batTeamDetails?.batsmenData?.bat_6)
-                                        batList1.add(score.batTeamDetails?.batsmenData?.bat_7)
-                                        batList1.add(score.batTeamDetails?.batsmenData?.bat_8)
-                                        batList1.add(score.batTeamDetails?.batsmenData?.bat_9)
-                                        batList1.add(score.batTeamDetails?.batsmenData?.bat_10)
-                                        batList1.add(score.batTeamDetails?.batsmenData?.bat_11)
-
-                                        bowlList1.add(score.bowlTeamDetails?.bowlersData?.bowl_1)
-                                        bowlList1.add(score.bowlTeamDetails?.bowlersData?.bowl_2)
-                                        bowlList1.add(score.bowlTeamDetails?.bowlersData?.bowl_3)
-                                        bowlList1.add(score.bowlTeamDetails?.bowlersData?.bowl_4)
-                                        bowlList1.add(score.bowlTeamDetails?.bowlersData?.bowl_5)
-                                        bowlList1.add(score.bowlTeamDetails?.bowlersData?.bowl_6)
-                                        bowlList1.add(score.bowlTeamDetails?.bowlersData?.bowl_7)
-                                        bowlList1.add(score.bowlTeamDetails?.bowlersData?.bowl_8)
-                                        bowlList1.add(score.bowlTeamDetails?.bowlersData?.bowl_9)
-                                        bowlList1.add(score.bowlTeamDetails?.bowlersData?.bowl_10)
-                                        bowlList1.add(score.bowlTeamDetails?.bowlersData?.bowl_11)
-
-                                        wicketList1.add(score.wicketsData?.wkt_1)
-                                        wicketList1.add(score.wicketsData?.wkt_2)
-                                        wicketList1.add(score.wicketsData?.wkt_3)
-                                        wicketList1.add(score.wicketsData?.wkt_4)
-                                        wicketList1.add(score.wicketsData?.wkt_5)
-                                        wicketList1.add(score.wicketsData?.wkt_6)
-                                        wicketList1.add(score.wicketsData?.wkt_7)
-                                        wicketList1.add(score.wicketsData?.wkt_8)
-                                        wicketList1.add(score.wicketsData?.wkt_9)
-                                        wicketList1.add(score.wicketsData?.wkt_10)
-
-                                        partnershipList1.add(score.partnershipsData?.pat_1)
-                                        partnershipList1.add(score.partnershipsData?.pat_2)
-                                        partnershipList1.add(score.partnershipsData?.pat_3)
-                                        partnershipList1.add(score.partnershipsData?.pat_4)
-                                        partnershipList1.add(score.partnershipsData?.pat_5)
-                                        partnershipList1.add(score.partnershipsData?.pat_6)
-                                        partnershipList1.add(score.partnershipsData?.pat_7)
-                                        partnershipList1.add(score.partnershipsData?.pat_8)
-                                        partnershipList1.add(score.partnershipsData?.pat_9)
-                                        partnershipList1.add(score.partnershipsData?.pat_10)
-                                    }
-
-                                }
-
-                                batterAdapter =
-                                    BatterScorecardAdapter(
-                                        this@ScorecardFragment,
-                                        batList
-                                    )
-
-                                bowlerAdapter =
-                                    BowlerScorecardAdapter(
-                                        this@ScorecardFragment,
-                                        bowlList
-                                    )
-
-                                fallOfWicketsAdapter =
-                                    FallOfWicketsScorecardAdapter(
-                                        this@ScorecardFragment,
-                                        wicketList
-                                    )
-
-                                partnershipsAdapter =
-                                    PartnershipScorecardAdapter(
-                                        this@ScorecardFragment,
-                                        partnershipList
-                                    )
-
-                                batterAdapter1 =
-                                    BatterScorecardAdapter(
-                                        this@ScorecardFragment,
-                                        batList1
-                                    )
-
-                                bowlerAdapter1 =
-                                    BowlerScorecardAdapter(
-                                        this@ScorecardFragment,
-                                        bowlList1
-                                    )
-
-                                fallOfWicketsAdapter1 =
-                                    FallOfWicketsScorecardAdapter(
-                                        this@ScorecardFragment,
-                                        wicketList1
-                                    )
-
-                                partnershipsAdapter1 =
-                                    PartnershipScorecardAdapter(
-                                        this@ScorecardFragment,
-                                        partnershipList1
-                                    )
                             }
                         }
                     }

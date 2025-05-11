@@ -11,7 +11,7 @@ import com.chaudharylabs.cricbuzzclone.ui.home.matche_details.ScorecardFragment
 
 class BatterScorecardAdapter(
     private var present: ScorecardFragment,
-    private var list: ArrayList<Bat?>
+    private var list: List<Bat?>
 ) :
     RecyclerView.Adapter<BatterScorecardAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

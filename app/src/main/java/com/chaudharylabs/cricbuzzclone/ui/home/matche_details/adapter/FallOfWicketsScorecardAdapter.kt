@@ -11,7 +11,7 @@ import com.chaudharylabs.cricbuzzclone.ui.home.matche_details.ScorecardFragment
 
 class FallOfWicketsScorecardAdapter(
     private var present: ScorecardFragment,
-    private var list: ArrayList<Wkt?>
+    private var list: List<Wkt?>
 ) :
     RecyclerView.Adapter<FallOfWicketsScorecardAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

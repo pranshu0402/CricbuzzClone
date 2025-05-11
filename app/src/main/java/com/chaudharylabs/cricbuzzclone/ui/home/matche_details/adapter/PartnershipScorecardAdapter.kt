@@ -11,7 +11,7 @@ import com.chaudharylabs.cricbuzzclone.ui.home.matche_details.ScorecardFragment
 
 class PartnershipScorecardAdapter(
     private var present: ScorecardFragment,
-    private var list: ArrayList<Partnerships?>
+    private var list: List<Partnerships?>
 ) :
     RecyclerView.Adapter<PartnershipScorecardAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
