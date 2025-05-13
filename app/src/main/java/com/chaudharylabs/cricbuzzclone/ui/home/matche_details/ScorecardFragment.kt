@@ -30,6 +30,8 @@ class ScorecardFragment : BaseFragment() {
     private lateinit var binding: FragmentScorecardBinding
     private val viewModel: MatchesViewModel by activityViewModels()
     private var match: Matche? = null
+    private var team1Expanded = true
+    private var team2Expanded = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,6 +57,34 @@ class ScorecardFragment : BaseFragment() {
 
         lifecycleScope.launch {
             viewModel.getScoreCard(match?.matchInfo?.matchId.toString()).collect(scorecardCallback)
+        }
+    }
+
+    fun team1Dropdown() {
+        binding.apply {
+            if (team1Expanded) {
+                team1Expanded = false
+                lytTeam1Data.visibility = View.GONE
+                ivTeam1DropDown.setBackgroundResource(R.drawable.keyboard_arrow_up_24)
+            } else {
+                team1Expanded = true
+                lytTeam1Data.visibility = View.VISIBLE
+                ivTeam1DropDown.setBackgroundResource(R.drawable.keyboard_arrow_down_24)
+            }
+        }
+    }
+
+    fun team2Dropdown() {
+        binding.apply {
+            if (team2Expanded) {
+                team2Expanded = false
+                lytTeam2Data.visibility = View.GONE
+                ivTeam2DropDown.setBackgroundResource(R.drawable.keyboard_arrow_up_24)
+            } else {
+                team2Expanded = true
+                lytTeam2Data.visibility = View.VISIBLE
+                ivTeam2DropDown.setBackgroundResource(R.drawable.keyboard_arrow_down_24)
+            }
         }
     }
 

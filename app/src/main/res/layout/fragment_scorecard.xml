@@ -82,6 +82,7 @@
                         android:background="@color/dark_light"
                         android:paddingStart="20dp"
                         android:paddingTop="14dp"
+                        android:onClick="@{()-> presenter.team1Dropdown()}"
                         android:paddingEnd="20dp"
                         android:paddingBottom="14dp"
                         app:layout_constraintTop_toTopOf="parent">
@@ -473,6 +474,7 @@
                         android:background="@color/dark_light"
                         android:paddingStart="20dp"
                         android:paddingTop="14dp"
+                        android:onClick="@{()-> presenter.team2Dropdown()}"
                         android:paddingEnd="20dp"
                         android:paddingBottom="14dp"
                         app:layout_constraintTop_toTopOf="parent">
