@@ -215,8 +215,17 @@ class HomeFragment : BaseFragment() {
                     }
                 }
 
-                matchesViewModel.list.postValue(list.distinct()
-                    .filter { it.matchInfo?.isFantasyEnabled == true } as ArrayList<Matche>)
+                val newList = list.distinct()
+                    .filter { it.matchInfo?.isFantasyEnabled == true } as ArrayList<Matche>
+
+                if (newList.isEmpty()) {
+                    list.subList(0, 5).forEach {
+                        newList.add(it)
+                    }
+                    matchesViewModel.list.postValue(newList)
+                } else {
+                    matchesViewModel.list.postValue(newList)
+                }
             }
         }
     }

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
-            name="matche"
+            name="match"
             type="com.chaudharylabs.cricbuzzclone.data.model.matches.Matche" />
 
         <variable
@@ -17,11 +18,11 @@
         android:id="@+id/lyt_list"
         android:layout_width="match_parent"
         android:layout_height="140dp"
-        android:onClick="@{()-> presenter.matchDetails(matche)}"
-        app:customBackgroundColor="#404040"
-        app:customBackgroundRadius="8dp"
         android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp">
+        android:layout_marginEnd="10dp"
+        android:onClick="@{()-> presenter.matchDetails(match)}"
+        app:customBackgroundColor="#404040"
+        app:customBackgroundRadius="8dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_match_no"
@@ -32,17 +33,21 @@
             android:textColor="@color/white"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@{match.matchInfo.matchDesc}" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_series_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textColor="@color/white"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@id/tv_match_no"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@{` • ` + match.matchInfo.seriesName}" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/lyt_team_name"
@@ -111,7 +116,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_team2_score"
@@ -119,7 +125,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -141,9 +148,12 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="14dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lyt_team_name" />
+            app:layout_constraintTop_toBottomOf="@id/lyt_team_name"
+            tools:text="@{match.matchInfo.status}" />
     </com.chaudharylabs.cricbuzzclone.ui.utils.CricConstraintLayout>
 </layout>
