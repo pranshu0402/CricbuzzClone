@@ -70,6 +70,7 @@ class LiveFragment : BaseFragment() {
                             tvStatus.text = it.matchHeader?.status
 
                             if (!it.matchHeader?.playersOfTheMatch.isNullOrEmpty()) {
+                                lytPom.visibility = View.VISIBLE
                                 val playerOfTheMatchUrl =
                                     "${Constants.PROFILE_URL}/c${
                                         it.matchHeader?.playersOfTheMatch?.get(
@@ -80,6 +81,20 @@ class LiveFragment : BaseFragment() {
                                 tvMom.text =
                                     it.matchHeader?.playersOfTheMatch?.get(0)?.fullName.toString()
                                 Glide.with(ivPlayer).load(playerOfTheMatchUrl).into(ivPlayer)
+                            }
+
+                            if (!it.matchHeader?.playersOfTheSeries.isNullOrEmpty()) {
+                                lytPos.visibility = View.VISIBLE
+                                val playerOfTheSeriesUrl =
+                                    "${Constants.PROFILE_URL}/c${
+                                        it.matchHeader?.playersOfTheSeries?.get(
+                                            0
+                                        )?.faceImageId.toString()
+                                    }/.jpg"
+
+                                tvMos.text =
+                                    it.matchHeader?.playersOfTheSeries?.get(0)?.fullName.toString()
+                                Glide.with(ivPlayers).load(playerOfTheSeriesUrl).into(ivPlayers)
                             }
 
                             if (it.matchHeader?.result?.winningteamId == it.matchHeader?.team1?.id) {

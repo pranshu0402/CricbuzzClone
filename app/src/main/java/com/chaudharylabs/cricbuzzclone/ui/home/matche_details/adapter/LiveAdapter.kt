@@ -15,8 +15,7 @@ class LiveAdapter(
     private val oversFragment: LiveFragment,
     private val commentaryList: List<LiveResponse.Commentary?>,
     private val commentarySnippetList: List<LiveResponse.CommentarySnippet?>
-) :
-    RecyclerView.Adapter<LiveAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<LiveAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -41,35 +40,83 @@ class LiveAdapter(
 
                 when (commentary?.event) {
                     "NONE" -> {
-                        chData.visibility = View.GONE
                         lytLiveFeed.visibility = View.GONE
                         tvFeed.visibility = View.VISIBLE
                     }
 
-                    "over-break" -> {
-                        chData.visibility = View.GONE
+                    "DROPPED" -> {
+                        lytCircle.visibility = View.GONE
                         lytLiveFeed.visibility = View.VISIBLE
+                        tvFeed.visibility = View.GONE
+                    }
+
+                    "over-break" -> {
+                        lytCircle.visibility = View.GONE
+                        lytLiveFeed.visibility = View.VISIBLE
+                        tvFeed.visibility = View.GONE
+                    }
+
+                    "over-break,WICKET" -> {
+                        lytCircle.visibility = View.VISIBLE
+                        lytLiveFeed.visibility = View.VISIBLE
+                        tvData.text = "W"
+                        ivData.setBackgroundResource(R.color.primary_red)
+                        tvFeed.visibility = View.GONE
+                    }
+
+                    "over-break,FOUR" -> {
+                        lytCircle.visibility = View.VISIBLE
+                        lytLiveFeed.visibility = View.VISIBLE
+                        tvData.text = "4"
+                        ivData.setBackgroundResource(R.color.primary_light_blue)
+                        tvFeed.visibility = View.GONE
+                    }
+
+                    "over-break,SIX" -> {
+                        lytCircle.visibility = View.VISIBLE
+                        lytLiveFeed.visibility = View.VISIBLE
+                        tvData.text = "6"
+                        ivData.setBackgroundResource(R.color.primary_purple)
                         tvFeed.visibility = View.GONE
                     }
 
                     "WICKET" -> {
-                        chData.visibility = View.VISIBLE
+                        lytCircle.visibility = View.VISIBLE
                         lytLiveFeed.visibility = View.VISIBLE
-                        chData.text = "W"
+                        tvData.text = "W"
+                        ivData.setBackgroundResource(R.color.primary_red)
                         tvFeed.visibility = View.GONE
                     }
 
                     "FOUR" -> {
-                        chData.visibility = View.VISIBLE
+                        lytCircle.visibility = View.VISIBLE
                         lytLiveFeed.visibility = View.VISIBLE
-                        chData.text = "4"
+                        tvData.text = "4"
+                        ivData.setBackgroundResource(R.color.primary_light_blue)
                         tvFeed.visibility = View.GONE
                     }
 
                     "SIX" -> {
-                        chData.visibility = View.VISIBLE
-                        lytLiveFeed.visibility = View.GONE
-                        chData.text = "6"
+                        lytCircle.visibility = View.VISIBLE
+                        lytLiveFeed.visibility = View.VISIBLE
+                        tvData.text = "6"
+                        ivData.setBackgroundResource(R.color.primary_purple)
+                        tvFeed.visibility = View.GONE
+                    }
+
+                    "FIFTY" -> {
+                        lytCircle.visibility = View.VISIBLE
+                        lytLiveFeed.visibility = View.VISIBLE
+                        tvData.text = "F"
+                        ivData.setBackgroundResource(R.color.primary_brown)
+                        tvFeed.visibility = View.GONE
+                    }
+
+                    "CENTURY" -> {
+                        lytCircle.visibility = View.VISIBLE
+                        lytLiveFeed.visibility = View.VISIBLE
+                        tvData.text = "C"
+                        ivData.setBackgroundResource(R.color.secondary_green)
                         tvFeed.visibility = View.GONE
                     }
 
@@ -78,12 +125,7 @@ class LiveAdapter(
                     }
                 }
 
-                if (commentary?.overNumber == null) {
-                    tvOver.visibility = View.GONE
-                } else {
-                    tvOver.visibility = View.VISIBLE
-                    tvOver.text = commentary.overNumber.toString()
-                }
+                tvOver.text = commentary?.overNumber.toString()
 
                 if (commentary?.commentaryFormats?.bold?.formatId?.isNotEmpty() == true) {
 

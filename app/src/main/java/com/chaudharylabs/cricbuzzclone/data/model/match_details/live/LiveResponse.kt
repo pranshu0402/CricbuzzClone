@@ -156,7 +156,7 @@ data class LiveResponse(
         @SerializedName("playersOfTheMatch")
         val playersOfTheMatch: List<PlayersOfTheMatch?>?,
         @SerializedName("playersOfTheSeries")
-        val playersOfTheSeries: List<Any?>?,
+        val playersOfTheSeries: List<PlayersOfTheSeries?>?,
         @SerializedName("result")
         val result: Result?,
         @SerializedName("revisedTarget")
@@ -210,6 +210,35 @@ data class LiveResponse(
             val substitute: Boolean?,
             @SerializedName("teamName")
             val teamName: String?
+        )
+
+        data class PlayersOfTheSeries(
+            @SerializedName("battingStyle")
+            val battingStyle: String?,
+            @SerializedName("bowlingStyle")
+            val bowlingStyle: String?,
+            @SerializedName("captain")
+            val captain: Boolean?,
+            @SerializedName("faceImageId")
+            val faceImageId: Int?,
+            @SerializedName("fullName")
+            val fullName: String?,
+            @SerializedName("id")
+            val id: Int?,
+            @SerializedName("keeper")
+            val keeper: Boolean?,
+            @SerializedName("name")
+            val name: String?,
+            @SerializedName("nickName")
+            val nickName: String?,
+            @SerializedName("role")
+            val role: String?,
+            @SerializedName("substitute")
+            val substitute: Boolean?,
+            @SerializedName("teamName")
+            val teamName: String?,
+            @SerializedName("teamId")
+            val teamId: Int?,
         )
 
         data class Result(

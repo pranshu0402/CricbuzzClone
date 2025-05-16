@@ -140,6 +140,18 @@ class LiveMatchesAdapter(
                     lytTeamScore.visibility = View.VISIBLE
                 }
 
+                if (match.matchInfo?.state == "Lunch") {
+                    tvStartDate.visibility = View.GONE
+                    tvStatus.visibility = View.VISIBLE
+                    lytTeamScore.visibility = View.VISIBLE
+                }
+
+                if (match.matchInfo?.state == "Tea") {
+                    tvStartDate.visibility = View.GONE
+                    tvStatus.visibility = View.VISIBLE
+                    lytTeamScore.visibility = View.VISIBLE
+                }
+
                 if (match.matchInfo?.state == "Complete") {
                     tvStartDate.visibility = View.GONE
                     tvStatus.visibility = View.VISIBLE

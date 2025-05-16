@@ -13,50 +13,82 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/bottom_nav_background"
+        android:paddingStart="1dp"
         android:paddingTop="10dp"
         android:paddingEnd="20dp"
-        android:paddingStart="1dp"
         android:paddingBottom="10dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/lyt_liveFeed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:orientation="horizontal"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_over"
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:fontFamily="@font/averta_semibold"
-                android:gravity="start"
-                android:letterSpacing="0.01"
-                android:lineSpacingExtra="2sp"
-                android:textColor="@color/white"
-                android:textSize="14sp"
+                android:layout_weight="0.1"
+                android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.1" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/ch_data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="6dp"
-                android:textColor="@color/black"
-                app:chipBackgroundColor="@color/white"
-                app:chipCornerRadius="50dp"
-                app:chipEndPadding="2dp"
-                app:chipStartPadding="2dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_over" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_over"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/averta_semibold"
+                    android:gravity="center"
+                    android:letterSpacing="0.01"
+                    android:lineSpacingExtra="2sp"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.1" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/lyt_circle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/iv_data"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@color/primary_light_blue"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CircleCornerSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/averta_bold"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_liveFeed"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="0.9"
                 android:letterSpacing="0.01"
                 android:lineSpacingExtra="2sp"
                 android:textColor="@color/white"
@@ -64,16 +96,16 @@
                 app:layout_constraintStart_toEndOf="@id/tv_over"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="0.9" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_feed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:letterSpacing="0.01"
             android:layout_marginStart="19dp"
-            android:layout_marginEnd="0dp"
-            android:lineSpacingExtra="2sp"
+            android:gravity="start"
+            android:letterSpacing="0.01"
+            android:lineSpacingExtra="1sp"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintTop_toTopOf="parent" />
