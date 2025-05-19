@@ -60,4 +60,6 @@
     <string name="women">Women</string>
     <string name="no_matches_available">No matches available</string>
     <string name="player_of_the_series">Player of the series</string>
+    <string name="crr">CRR</string>
+    <string name="rrr">REQ</string>
 </resources>

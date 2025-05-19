@@ -219,12 +219,12 @@ class HomeFragment : BaseFragment() {
                     .filter { it.matchInfo?.isFantasyEnabled == true } as ArrayList<Matche>
 
                 if (newList.isEmpty()) {
-                    list.subList(0, 5).forEach {
+                    list.subList(0, list.size - 1).forEach {
                         newList.add(it)
                     }
-                    matchesViewModel.list.postValue(newList)
+                    matchesViewModel.list.postValue(newList.distinct() as ArrayList<Matche>)
                 } else {
-                    matchesViewModel.list.postValue(newList)
+                    matchesViewModel.list.postValue(newList.distinct() as ArrayList<Matche>)
                 }
             }
         }
