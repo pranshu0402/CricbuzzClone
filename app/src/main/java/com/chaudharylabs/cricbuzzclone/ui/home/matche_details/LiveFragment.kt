@@ -19,10 +19,6 @@ import com.chaudharylabs.cricbuzzclone.ui.home.matche_details.adapter.LiveAdapte
 import com.chaudharylabs.cricbuzzclone.ui.utils.Constants
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.launch
-import java.util.concurrent.TimeUnit
-import kotlin.time.Duration
-import kotlin.time.DurationUnit
-import kotlin.time.TimeSource
 
 class LiveFragment : BaseFragment() {
 
@@ -76,6 +72,9 @@ class LiveFragment : BaseFragment() {
                         Log.d(TAG, "response Success :: $it")
 
                         binding.apply {
+
+                            println(matche?.matchInfo?.state)
+                            println(matche)
 
                             when (matche?.matchInfo?.state) {
                                 "Complete" -> {

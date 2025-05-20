@@ -215,17 +215,9 @@ class HomeFragment : BaseFragment() {
                     }
                 }
 
-                val newList = list.distinct()
-                    .filter { it.matchInfo?.isFantasyEnabled == true } as ArrayList<Matche>
-
-                if (newList.isEmpty()) {
-                    list.subList(0, list.size - 1).forEach {
-                        newList.add(it)
-                    }
-                    matchesViewModel.list.postValue(newList.distinct() as ArrayList<Matche>)
-                } else {
-                    matchesViewModel.list.postValue(newList.distinct() as ArrayList<Matche>)
-                }
+                matchesViewModel.list.postValue(
+                    list.distinct()
+                    .filter { it.matchInfo?.isFantasyEnabled == true } as ArrayList<Matche>)
             }
         }
     }
@@ -233,23 +225,27 @@ class HomeFragment : BaseFragment() {
     private fun loadBanners(matchList: ArrayList<Matche>) {
         binding.apply {
             lytSwipeRefresh.isRefreshing = false
-            rvBannerList.adapter = HomeBannerAdapter(this@HomeFragment, matchList, activity)
-            rvBannerList.setHasFixedSize(true)
-            rvBannerList.onFlingListener = null
-            val snapHelper = PagerSnapHelper()
-            snapHelper.attachToRecyclerView(rvBannerList)
 
-            rvBannerList.let {
-                if (it.itemDecorationCount < 1) {
-                    it.addItemDecoration(
-                        DotsIndicatorDecoration(
-                            "#FFFFFF",
-                            "#4DFFFFFF"
+            if (matchList.isNotEmpty() == true) {
+                lytMatches.visibility = View.VISIBLE
+                rvBannerList.visibility = View.VISIBLE
+                rvBannerList.adapter = HomeBannerAdapter(this@HomeFragment, matchList, activity)
+                rvBannerList.setHasFixedSize(true)
+                rvBannerList.onFlingListener = null
+                val snapHelper = PagerSnapHelper()
+                snapHelper.attachToRecyclerView(rvBannerList)
+
+                rvBannerList.let {
+                    if (it.itemDecorationCount < 1) {
+                        it.addItemDecoration(
+                            DotsIndicatorDecoration(
+                                "#FFFFFF",
+                                "#4DFFFFFF"
+                            )
                         )
-                    )
+                    }
                 }
             }
-            rvBannerList.visibility = View.VISIBLE
         }
     }
 

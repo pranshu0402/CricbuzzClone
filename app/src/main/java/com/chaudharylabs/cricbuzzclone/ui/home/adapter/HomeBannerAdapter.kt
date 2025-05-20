@@ -66,32 +66,6 @@ class HomeBannerAdapter(
                     .load("$URL/c${matche.matchInfo?.team2?.imageId.toString()}/.jpg")
                     .into(ivTeam2Pic)
 
-                when (matche.matchInfo?.state) {
-                    "Complete" -> {
-                        tvStatus.setTextColor(
-                            AppCompatResources.getColorStateList(
-                                tvStatus.context, R.color.primary_light_blue
-                            )
-                        )
-                    }
-
-                    "Upcoming" -> {
-                        tvStartDate.setTextColor(
-                            AppCompatResources.getColorStateList(
-                                tvStatus.context, R.color.primary_brown
-                            )
-                        )
-                    }
-
-                    else -> {
-                        tvStatus.setTextColor(
-                            AppCompatResources.getColorStateList(
-                                tvStatus.context, R.color.primary_red
-                            )
-                        )
-                    }
-                }
-
                 val team1 = matche.matchInfo?.team1?.teamSName.toString()
                 val team2 = matche.matchInfo?.team2?.teamSName.toString()
 
@@ -167,6 +141,12 @@ class HomeBannerAdapter(
                     tvStartDate.visibility = View.GONE
                     tvStatus.visibility = View.VISIBLE
                     lytTeamScore.visibility = View.VISIBLE
+
+                    tvStatus.setTextColor(
+                        AppCompatResources.getColorStateList(
+                            tvStatus.context, R.color.primary_light_blue
+                        )
+                    )
                 }
 
                 val team1Overs = matche.matchScore?.team1Score?.inngs1?.overs.toString()
